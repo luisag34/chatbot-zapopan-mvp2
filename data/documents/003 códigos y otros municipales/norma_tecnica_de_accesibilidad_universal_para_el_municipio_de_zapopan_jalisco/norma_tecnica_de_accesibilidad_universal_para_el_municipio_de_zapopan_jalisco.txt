@@ -1,0 +1,713 @@
+Publicada en GMZ 13/12/2019
+
+• Gaceta Municipal Vol. XXVI No. 159, Segunda Época. Norma Técnica de Accesibilidad Universal para el Municipio de Zapopan, Jalisco. de 13 de diciembre de 2019.
+
+NORMA TÉCNICA DE ACCESIBILIDAD UNIVERSAL PARA EL MUNICIPIO DE ZAPOPAN, JALISCO.
+Publicada en GMZ 13/12/2019
+
+Exposición Motivos
+
+De acuerdo al artículo 9 de la Convención de los Derechos de las Personas con Discapacidad, se establece que las Personas que vivan con esta condición, deben desarrollarse de manera independiente y participar plenamente en todos los aspectos sociales. Es por eso que los gobiernos deben adoptar medidas pertinentes para asegurar el acceso de las Personas con Discapacid ad en condiciones de equidad, con todas las demás personas.
+
+Uno de los propósitos del Municipio de Zapopan es crear una Ciudad para todas y todos, por esta razón, ha implementado una serie de acciones para eliminar de manera progresiva las barreras físicas, facilitando el acceso y uso de los espacios, entornos y servicios para todas y todos los que vivimos y transitamos en ella.
+
+La Norma Técnica de Accesibilidad Universal está diseñada como un instrumento de apoyo a proyectos de planeación, construcción, modificación o rehabilitación de los entornos físicos; con criterios, especificaciones y gráficos que toman en cuenta las necesidades de las personas con movilidad reducida o cualquier otra limitación física o sensorial, la accesibilidad y la utilización de los bienes y servicios de la sociedad, así como promover la utilización de ayudas técnicas y humanas adecuadas que permitan el desarrollo normal de la vida física o sensorial de estas personas, mediante el establecimiento de medidas de fomento y de contr ol en el cumplimiento de la normativa dirigida a suprimir y evitar cualquier tipo de barrera u obstáculo físico o sensorial.
+
+Está dirigida a quienes planean, proyectan, construyen y mantienen el entorno del municipio, tanto en el ámbito público como priva do, y es una herramienta de observancia obligatoria y general por parte de la sociedad para que se pueda exigir la implementación de los criterios que mejoren la calidad de vida.
+
+El diseño de esta norma se basa en medidas antropométricas, en guías de cará cter técnico que contribuyan al desplazamiento seguro de las personas con discapacidad, en mejorar las condiciones, el entorno y la seguridad de la ciudad con criterios de accesibilidad universal.
+La norma es el resultado de una tarea colectiva y de largo plazo que conlleva a un proceso
+
+evolutivo de reglamentación y elaboración de normas de diseño y construcción, que busca crear un ambiente accesible e incluyente en beneficio de todos los sectores de la población.
+
+Construir y adaptar la Ciudad para hacerl a accesible, no significa llenar el entorno de elementos y cadenas aisladas, se trata de planear y diseñar para todas y todos, con base en la observancia y reglamentación basada en el diseño universal, a fin de beneficiar al sector de las personas con discapacidad y garantizar el acceso y uso para la mayoría.
+
+TÍTULO ÚNICO Capítulo I Disposiciones Generales 
+Artículo 1. La presente norma establece las condiciones y especificaciones técnicas de diseño para la planeación y elaboración de proyectos y ejecución de obras de edificación, y para la adecuación de las existentes, con el fin de hacerlas accesibles para todas las personas con movilidad reducida o cualquier otra limitación física o sensorial.
+
+Las disposiciones de accesibilidad universal contenidas en la presente norma técnica serán de aplicación obligatoria a partir de su entrada en vigor para los nuevos proyectos de obra y edificación, de remodelación o acciones de redensificación o renovación urbana, donde se presten servicios de atención al público, d e propiedad pública, social o privada en el municipio y se observen por las autoridades estatales y federales que ejecuten obras en el Municipio de Zapopan, Jalisco.
+
+Se considerarán las características particulares de cada caso en la aplicación de los elementos básicos de accesibilidad.
+
+Artículo 2. El Gobierno Municipal vigilará que las personas con discapacidad y con movilidad reducida se encuentren en posibilidad de desplazarse libremente en condiciones dignas y seguras en espacios públicos, que les per mitan el uso y acceso a los servicios públicos.
+
+Todo establecimiento, edificación, equipamiento, espacio público, desarrollos y obras de carácter público o privado de uso público, deberá contar con facilidades y de infraestructura para que cualquier perso na con discapacidad o movilidad reducida pueda realizar accesiblemente su trabajo.
+
+Artículo 3. En la construcción, remodelación, ampliación o cualquier cambio que implique la modificación de la estructura arquitectónica de los bienes inmuebles propiedad municipal, así como cualquier lugar que tenga acceso al público, se sujetará a los diversos lineamientos establecidos en la presente norma, y demás reglamentación aplicables.
+
+Artículo 4. La Coordinación General de Gestión Integral de la Ciudad a través de la Dirección de Obras Públicas e Infraestructura y la Dirección de Ordenamiento del Territorio, tendrán la obligación de garantizar que en cualquier proyecto autorizado, se
+
+incluyan las previsiones que contempla la presente norma, reglamentos, códigos, Nor mas Oficiales y leyes aplicables.
+
+Artículo 5. En lo no previsto en la presente norma, se aplicarán los criterios y condiciones establecidos en la Ley General de Asentamientos Humanos, Ordenamiento Territorial y Desarrollo Urbano, las Normas Oficiales Mexicanas, el Código Urbano para el Estado de Jalisco, el Reglamento Estatal de Zonificación, manuales y demás reglamentación aplicable.
+
+Artículo 6. Para los efectos de la presente norma se entenderá por:
+
+I. Accesibilidad. Las medidas pertinentes para asegurar el acceso de las personas con discapacidad, en igualdad de condiciones con las demás, al entorno físico, el transporte, la información y las comunicaciones, incluidos los sistemas y las tecnologías de la información y las comunicaciones, y a otros servicios e instalaciones abiertos al público o de uso público, tanto en zonas urbanas como rurales.
+
+II. Ajustes razonables: Son las modificaciones y adaptaciones en la infraestructura y los servicios, cuya realización no im ponga carga desproporcionada o que se afecten derechos de terceros.
+
+III. Ampliación. En la construcción, se refiere al crecimiento de los espacios existentes.
+
+IV. Andador. Área pavimentada destinada al tránsito peatonal dentro de las áreas verdes y/o for estadas o dentro de áreas de recreación, protegidas o no en sus costados por guarniciones, y en su defecto, en caso de calles sin desniveles, andadores protegidos por mobiliario urbano, arbolado, cambio de texturas y/o materiales.
+
+V. Apoyo. Dispositivo para ayudar a las personas a cambiar de posición o caminar. Es el caso, entre otros, de pasamanos, barras y protecciones.
+
+VI. Área de aproximación. Es el espacio de maniobra para hacer uso de un elemento contiguo.
+
+VII. Área de descanso. Es un área inmediat a a las circulaciones, en las cuales se pueden ubicar bancas, mobiliario urbano y espacio para personas usuarias de silla de ruedas.
+
+VIII. Área de detección. Es aquella superficie que puede ser localizada o detectada por el bastón utilizado por personas con discapacidad visual.
+
+IX. Área de resguardo. Es un área de menor riesgo dentro de la edificación, con o sin acceso a la vía pública por medio de una salida, en donde las personas con discapacidad, permanecen temporalmente con seguridad, en espera de post eriores instrucciones o asistencia durante una evacuación de emergencia o las áreas de espera en camellones protegidas por elementos de contención y seguridad en donde los peatones permanecen temporalmente, en espera de continuar su traslado por la vía pública.
+
+X. Área de transferencia para el transporte. Espacio o zona destinada a la conexión entre los diversos modos de transporte que permite un adecuado funcionamiento del tránsito peatonal y vehicular.
+
+XI. Arroyo vehicular o superficie de rodadura. Espacio destinado a la circulación de vehículos, incluyendo la circulación de vehículos no motorizados, generalmente delimitado por acotamientos o banquetas, y en caso de calles sin desnivel, delimitado con mobiliario urbano, arbolado, entre otros.
+
+XII. Audible.- Sonido identificable con respecto al entorno.
+
+XIII. Ayudas técnicas. Dispositivos técnicos, tecnológicos o materiales, apoyo humano o animal que permitan habilitar, rehabilitar o compensar una o más limitaciones de tipo funcional, motriz, sensorial, intelectual o mental de las personas con discapacidad con la finalidad de favorecer su autonomía o inclusión.
+
+XIV. Área de uso público. Espacios interiores o exteriores que están disponibles para el público en general en un inmueble de propiedad pública o privada de uso público.
+
+XV. Banqueta o acera. Camino a cada lado de una calle o avenida, reservado para la circulación, estancia y disfrute exclusivo de las personas con discapacidad, peatones y en su caso, usuarios de la movilidad no motorizada, sin hacer uso del mismo. Entendiéndose esta, desde el límite de la propiedad privada, hasta el inicio del arroyo vehicular. Las banquetas no podrán ser utilizadas para estacionamiento.
+
+XVI. Barreras de Comunicación. Es la ausencia o deficiente aplicación de códigos de comunicación hacia las personas con disc apacidad, que obstaculizan su comprensión del entorno y su plena inclusión.
+
+XVII. Barreras Físicas. Todos aquellos obstáculos y elementos físicos, de ornato y de construcción que dificultan, entorpecen o impidan a las personas con discapacidad, su libre acceso, desplazamiento e intervención en vía pública, edificaciones y servicios públicos.
+
+XVIII. Color de contraste. Contraste significativo entre el color del fondo y el frontal de un elemento, se considera que un contraste del 70% entre caracteres y el f ondo, es adecuado para personas con baja visión.
+
+XIX. Cruce peatonal. Área de circulación para el tránsito peatonal dentro de una intersección, a mitad de una cuadra o en donde la carga peatonal lo requiera, que puede estar a nivel de la banqueta o en la superficie de rodadura.
+
+XX. Desnivel. Diferencia en sentido vertical o altitud entre dos o más superficies.
+
+XXI. Diseño universal. Se entenderá el diseño de productos, entornos, programas y servicios que puedan utilizar todas las personas, en la mayor med ida posible, sin necesidad
+
+de adaptación ni diseño especializado. El diseño universal no excluirá las ayudas técnicas para grupos particulares de personas con discapacidad, cuando se necesiten;
+
+XXII. Elemento. Componente físico en una edificación, instala ción o espacio, por ejemplo: rampa, puerta, elevador, señalamiento o bolardo.
+
+XXIII. Elementos de circulación vertical. Aquellos que comunican espacios permitiendo la llegada, desplazamiento y uso de los mismos entre diferentes niveles.
+
+XXIV. Entrada. Cualquier punto de acceso a un inmueble o edificación.
+
+XXV. Espacio. Área contenida por elementos y que define un volumen.
+
+XXVI. Espacios al exterior. Áreas en predios o inmuebles, cuyo uso es la recreación y/o circulación de las personas, tales como: pati os, jardines, vestíbulos y demás de naturaleza análoga. Dichas áreas pueden o no estar contenidas por bardas, muros y/o construcciones.
+
+XXVII. Espacio público. Área delimitada por construcciones o por elementos naturales, que permite la circulación que pe rmite la circulación de todos los modos de transporte, así como la recreación y reunión de los habitantes, tales como, calles, plazas, avenidas, viaductos, paseos, jardines, bosques, parques públicos y demás de naturaleza análoga.
+
+XXVIII. Guarnición o bor dillo. Elemento longitudinal que delimita las áreas de circulación, entre peatones y vehículos o límite para contener andaderos o caminos.
+
+XXIX. Igualdad de oportunidades. Proceso de adecuaciones, ajustes, mejoras o adopción de acciones afirmativas necesarias en el entorno jurídico, social, cultural y de bienes y servicios, que faciliten a las personas con discapacidad a su inclusión, integración, convivencia y participación, en igualdad de oportunidades con el resto de la población;
+
+XXX. Isla. Zona limitada por guarniciones o elementos de protección al peatón, que ncauza el tránsito vehicular.
+
+XXXI. Lugares Públicos. Los inmuebles destinados al uso público o propiedad de un particular que en razón de la naturaleza principal de las actividades que e n ellos se realicen, permitan el libre tránsito y la comunicación de las personas, ya sea por sí mismos o utilizando aparatos ortopédicos, sillas de ruedas, perro guía o animal de servicio, lengua de señas mexicana u otras formas de
+
+XXXII. Mobiliario urbano. Comprende a todos aquellos elementos urbanos complementarios, ya sean fijos, permanentes, móviles o temporales, ubicados en la vía pública o en espacios al exterior que sirven de apoyo a la infraestructura y al equipamiento urbano.
+
+XXXIII. Parada de transporte público. Área de transferencia para el transporte destinada para el ascenso, descenso y espera de los pasajeros en la vía pública a lo largo de una ruta.
+
+XXXIV. Pavimento táctil. Sistema de información en la superficie de piso en alto reliev e y color de contraste con características estandarizadas, para facilitar el desplazamiento y orientación a personas con discapacidad visual, con el objeto de ser detectada por la pisada o usando el bastón blanco. El sistema se compone de dos tipos de text ura para informar a la persona de situaciones de advertencia y de guía.
+
+XXXV. Paramento. Elemento arquitectónico que consiste en una superficie de cualquier material en posición vertical, para delimitar un espacio o área, tales como muros o bardas.
+
+XXXVI. Peralte. Superficie o paramento vertical de un escalón.
+
+XXXVII. Perceptible. Que puede ser detectado por uno de los sentidos con o sin el uso de ayudas técnicas.
+
+XXXVIII. (PCD) Persona con discapacidad. Todo ser humano que tiene ausencia o disminución congénita, genética o adquirida de una aptitud o capacidad física, mental, intelectual o sensorial, de manera parcial o total, que le impida o dificulte su pleno desarrollo o inclusión efectiva al medio que lo rodea, de manera temporal o permanente.
+
+XXXIX. (PMR) Persona con movilidad reducida. Es aquella que de forma temporal o permanente, debido a enfermedad, edad, accidente o alguna otra condición, realizan un desplazamiento lento, difícil o desequilibrado.
+
+XL. Principio de Funcionalidad. Consiste en fl exibilizar la aplicación de criterios de accesibilidad universal, que por las condiciones particulares del lugar o su entorno, no es posible apegarse a la normatividad vigente en la materia, pero que resultan funcionales en razón de las necesidades de las PCD y PMR.
+
+XLI. Principio de Posibilidad. Se refiere a que en caso de no ser posible, viable y seguro realizar ajustes razonables en determinadas construcciones, previo diagnóstico y dictaminación, se suplirán dichos ajustes físicos, por protocolos, y con ductas de apoyo y servicio que faciliten el acceso a todas las personas en igualdad de condiciones.
+
+XLII. Remodelación. Cambio constructivo que han de sufrir los espacios.
+
+XLIII. Requisitos Arquitectónicos. Especificaciones a utilizar en la construcción o adaptación de edificios y espacios de uso público o propiedad de un particular.
+
+XLIV. Ruta accesible. Es la que permite una circulación continua y sin obstáculos, con la combinación de elementos construido s que garantizan a cualquier persona entrar, desplazarse, salir, orientarse y comunicarse con el uso seguro, autónomo y cómodo tanto en el espacio público como en las edificaciones y el mobiliario.
+
+XLV. Ruta táctil. Circulación diseñada para las personas con discapacidad visual que señala un camino determinado entre los espacios, usando una combinación de elementos táctiles, tales como, pavimento táctil, señalamiento tacto-visual y pasamanos.
+
+XLVI. Señalamiento horizontal. Son marcas como rayas, flechas, símbolos y leyendas que se aplican sobre la superficie de rodamiento, guarniciones y obstáculos o estructuras de las vías o adyacentes a ellas para regular y canalizar el tránsito de todos los usuarios de los diferentes modos de transporte.
+
+XLVII. Señala miento vertical. Son tableros con símbolos y leyendas fijados en estructuras diversas, ubicadas en el espacio público, que proveen de información útil de orientación al usuario, para un desplazamiento seguro y ordenado.
+
+XLVIII. Señalización. Es aquella in formación visual, táctil o audible, diseñada para orientar con seguridad a las personas en el desplazamiento y uso de los espacios.
+
+XLIX. Señalización táctil. Información que puede ser leída o entendida por medio del tacto.
+
+L. Símbolo. Figura con que se representan ideas, conceptos, circunstancias, objetos, lugares, cosas, etcétera.
+
+LI. Sistema de Escritura Braille. Sistema para la comunicación representado mediante signos en relieve, leídos en forma táctil por las personas con discapacidad visual;
+
+LII. Superficie antideslizante. Piso que no es resbaloso en condiciones secas o húmedas y a prueba de lluvia.
+
+Capítulo II Normas para libre acceso en condiciones de equidad
+
+Artículo 7. El presente capítulo establece normas técnicas para facilitar el libre ac ceso de las PMR y PCD, en particular aquellas que tienen:
+
+I. Dificultad de desplazamiento. Cuando dependen de ayudas para caminar u otras técnicas para desplazarse, como pueden ser el bastón, las muletas, andadera y silla de ruedas.
+
+II. Dificultades visuales. Puede ser a causa de la ceguera o de dificultades de la vista.
+
+III. Dificultades auditivas y/o del habla. Cuando tienen dificultades para comprender sonidos o palabras. Las personas con disminución auditiva pueden depender para comunicarse de otras ayudas técnicas.
+
+Artículo 8. Los derechos que esta norma protege a favor de las PMR y PCD, mediante la modificación, planeación y diseño del entorno físico son los siguientes:
+
+I. Desplazarse libremente en los espacios públicos;
+
+II. Tener acceso y facilidades de desplazamiento en los espacios laborales, comerciales, oficiales y recreativos, mediante la ejecución e implementación de las especificaciones arquitectónicas y constructivas que posibiliten dicho fin.
+
+Artículo 9. Todo proyecto de edificación y construcción de uso público o privado de uso público deberá contemplar y en consecuencia incorporar al diseño arquitectónico de dichos edificios los elementos básicos de accesibilidad que se describen en ésta Norma así como colocar el equ ipamiento básico como muebles, sanitarios, cocinas, puertas, apagadores, contactos, llaves de agua, aparatos de intercomunicación, y objetos análogos, considerando los movimientos que se llevan a cabo para su uso o accionamiento.
+
+Artículo 10. Los elementos básicos a considerar para el acceso en condiciones de igualdad a los que deben adecuarse las edificaciones y espacios abiertos, tanto públicos como privados de acceso público según corresponda al caso concreto, son las siguientes:
+
+I. Estacionamientos; II. Servicios sanitarios; III. Rampas de acceso; IV. Rampas en la vía pública; V. Escaleras; VI. Elevadores; VII. Vestíbulos; VIII. Vía pública; IX. Ruta Accesible X. Señalamientos y provisiones; XI. Parques y áreas de juego; XII. Ventanilla de atención al Público; XIII. Pavimento táctil; XIV. Ruta táctil; XV. Accesorios; XVI. Accionamientos; XVII. Los demás que refieran otros ordenamientos legales o que dificulten, entorpezcan o impidan el libre desplazamiento.
+
+Capítulo III De los Estacionamientos en espacios Públicos, privados de uso público y Edificios 
+Artículo 11. En los espacios públicos, edificios y áreas de estacionamiento se aplicarán los siguientes lineamientos:
+
+I. Todos los desarrollos que cuenten con estacionamiento deben contemplar cajones para PCD. Se destinará 1 un cajón por cada 12 cajones. Si el desarrollo cuenta con menos de 12 cajones se requerirá al menos 1; en caso de que el desarrollo solo disponga de un cajón de estacionamiento, éste deberá tener dicha función.
+
+II. Los estacionamientos abiertos se deberá prever un cajón reservado por cada
+25 vehículos seg ún la capacidad del estacionamiento, en caso que el estacionamiento tenga un total de hasta 50 vehículos, los cajones reservados deberán ser 2 obligadamente;
+
+III. Las medidas del cajón serán de 5 metros de fondo por 3.80 metros de frente;
+
+IV. Los cajones reservados deberán ubicarse lo más cerca posible a la entrada del edificio y deberán contar con una alineación horizontal con respecto de la superficie del ingreso a los establecimientos;
+
+V. Se colocarán señalamientos, en el piso se pintará el s ímbolo internacional de acceso a personas con discapacidad de 1.60 metros en medio del cajón, así como una franja de maniobra de 1.40 metros; y se colocará un letrero con el mismo símbolo de 0.61 metros por 0.61 metros colocado a 2.50 metros de altura.
+
+VI. Para el caso de las rampas en los espacios de estacionamiento para PCD, la pendiente máxima será de 6% como se muestra en el siguiente gráfico:
+
+Todo cajón de estacionamiento deberá contar con topes de 0.15 metros (quince centímetros de altura); cuando en el cajón de estacionamiento el automóvil ingrese de frente, el tope se ubicará 0.80 metros (ochenta centímetros) del límite del cajón y cuando en el cajón de
+
+estacionamiento el automóvil ingrese en reversa, el tope se ubicará a 1.20 metros (ciento veinte centímetros) del límite del cajón.
+
+Artículo 12. En los edificios y espacios públicos y privados con estacionamiento interno o en la vía pública, se deberán señalar 1 un cajón de estacionamiento por cada 25 cajones o menos, con el símbolo internacional como se requiere ubicándolos lo más cerca posible al vestíbulo de ingreso al espacio abierto o edificio. El recorrido desde el cajón de estacionamiento hasta el ingreso deberá estar libre de barreras arquitectónicas.
+
+Capítulo IV De los Servicios Sanitarios
+
+Artículo 13. En áreas de sanitarios públicos, por cada seis o menos sanitarios se deberá instalar uno para PCD. Los elementos que integran el sani tario deberán observar las siguientes características:
+
+I. Muros macizos;
+
+II. 2 metros de fondo por 1.60 metros de frente;
+
+III. Piso antiderrapante;
+
+IV. Puertas de un metro de ancho mínimo;
+
+V. Tres barras horizontales de apoyo, de 1 ½ pulgadas de diámetro cada una, en las paredes laterales del inodoro colocadas una a 0.90 metros de altura sobre el nivel de piso en un extremo, y en el extremo opuesto las dos restantes una a 0.70 metros y la otra a 0.50 metros de altura sobre el nivel de piso totalmente horizontales, se extenderán a 0.70 metros de largo con separación mínima a la pared de 0.050 metros;
+
+VI. Una barra vertical de apoyo, de 1 ½ pulgadas de diámetro, de 0.70 metros de longitud en la pared posterior al inodoro centrada a una altura de 0.80 metros sobre el nivel de piso en la parte inferior de la barra y a 1.50 metros en la parte superior;
+
+VII. El inodoro debe tener un asiento a 0.50 metros de altura sobre el nivel del piso; y
+
+VIII. El inodoro debe estar colocado a 0.50 metros de distancia del paño de la pared al centro del mueble.
+
+Referencias:
+
+1. Cambiador de pañales para infantes.
+
+2. Barra de apoyo horizontal abatible (opcional).
+
+3. Excusado.
+
+4. Espejo.
+
+5. Lavabo.
+
+6. Barras de apoyo.
+
+7. Portapapeles con salida frontal o lateral.
+
+8. Puerta abatible hacia el exterior.
+
+Artículo 14. Las características de colocación de los lavabos deberán ser las siguientes:
+
+I. A 0.76 metros de altura libre sobre el nivel del piso;
+
+II. La distancia entre lavabos será de 0.90 metros de eje a eje;
+
+III. El mueble debe tener empotre de fijación o ménsula de sostén para soportar el esfuerzo generado por el usuario;
+
+IV. El desagüe colocado hacia la pared posterior;
+
+V. Deberán existir 0.035 metros de espacio como mínimo entre el grifo y la pared que da detrás del la vabo cuando se instalen dos grifos, deberán estar separados entre sí
+0.20 metros como mínimo;
+
+VI. El grifo izquierdo del agua caliente, deberá señalarse con color rojo;
+
+VII. Uno de los lavabos tendrá llaves largas tipo aleta;
+
+VIII. Los accesorios como toalleros y secador de manos deberá estar colocados a una altura máxima de 1 metro sobre el nivel del piso.
+
+Artículo 15. Si se cuenta con regaderas, estas tendrán como mínimo una regadera para personas con discapacidad que cubra las siguientes características:
+
+I. Dimensiones de 1.10 metros de frente por 1.30 metros de fondo;
+
+II. Puerta de 1 metro de ancho mínimo;
+
+III. Dos barras horizontales de apoyo esquineras de 1 ½ pulgadas de diámetros y
+0.90 metros de largo colocadas en la esquina más cercana a 0.80 metros sobre el nivel del piso; y
+
+IV. Banca de transferencia de 0.90 metros por 0.40 metros y 0.50 metros de altura.
+
+Artículo 16. En los servicios sanitarios donde se requieran vestidores, deberá haber un vestidor como mínimo para personas con discapacidad con las siguientes características:
+
+I. Medidas de 1.80 metros de frente por 1.80 metros de fondo;
+
+II. Banca de 0.90 metros de largo por 0.40 metros de ancho y 0.50 metros de altura;
+
+III. Una barra horizontal de apoyo de 1 ½ pulgadas de diámetro en una de las paredes laterales colocada a 0.90 metros de altura sobre el nivel del piso;
+
+IV. Una barra vertical de apoyo de 1 ½ pulgadas de diámetro de 0.70 metros de longitud a una altura de 0.80 metros sobre el nivel del piso de la parte inferior de la barra y a 1.50 metros en la parte superior, próxima a la banca y barra horizontal en el muro adyacente a la banca.
+
+Capítulo V De las Rampas de Acceso
+
+Artículo 17. Para indicar la proximidad de rampas de acceso, escaleras y otros cambios de nivel, el piso, deberá tener textura diferente con respecto al predominante, en una distancia de 1.20 metros por el ancho del elemento.
+
+I. Las rampas de acceso deberán tener las características siguientes:
+
+a) Ancho mínimo de 1.20 metros de espacio libre de circulación, ancho efectivo, libre de todo obstáculo; b) Pendiente de entre 4% al 8% como máximo, dependiendo del sitio c) Bordes laterales de 0.50 metros de altura; d) Pasamanos en ambos lados, colocados después del área libre de circulación; e) El piso deberá ser firme, uniforme y antiderrapante; f) Longitud no mayor de 6 metros de largo; g) Cuando la longitud requerida sobrepase los 6 metros se considerarán descansos de 1.50 metros; h) Señalamiento que prohíba la obstrucción de la rampa con cualquier tipo de elemento; i) Símbolo internacional de acceso a personas con discapacidad.
+j) El ancho de los descansos deberá ser igual o mayor al ancho de la rampa.
+
+II. Los dispositivos de sujeción y/o apoyo (barandales , pasamanos, agarraderas, entre otros), deberán tener:
+
+a) Una altura de 90 a 105 cm; b) Un diámetro entre 3.5 a 4.5 cm; c) Una separación de 3.5 a 4.5 cm del muro o elemento constructivo; d) Continuidad en toda su longitud y superficies libres de elementos que puedan provocar un accidente o daño, y; e) Un anclaje que les permita estar estables y soportar el peso o fuerza ejercida por el trabajador con discapacidad.
+
+Artículo 18. Todos los establecimientos para uso público y privado de uso público contarán con una entrada al nivel del piso, sin diferencias de niveles entre el interior y el exterior. Cuando lo anterior no sea posible, las entradas deberán tener rampas de acceso desde la vía pública hasta el interior del inmueble con las especificaciones señaladas en el artículo anterior.
+Capítulo VI De las Rampas en la Vía Pública
+
+Artículo 19. Se deberá contar en los puntos de cruce de la vía pública con los arroyos vehiculares con rampas especiales para sillas de ruedas.
+
+Estas rampas deberán observar las siguientes dimensiones mínimas:
+
+I. Antes de iniciar la rampa, la banqueta deberá tener una dimensión mínima de
+1.60 metros de ancho, para garantizar el desarrollo de la rampa y el libre acceso y maniobrabilidad de personas con sillas de ruedas;
+
+II. El ancho mínimo de las rampas será de 1.20 metros;
+
+III. La pendiente de la rampa será de entre 4% al 8 % como máximo, para salvar el desnivel de la guarnición de una altura máxima de 0.15 metros;
+
+IV. El acabado del pavimento en la rampa deberá ser terso pero no resbaladizo, sin ningún elemento en bajo a alto relieve;
+
+V. Deberán alinearse las rampas de las aceras del arroyo vehicular para evitar desplazamientos en diagonal de personas con discapacidad visual; y
+
+VI. Deberán construirse de la mejor calidad posible y de materiales duraderos.
+
+Capítulo VII De las Escaleras 
+Artículo 20. Las escaleras deberán contar con las características siguientes:
+
+I. Pasamanos en ambos lados;
+
+II. Ancho mínimo de 1.20 metros libre de pasamanos;
+
+III. 15 escalones como máximo entre descansos;
+
+IV. La nariz de las huellas debe ser antiderrapante y de color contrastante;
+
+V. Los peraltes serán verticales y con una inclinación máxima de 0.025 metros;
+
+VI. Los escalones deberán tener huellas de 0.34 metros;
+
+VII. Superficie antiderrapante; y
+
+VIII. Ausencia de saliente en la parte superior del peralte.
+
+IX. Los pasamanos estarán firmemente asegurados, a una altura de 90 y 75 cm.
+del piso, prolongarse 30 cm. después del primer y último escalón y rematar en curva.
+Capítulo VIII De los Elevadores
+
+Artículo 21. El área mínima de aproximación debe ser de 1.20 m de longitud por 1.20 m de ancho, medidos desde la parte central del umbral de la puerta del elevador.
+
+Artículo 22. Los elevadores deberán encontrarse en óptimas condiciones de servicio y operación; y contar con las características siguientes:
+
+I. Señalamientos claros para su localización;
+
+II. Ubicación cercana a la entrada principal;
+
+III. Área interior libre de 1.50 metros por 1.50 metros como mínimo;
+
+IV. Ancho mínimo de puerta de 1.20 metros;
+
+V. Pasamanos interiores en sus tres lados;
+
+VI. Controles de llamada colocados a 1.20 metros en su parte superior;
+
+VII. Dos tableros de control colocados a 1.20 metros de altura uno a cada lado de la puerta y los botones de control deberá tener número arábigos en relieve;
+
+VIII. Los mecanismos automáticos de cierre de las puertas deberán de operarse con un mínimo de 5 segundos, para facilitar el paso de PMR y PCD.
+
+IX. El elevador deberá tener exactitud en la parada con relación al nivel del piso.
+
+Capítulo IX De los Vestíbulos 
+Artículo 23. En los vestíbulos de acceso a edificios, las puertas deberán tener las características siguientes:
+
+I. En todos los accesos exteriores y de intercomunicación deberá tener colores de alto contraste en relación a los de la pared;
+
+II. Ancho mínimo de 1.20 metros;
+
+III. Si está cerca de la esquina o en la esquina de una habitación, deberá abatir hacia el muro más cercano;
+
+IV. Las manijas y cerraduras deberán ser resistentes, de fácil man ejo y estar instaladas a 0.90 metros del nivel del piso;
+
+V. Los picaportes y jaladoras deberán ser de tipo palanca;
+
+VI. Cuando existan cambios de nivel en los espacios exteriores públicos, haciéndose necesario el uso de circulaciones verticales, se deberá prev er tanto escaleras con pasamanos, como rampas sujetándose a las especificaciones descritas; y
+
+VII. Los vestíbulos de ingreso a edificaciones o vestíbulos de distribución interiores deberán observar las siguientes consideraciones:
+
+a) Deberán de evitarse en lo posible escalones o cambios de nivel pronunciados en los vestíbulos de acceso a edificios sea este vestíbulo interior o exterior; b) Deberá ser el espacio donde no exista ningún tipo de barrera arquitectónica o de vegetación; y c) Será el espacio más amplio del edificio y tendrá un acceso directo a la vía pública, estacionamiento o rutas pedestres.
+
+Capítulo X De la Vía Pública
+
+Artículo 24. Los andadores, banquetas o senderos peatonales deberán observar las siguientes características:
+
+I. En los espacios abiertos públicos se deberá prever que existan áreas de descanso para sillas de ruedas al menos a cada 50 metros de distancia, que no interfieran con la circulación peatonal;
+
+II. La pendiente máxima en los andadores será del 5 %;
+
+III. Se deberá observar con especial atención que la vegetación y arbolado a los lados de los andadores peatonales tenga una altura mínima de 2.10 metros y que no obstruya el andador en los costados;
+
+IV. Deberán ser de un terminado rugoso y antiderrapante;
+
+V. Todas las banquetas deben tener super ficies firmes, parejas y antiderrapante. De ser posible, en las aceras se deben utilizar diferentes materiales, o colores para facilitar la identificación y orientación a personas con discapacidad visual;
+
+VI. En los cruces con el arroyo vehicular se deberán c onstruir rampas con las especificaciones antes descritas; y
+
+VII. Por ningún motivo se permitirá cambios bruscos de nivel en las banquetas por paso de ingresos vehiculares o peatonales que ingresen a propiedad privada o pública. Los desarrollos de estos cambios de nivel se realizarán por dentro de la propiedad.
+
+Artículo 25. No se permitirán establecimientos temporales o permanentes sobre la vía pública, con el fin de garantizar el libre paso de las PCD o PMR.
+
+Artículo 26. En conjuntos habitacionales, comerciales o de equipamiento se deberá diseñar un sistema de rutas pedestres independiente del tráfico vehicular sin ninguna barrera ni pendiente mayor del 5%.
+
+Artículo 27. En los casos en que las rutas pedestres coincidan c on las vías de tráfico vehicular, se debe proveer de semáforos sonoros y luminosos especiales para el cruce de peatones.
+
+Artículo 28. Los pavimentos táctiles deben ser de color contrastante, pueden estar integrados al acabado del piso, ser un elemento tipo loseta o sobrepuestos, y la dimensión de los módulos será mínimo de 30 por 30 centímetros y máximo de 40 por 40 centímetros .
+Se dividen en dos: indicador de advertencia y guía de dirección, se colocarán de acuerdo a lo siguiente:
+
+I. El pavimento de advertencia se utiliza para indicar: zona de alerta o peligro, aproximación a un objeto u obstáculo, cambio de dirección, cambio de nivel y fin de recorrido. Se compone de patrones de conos truncados con las siguientes especificaciones:
+
+ H = Altura del cono 4 milímetros
+ D1 = Diámetro del cono entre 12 y 15 milímetros en la parte superior
+ D2 = Diámetro del cono 25 milímetros en la base
+ C1 = Separación entre centros de los conos 50 milímetros
+ C2 = Separación entre borde del cono al borde del módulo 12.5 milímetros
+
+II. El pavimento de guía de dirección se utiliza para indicar el recorrido para una persona ciega o débil visual, se compone de barras paralelas a la dirección de marcha con las siguientes especificaciones:
+
+ H = Altura de la barra 4 milímetros
+ A = Ancho de la barra 25 milímetros
+
+ L = Longitud de la barra en la dirección de la marcha boleada 27.50 centímetros
+ C1 = Separación entre centros de las barras 50 milímetros
+ C2 = Separación entre el borde de la barra al borde del módulo 12.5 milímetros
+
+Capítulo XI Ruta Accesible
+
+Artículo 29. Cualquier ruta accesible exterior o interior debe permitir el acceso y uso a toda área común.
+
+Artículo 30. La ruta accesible se compone de elementos que se van conectados entre sí para hacer uso de espacios y servicios en un inmueble, ed ificación, predio o espacio público.
+
+Artículo 31. La ruta accesible está conformada por elementos tales como banquetas, cruces peatonales, calles peatonales, pasos a desnivel, andaderos, senderos, rampas o cualquier dispositivo mecánico para salvar las diferencias de nivel.
+
+Artículo 32. En edificaciones, una ruta accesible es una serie interconectada de diferentes elementos como un corredor, pasillo, andadores, puertas, sanitarios, rampas o cualquier dispositivo mecánico para salvar las diferencias de nivel.
+
+Los edificios de atención al público, deben garantizar que las PCD y PMR puedan acceder mediante una ruta accesible, utilizando los mismos servicios que las otras personas ya sean visitantes o empleados del inmueble considerando las medidas antropo métricas indicadas en la presente norma.
+
+Las características de accesibilidad para PCD y PMR, deben considerar los siguientes requisitos mínimos:
+
+a) Acceso: Llegar por lo menos a una entrada accesible de la o las edificaciones, desde el alineamiento del inmueble y el área de estacionamiento accesible; b) Ruta o rutas accesibles dentro del inmueble, a las diferentes edificaciones en un conjunto, a los diferentes niveles y a las áreas que se requieran; c) Sanitarios accesibles; d) Espacios accesibles: Para las personas usuarias de silla de ruedas en lugares donde existan posiciones para espectadores y áreas de estar;
+
+e) Señalización visual, auditiva y táctil para la movilidad interna; f) Pavimento táctil de advertencia y de dirección.
+
+Se indicará la ruta accesible para personas con discapacidad visual con pavimento táctil como mínimo hasta el primer punto de comunicación del edificio, es decir, al módulo de atención o información interactiva; y
+
+ g) Cuando no se requiera contar con dispositivos mecánicos de circulación vertical, deberá ser accesible la planta que comunique la edificación con la vía pública.
+
+Artículo 33. El ancho de las circulaciones se debe determinar de acuerdo al flujo peatonal de la zona, si el desplazamiento es en línea recta o con cambios de dirección, si está en interiores, exteriores o en el espacio público. Se debe apegar a las siguientes especificaciones:
+
+a) El ancho mínimo varía entre 120, 150 o 200 centímetros.
+b) En vivienda debe tener mínimo 90 cm y se incrementa en los cambios de dirección.
+c) En el caso de circulaciones menores a 150 cm de ancho, el trazado debe permitir que las personas usuarias de silla de ruedas cambien de sentido en los extremos, a intervalos no mayores a 30 metros, contando con espacios donde se pueda inscribir un círculo de 150 cm de diámetro como mínimo.
+d) La superficie de piso debe tener una pendiente máxima del 4%. Las pendientes mayores deben cumplir con los elementos de circulación vertical.
+
+e) La pendiente transversal de la superficie de piso debe tener un máximo de
+2%, para el drenaje del agua y evitar encharcamientos.
+f) Las circulaciones que cuenten con lados expuestos hacia vacíos, deben contar con una protección lateral.
+
+I. La protección puede ser de cualquier material, firme y con una altura de 10 cm para desniveles lat erales de máximo 30 cm. Para mayores desniveles se debe colocar un barandal, muro o elemento de protección a una altura de mínimo 90 cm.
+
+g) La iluminación debe ser de mínimo 100 luxes.
+
+Artículo 34. La altura mínima libre de la circulación debe tener 2.10 metros en toda su longitud y no debe disminuir el ancho requerido, es decir, que esté libre de objetos volados, colgantes a los paramentos y salientes como lámparas, señalizaciones o similares.
+
+Para el caso de la ubicación de señalización vertical en el espacio público, se debe atender a las especificaciones que establezcan los ordenamientos aplicables.
+
+Artículo 35. En la superficie de piso, los materiales utilizados deben permitir el desplazamiento tanto para personas usuarias de silla de ruedas como personas con muletas o bastón en condiciones de superficie seca y húmeda.
+
+a) El acabado de la superficie debe ser firme, continuo, nivelado y antideslizante. Se recomienda no pintar el concreto.
+
+b) Se debe evitar el uso de mármoles, granitos, terrazos o materiales similares con acabado pulido cuando las circulaciones tengan pendientes mayores al
+6% en interiores y en todos los casos en espacio público y espacio al exterior.
+
+c) La separación de las juntas debe tener máximo 13 milímetros.
+
+d) Para desagües, las ranuras de las rejillas, deben tener máximo 13 milímetros de separación y se deben colocar de forma perpendicular a la dirección de la circulación.
+
+e) Desniveles a máximo 6 milímetros cuando el acabado tenga aristas boleadas.
+
+f) Desniveles de entre 6 milímetros y 15 milímetros cuando la junta tiene una pendiente de máximo dos veces la altura en sentido horizontal.
+
+g) En rampas con alfombras, éstas últimas deben ser de un espesor máximo, considerando el bajo -alfombra, de 13 milímetros. El tejido debe ser bajo,
+
+firme y nivelado. Deben estar fijas adecuadamente. Los bordes expuestos deben tener ribetes los cuales deben ser achaflanados.
+
+Separación de Juntas (Aristas Boleadas) Cambios de nivel, junta con pendiente máxima de 45º
+
+Rejilla
+
+Alfombras o tapetes
+
+Capítulo XII De los Señalamientos y Provisiones
+
+Artículo 36. En las áreas de acceso, tránsito y estancia de edificios públicos y centros comerciales se deberán instalar señalamientos en apego a las especificaciones siguientes:
+
+I. Los letreros o señalizaciones deberán de ser de los colores y especificaciones internacionales que para el caso existen;
+
+II. Los letreros gráficos visuales deberán tener letras de 0.05 metros de alto como mínimo, en color contrastante con el fondo y colocados a 2.10 metros sobre el nivel del piso;
+
+III. En los letreros táctiles las letras o números tendrán las siguientes dimensiones:
+0.002 metros de relieve, 0.02 metros de altura y colocarse a 1.40 metros de altura sobre la pared adyacente a la manija de la puerta;
+
+IV. Los sistemas de alarma de emergencia deberán instalarse a base de señales audibles y visibles con sonido intermitente y lámpara de destellos; Pendiente Máxima Transversal
+
+V. En salas de espera y auditorios se destinará un área de descanso cercana a l acceso de 1 metro por 1.25 metros para personas con discapacidad en sillas de ruedas, la cual deberá Se indicará simbología de área reservada;
+
+VI. En salas de espera y auditorios se reservará 1 asiento por cada 25, para PCD o PMR, los cuales deberán estar c ercanos al acceso y con simbología de área reservada;
+
+VII. En comedores se deberán considerar mesas de 0.76 metros de altura libre y asientos removibles; y
+
+VIII. Los mostradores de atención al público tendrán una altura máxima de 0.90 metros.
+Capítulo XIII Parques y áreas de juego
+
+Artículo 37. Los espacios de recreación, parques, áreas de juego y deporte deben diseñarse y construirse con criterios de accesibilidad universal; y en su caso realizar los ajustes razonables necesarios que permitan la inclusión y disfrut e de dichas instalaciones por todas y todos en igualdad de condiciones.
+
+Artículo 38. Los parques y áreas de juegos accesibles deben contar con lo siguiente:
+
+I. Mapa táctil y paneles de información.
+
+II. Cambios de textura en la circulación.
+
+III. Los anfiteatros y escenarios deben contar con los elementos de accesibilidad usarlos libremente.
+
+IV. El mobiliario infantil con accesibilidad para todas y todos.
+
+V. Diseños que promuevan la equidad, seguridad y accesibilidad al espacio.
+
+Capítulo XIV Ventanillas de atención al Público
+
+Artículo 39. El módulo de atención al público deberá tener una altura máxima de 0.80 metros para beneficio de las PCD usuarias de silla de ruedas.
+
+Artículo 40. El ancho de área de fila de espera será mínimo de 0.90 metros y para el caso de cambios de dirección deberá existir un ancho libre de 1.50 metros.
+
+Artículo 41. El mobiliario para atención al público deberá contar con un área de aproximación de un ancho mínimo de 0.90 m por 1.20 m, incluyendo el área de uso inferior del módulo.
+
+Bajo el módulo debe haber un espacio libre mínimo de 0.73 m a 0.80 m de altura y 0.40 m a 0.45 m de profundidad y la altura desde el nivel de piso terminado debe ser en un rango de 0.80 m a 0.86 m.
+
+Capítulo XV Pavimento táctil
+
+Artículo 42. El pavimento debe de tener las siguientes características:
+
+a) La superficie del piso adyacente al pavimento táctil no debe ser rugosa.
+b) Debe tener un color de contraste del 75% como mínimo.
+c) Los pavimentos de advertencia deben colocarse en bordes de andenes o áreas para abordar algún modo de transporte:
+
+I. Para desniveles menores a 60 cm franja de 30 o 40 cm.
+
+II. Para desniveles mayores a 60 cm franja de 40 o 60 cm.
+
+III. En franja de advertencia táctil en banqueta dejando libre las guarniciones y no sobre el arroyo vehicular;
+
+IV. En camellones, islas o agujas
+
+V. Inicio y término de escaleras, rampas y acceso a elevador;
+
+VI. En el área de aproximación o descansos, a lo ancho de la escalera o rampa, al menos que esté unida a una guía de dirección.
+
+VII. Para la aproximación frontal a objetos, tales como, mostradores, módulos de información o señalamiento tactovisual, se deben colocar tres módulos de pavimento de advertencia, de tal forma que coincida su terminación con el borde frontal de dicho objeto o de la cubierta del área de uso.
+
+VIII. Para el módulo de guía de dirección, se pueden prolongar las barras paralelas hasta el borde del módulo de 30 o 40 cm. En la unión con el módulo de advertencia con conos truncados, las barras deben estar boleadas en sus bordes.
+
+IX. Para señalar las rutas táctiles, se debe colocar el pavimento de advertencia en combinación con las guías de dirección.
+
+Capítulo XVI Ruta táctil
+
+Artículo 43. La ruta táctil puede estar trazada por separado de la ruta accesible para personas usuarias de silla de ruedas.
+
+Artículo 44. La ruta táctil se complementa con señalamiento tacto -visual pasamanos en circulaciones horizontales, rampas o escaleras.
+
+Artículo 45. La ruta táctil debe ubicarse en los recorridos más seguros para las personas con discapacidad visual.
+
+Artículo 46. La distancia entre guías de dirección paralelas debe tener mínimo 90 centímetros.
+
+Artículo 47. Los cambios de dirección se deben señalar de la siguiente forma:
+
+a) Cambios a 90º, con un módulo de pavimento de advertencia o con 4 módulos cuando sea posible su colocación y no constituya un obstáculo.
+b) Cambio mayor o menor a 90º y nunca menor a 45°, se continúa el pavimento de guía de dirección.
+
+Artículo 48. Para los casos de interrupción de la ruta por rejillas, coladeras, juntas constructivas, se estará a lo siguiente:
+
+a) Si la longitud en el sentido de la ruta es menor a un módulo de pavimento táctil, se continúa con pavimento de guías de dirección.
+b) Si la longitud en el sentido de la ruta es mayor a un módulo de pavimento táctil, se debe colocar un módulo de pavimento de advertencia antes y después de la interrupción.
+
+Capítulo XVII Accesorios
+
+Artículo 49. Los pasamanos deben ser redondos u ovalados. Pueden ser de cualquier material que resista el uso y la presión que se ejercerá sobre ellos, siend o los metálicos los más recomendables. Deben tener un color contrastante con su entorno inmediato. El diámetro debe ser de mínimo 3 centímetros y máximo de 4 centímetros. Además deben de tener los siguientes lineamientos:
+
+a) En espacios con mayor afluencia d e niños, se debe colocar un pasamanos a una altura de 90 centímetros y otro a una altura de 75 centímetros.
+b) Color de contraste con el entorno inmediato.
+
+c) En los pasamanos se puede grabar información en alto relieve y en sistema braille para indicar el piso en el que se encuentra el usuario, dirección, etc.
+d) Sin bordes agudos, éstos deben redondearse.
+e) Cuando se fijen en muro y el acabado sea rugoso, se debe colocar una base de protección para los nudillos.
+f) Los pasamanos ovalados deben medir en su plano horizontal entre 50 y 70 milímetros y vertical entre 25 y 50 milímetros.
+g) Las barras rectangulares solamente pueden colocarse dentro de elevadores.
+h) Dentro de elevadores, la altura del pasamanos debe tener aproximadamente
+85 centímetros.
+i) Instalación fija en muro o piso para soportar un peso de mínimo 120 kilogramos.
+j) Los pasamanos sirven como continuidad de una ruta táctil.
+
+Referencias:
+
+1. Pasamanos.
+
+2. Terminación pasamanos.
+
+3. Ajuste cambio de dirección del pasamanos.
+
+Capítulo XVIII Accionamiento (apagador, contacto, botón o ventana)
+
+Artículo 50. Las características de los elementos de accionamiento serán los siguientes:
+
+I. Las ventanas deben ser fáciles de operar con manijas tipo palanca las cuales, al igual que los apagadores o cualquier elemento de accionamiento, deben estar a una altura de entre 80 y 110 cm.
+
+II. Los contactos deben colocarse a una altura mínima de 40 cm.
+
+III. La ubicación de apagadores, contactos o elementos de accionamiento deben tener mínimo 50 cm de separación, hacia ambos lados, con respecto a la esquina interior o vértice conformado por dos muros que forman un ángulo de 90 grados, para permitir su alcance a personas usuarias de silla de ruedas.
+
+IV. Los elementos de accionamiento en un plano horizontal deben tener una altura de entre 80 y 90 cm con máximo 30 cm de profundidad.
+
+V. El elemento a ser accionado, por ejemplo, un botón de llamado, debe tener una dimensión entre 2.5 y 7.5 cm de radio hacia ambos lados.
+
+VI. En caso de que el botón de llamado contenga un símbolo, éste debe estar en al to relieve.
+
+Capítulo XIX Protección Civil
+
+Artículo 51. Para los efectos del presente capítulo, se estará a lo dispuesto por la Norma Oficial Mexicana NOM -008-SEGOB-2015 “Personas con discapacidad. - Acciones de prevención y condiciones de seguridad en mat eria de protección civil en situación de emergencia o desastre”.
+
+Artículo 52. Se deben desarrollar Programas Internos de Protección Civil para cada inmueble con recomendaciones que sean específicas para cada tipo de siniestro.
+
+Para cada inmueble, se debe n trazar las rutas de evacuación accesible, sin obstáculos y debidamente señalizada.
+
+I. La señalización visible deberá estar:
+
+a) Colocada a una altura, lugar y posición que no represente un factor de riesgo para las personas y que no esté obstruida, y b) Enfocada a las discapacidades que así lo requieran.
+
+II. La señalización táctil deberá:
+
+a) Estar ubicada a una altura de entre 90 a 120 centímetros del nivel del piso; b) Ser elaborada en código Braille; c) Ser accesible y estar libre de obstáculos; d) Proporcionar información a las personas que así lo requieran que le permita:
+
+ 1) Ubicarse en el edificio en el que se encuentren, y/o
+ 2) Ubicar e identificar las rutas de evacuación y salidas de emergencia.
+
+III. La señalización audible deberá:
+
+a) Estar ubicada de tal manera que permita escucharse en la zona, área o lugar de trabajo; b) Emitir sonidos o instrucciones cortas, y c) Tener un sonido por medio de frecuencias diferentes a los sonidos generados en el lugar de que se trate.
+
+Las zonas de seguridad deben contar con es pacios exclusivos para PCD, los cuales deben encontrarse en áreas que por su ubicación, materiales y estructura sean seguras para su resguardo. En interiores se recomienda que las zonas de seguridad asignadas a PCD no se encuentren ubicadas cerca de las salidas de emergencia.
+
+Artículo 53. En aquellos inmuebles donde existan condiciones de accesibilidad, las PCD se podrán incluir en las brigadas de protección civil.
+
+Capítulo XX Sanciones
+
+Artículo 54. La contravención a lo dispuesto por la presente Norma T écnica dará lugar a la aplicación de las sanciones previstas en el Código Urbano para el Estado de Jalisco, con las formalidades previstas en la Ley del Procedimiento Administrativo del Estado de Jalisco, y demás reglamentación aplicable.
+
+Capítulo XXI Recursos
+
+Artículo 55. Los actos o resoluciones que emanen de estas normas técnicas que los interesados estimen antijurídicos, infundados o faltos de motivación, pueden ser impugnados mediante el recurso de revisión.
+
+El recurso de inconformidad procede en contra de multas impuestas por las autoridades administrativas en la aplicación de las presentes normas técnicas.
+
+Ambos recursos se interpondrán en los casos, con los requisitos, bajo los plazos y procedimientos que señala al efecto para dichos recursos la Ley del Procedimiento Administrativo del Estado de Jalisco.
+
+Capítulo XXII Referencias Antropométricas
+
+Sección I Usuarios de Silla de Ruedas
+
+Vista transversal superior Posición Estática
+
+Vista transversal superior Posición dinámica
+
+Vista coronal (alzado frontal)
+
+Vista sagital derecha (alzado frontal)
+
+Sección II. Usuarios de silla de ruedas con acompañante
+
+Vista transversal superior
+
+Vista sagital izquierda
+
+Sección III. Personas con muletas
+
+Vista transversal superior c) Oscilación de las muletas al andar d) Separación de las muletas cuando el usuario está de pie
+
+Sección IV. Personas con bastón blanco
+
+Vista transversal superior
+1 Área de detección
+2 Espacio de detección del bastón a pasos regulares
+
+Vista coronal (alzado frontal)
+
+Vista sagital derecha (alzado frontal)
+
+Sección IV. Personas con perro guía, andadera y bastón de apoyo
+
+Vista coronal
+
+Transitorios
+
+Primero. Publíquese el presente ordenamiento en la Gaceta Municipal.
+
+Segundo. La presente Norma Técnica entrará en vigor al día siguiente de su publicación en la Gaceta Municipal del Ayuntamiento de Zapopan, Jalisco.
+
+Tercero. Quedan derogadas las disposiciones de orden municipal que se opongan al presente ordenamiento.
+
+Cuarto. Se ejecutará por parte de la Dirección de Inclusión y Migrantes, un programa permanente de concientización y aplicación progresiva de las disposiciones de la presente norma en los entornos físicos privados y sociales de acceso público, con una duración de 6 seis meses que permitirá a los particulares migrar hacia una ciudad incluyente con accesibilidad para todos.
+
+SALÓN DE SESIONES DEL AYUNTAMIENTO ZAPOPAN, JALISCO, A 26 DE NOVIEMBRE DE 2019
+
+EL SECRETARIO DEL AYUNTAMIENTO
+
+MAESTRO JOSÉ LUIS TOSTADO BASTIDAS
+
+Dado en el Palacio Municipal, a veintiséis días del mes de noviembre de dos mil diecinueve.
+
+EL PRESIDENTE MUNICIPAL
+
+LIC. JESÚS PABLO LEMUS NAVARRO
+
+EL SECRETARIO DEL AYUNTAMIENTO
+
+MAESTRO JOSÉ LUIS TOSTADO BASTIDAS

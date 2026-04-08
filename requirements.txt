@@ -1,0 +1,6 @@
+# Dependencias MÍNIMAS para MVP Vercel
+# Solo requests para HTTP client
+requests==2.31.0
+
+# NOTA: No incluir ChromaDB, LangChain, sentence-transformers, etc.
+# Son demasiado pesados para Vercel Lambda (límite 500 MB)
