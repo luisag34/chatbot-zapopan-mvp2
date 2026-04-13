@@ -1,6 +1,5 @@
-# Dependencias MÍNIMAS para MVP Vercel
-# Solo requests para HTTP client
-requests==2.31.0
+# Python 3.9+ requirements for Vercel
+# Minimal dependencies for serverless function
 
-# NOTA: No incluir ChromaDB, LangChain, sentence-transformers, etc.
-# Son demasiado pesados para Vercel Lambda (límite 500 MB)
+# No external dependencies needed - using Python standard library only
+# This empty requirements.txt tells Vercel to use Python runtime
