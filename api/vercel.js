@@ -368,24 +368,56 @@ class SistemaConsultaNormativaZapopan {
         const consultaLower = consulta.toLowerCase();
         const resultados = [];
         
-        // Palabras clave que indican facultades de Inspección y Vigilancia
+        // Palabras clave ESPECÍFICAS que indican facultades de Inspección y Vigilancia
         const palabrasFacultadInspeccion = [
             'inspección', 'vigilancia', 'verificar', 'verificación', 'sancionar', 'clausura',
-            'multa', 'infracción', 'acta', 'medida de seguridad', 'facultad', 'competencia',
-            'atribución', 'dirección', 'autoridad municipal', 'municipio'
+            'multa', 'infracción', 'acta', 'medida de seguridad', 'facultad municipal',
+            'competencia municipal', 'atribución municipal', 'dirección de inspección'
         ];
+        
+        // Palabras que NO son suficientes para indicar facultad de Inspección
+        const palabrasGenericas = ['municipio', 'licencia', 'permiso', 'autorización'];
         
         for (const documento of this.datasetRAG) {
             let relevancia = 0;
             let tieneFacultadInspeccion = false;
             
-            // 1. PRIORIDAD MÁXIMA: Documentos que otorgan facultades a Inspección
+            // 1. PRIORIDAD MÁXIMA: Documentos que otorgan facultades ESPECÍFICAS a Inspección
             const textoLower = documento.texto_normativo.toLowerCase();
+            const tituloLower = documento.document_title.toLowerCase();
+            
+            // Verificar palabras específicas de facultad de Inspección
             for (const palabra of palabrasFacultadInspeccion) {
                 if (textoLower.includes(palabra)) {
-                    relevancia += 25; // Máxima prioridad para facultades de Inspección
+                    relevancia += 30; // Máxima prioridad para facultades ESPECÍFICAS de Inspección
                     tieneFacultadInspeccion = true;
                     break;
+                }
+            }
+            
+            // Reglamentos específicos de Inspección (aunque no mencionen la palabra)
+            if (tituloLower.includes('construcción') || tituloLower.includes('comercio')) {
+                // Reglamentos municipales de áreas donde Inspección tiene competencia
+                relevancia += 20;
+                tieneFacultadInspeccion = true;
+            }
+            
+            // Penalizar documentos que solo mencionan palabras genéricas
+            let soloPalabrasGenericas = true;
+            for (const palabra of palabrasFacultadInspeccion) {
+                if (textoLower.includes(palabra)) {
+                    soloPalabrasGenericas = false;
+                    break;
+                }
+            }
+            
+            if (soloPalabrasGenericas) {
+                // Si solo tiene palabras genéricas, no es facultad específica de Inspección
+                for (const palabra of palabrasGenericas) {
+                    if (textoLower.includes(palabra)) {
+                        relevancia += 5; // Prioridad baja para documentos genéricos
+                        break;
+                    }
                 }
             }
             
