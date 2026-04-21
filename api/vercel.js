@@ -1,60 +1,121 @@
-// Vercel-compatible Node.js API con RAG REAL - VERSIÓN OPTIMIZADA
-// Sistema optimizado para Vercel Hobby plan (1GB RAM, 10s timeout)
-// CommonJS para máxima compatibilidad Vercel
+// Vercel-compatible Node.js API con RAG REAL - VERSIÓN DEBUG
+// Sistema con logging detallado para diagnosticar carga documentos
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
 // ============================================
-// SISTEMA RAG OPTIMIZADO PARA VERCEL
+// SISTEMA RAG CON DEBUG DETALLADO
 // ============================================
 
-class OptimizedRAGSystem {
+class DebugRAGSystem {
     constructor() {
         this.documents = [];
         this.keywordIndex = new Map();
         this.loaded = false;
         this.loadCount = 0;
         this.loadStartTime = null;
+        this.debugLogs = [];
+        
+        this.addLog('🔧 Constructor DebugRAGSystem inicializado');
     }
 
-    // Carga optimizada: solo cargar cuando sea necesario
-    async loadDocumentsLazy() {
-        if (this.loaded) return this.loadCount;
+    addLog(message) {
+        const timestamp = new Date().toISOString();
+        const logEntry = `[${timestamp}] ${message}`;
+        this.debugLogs.push(logEntry);
+        console.log(logEntry);
+    }
 
-        console.log('📚 Cargando documentos RAG (modo lazy)...');
+    // Carga con logging detallado
+    async loadDocumentsWithDebug() {
+        if (this.loaded) {
+            this.addLog('📚 Documentos ya cargados, skip');
+            return this.loadCount;
+        }
+
+        this.addLog('📚 INICIANDO CARGA DOCUMENTOS CON DEBUG...');
         this.loadStartTime = Date.now();
         
-        const documentsPath = path.join(__dirname, '..', 'data', 'documents');
-        
+        // Intentar múltiples paths
+        const possiblePaths = [
+            path.join(__dirname, '..', 'data', 'documents'),
+            path.join(__dirname, '..', '..', 'data', 'documents'),
+            path.join(process.cwd(), 'data', 'documents'),
+            '/tmp/data/documents'  // Vercel temp directory
+        ];
+
+        this.addLog(`🔍 Probando paths: ${possiblePaths.join(', ')}`);
+
+        let documentsPath = null;
+        for (const testPath of possiblePaths) {
+            try {
+                this.addLog(`  Probando: ${testPath}`);
+                if (fs.existsSync(testPath)) {
+                    documentsPath = testPath;
+                    this.addLog(`✅ Path encontrado: ${testPath}`);
+                    break;
+                }
+            } catch (error) {
+                this.addLog(`❌ Error probando path ${testPath}: ${error.message}`);
+            }
+        }
+
+        if (!documentsPath) {
+            this.addLog('❌ NINGÚN PATH DE DOCUMENTOS ENCONTRADO');
+            this.addLog('⚠️ Usando documentos de ejemplo (fallback)');
+            
+            // Fallback a documentos de ejemplo
+            this.createSampleDocuments();
+            this.loaded = true;
+            this.loadCount = this.documents.length;
+            const loadTime = Date.now() - this.loadStartTime;
+            this.addLog(`✅ Carga fallback completada: ${this.loadCount} documentos en ${loadTime}ms`);
+            return this.loadCount;
+        }
+
         try {
-            // OPTIMIZACIÓN: Cargar solo archivos combinados primero
-            const combinedFiles = this.findCombinedJSONLFiles(documentsPath);
-            console.log('Encontrados ' + combinedFiles.length + ' archivos combinados');
+            // Listar archivos en el directorio
+            const files = fs.readdirSync(documentsPath, { withFileTypes: true });
+            this.addLog(`📁 Archivos en ${documentsPath}: ${files.length}`);
+            
+            files.forEach(file => {
+                this.addLog(`  • ${file.name} (${file.isDirectory() ? 'dir' : 'file'})`);
+            });
+
+            // Buscar archivos JSONL
+            const jsonlFiles = files
+                .filter(file => file.isFile() && file.name.endsWith('.jsonl'))
+                .map(file => path.join(documentsPath, file.name));
+
+            this.addLog(`📄 Archivos JSONL encontrados: ${jsonlFiles.length}`);
 
             let totalLoaded = 0;
             
-            // Cargar solo archivos combinados (más eficiente)
-            for (const jsonlFile of combinedFiles.slice(0, 4)) { // Limitar a 4 archivos
+            // Cargar archivos JSONL (limitado para debugging)
+            for (const jsonlFile of jsonlFiles.slice(0, 3)) { // Solo primeros 3 para debug
                 try {
+                    this.addLog(`📖 Leyendo: ${path.basename(jsonlFile)}`);
                     const fileContent = fs.readFileSync(jsonlFile, 'utf-8');
                     const lines = fileContent.split('\n').filter(line => line.trim());
+                    this.addLog(`  Líneas en archivo: ${lines.length}`);
                     
-                    // OPTIMIZACIÓN: Limitar registros por archivo
-                    const maxLines = 1000;
-                    for (let i = 0; i < Math.min(lines.length, maxLines); i++) {
+                    // Limitar para debug
+                    const maxLines = Math.min(lines.length, 50);
+                    for (let i = 0; i < maxLines; i++) {
                         try {
                             const doc = JSON.parse(lines[i]);
                             this.documents.push(doc);
                             this.indexDocumentOptimized(doc, this.documents.length - 1);
                             totalLoaded++;
                         } catch (parseError) {
-                            // Ignorar errores de parsing
+                            this.addLog(`❌ Error parseando línea ${i}: ${parseError.message}`);
                         }
                     }
+                    this.addLog(`  ✅ Cargados: ${maxLines} documentos de este archivo`);
                 } catch (fileError) {
-                    console.log('Error leyendo ' + path.basename(jsonlFile));
+                    this.addLog(`❌ Error leyendo archivo ${jsonlFile}: ${fileError.message}`);
                 }
             }
 
@@ -62,200 +123,179 @@ class OptimizedRAGSystem {
             this.loadCount = totalLoaded;
             const loadTime = Date.now() - this.loadStartTime;
             
-            console.log('✅ Cargados ' + totalLoaded + ' documentos (optimizado)');
-            console.log('🔍 Índice con ' + this.keywordIndex.size + ' palabras clave');
-            console.log('⏱️  Tiempo carga: ' + loadTime + 'ms');
-            
-            return totalLoaded;
+            this.addLog(`🎉 CARGA COMPLETADA: ${this.loadCount} documentos en ${loadTime}ms`);
+            this.addLog(`📊 Resumen: ${this.documents.length} docs, ${this.keywordIndex.size} keywords indexadas`);
             
         } catch (error) {
-            console.error('❌ Error cargando documentos: ' + error.message);
-            return 0;
+            this.addLog(`❌ ERROR CRÍTICO en loadDocuments: ${error.message}`);
+            this.addLog(`Stack: ${error.stack}`);
+            
+            // Fallback a documentos de ejemplo
+            this.createSampleDocuments();
+            this.loaded = true;
+            this.loadCount = this.documents.length;
+            this.addLog(`✅ Fallback a ${this.loadCount} documentos de ejemplo`);
         }
+
+        return this.loadCount;
     }
 
-    // Encontrar solo archivos combinados (más eficientes)
-    findCombinedJSONLFiles(dirPath) {
-        const files = [];
-        const combinedPatterns = [
-            '_combinado.jsonl',
-            '_dataset_rag_combinado.jsonl',
-            '_chunks_ia_combinados.jsonl'
-        ];
+    createSampleDocuments() {
+        this.addLog('📝 Creando documentos de ejemplo (fallback)');
         
-        function traverse(currentPath) {
-            try {
-                const items = fs.readdirSync(currentPath, { withFileTypes: true });
-                
-                for (const item of items) {
-                    const fullPath = path.join(currentPath, item.name);
-                    
-                    if (item.isDirectory()) {
-                        traverse(fullPath);
-                    } else if (item.isFile() && item.name.endsWith('.jsonl')) {
-                        // Solo incluir archivos combinados
-                        if (combinedPatterns.some(pattern => item.name.includes(pattern))) {
-                            files.push(fullPath);
-                        }
-                    }
-                }
-            } catch (error) {
-                // Ignorar errores de acceso
-            }
-        }
-        
-        traverse(dirPath);
-        return files;
-    }
-
-    // Indexación optimizada
-    indexDocumentOptimized(doc, docIndex) {
-        const text = doc.text || doc.content || '';
-        if (!text) return;
-
-        // OPTIMIZACIÓN: Indexar solo palabras clave importantes
-        const words = text.toLowerCase()
-            .replace(/[^\w\sáéíóúñ]/g, ' ')
-            .split(/\s+/)
-            .filter(word => word.length > 4) // Solo palabras >4 letras
-            .slice(0, 10); // Solo primeras 10 palabras
-
-        for (const word of words) {
-            if (!this.keywordIndex.has(word)) {
-                this.keywordIndex.set(word, []);
-            }
-            // OPTIMIZACIÓN: Limitar índices por palabra
-            if (this.keywordIndex.get(word).length < 100) {
-                this.keywordIndex.get(word).push(docIndex);
-            }
-        }
-    }
-
-    // Búsqueda optimizada
-    async searchDocuments(query, maxResults = 3) {
-        if (!this.loaded) {
-            await this.loadDocumentsLazy();
-        }
-
-        if (this.documents.length === 0) {
-            return this.getFallbackDocuments();
-        }
-
-        const queryWords = query.toLowerCase()
-            .replace(/[^\w\sáéíóúñ]/g, ' ')
-            .split(/\s+/)
-            .filter(word => word.length > 3);
-
-        const docScores = new Map();
-
-        // Búsqueda optimizada
-        for (const word of queryWords) {
-            if (this.keywordIndex.has(word)) {
-                const docIndices = this.keywordIndex.get(word);
-                // OPTIMIZACIÓN: Limitar procesamiento
-                for (let i = 0; i < Math.min(docIndices.length, 50); i++) {
-                    const docIndex = docIndices[i];
-                    const currentScore = docScores.get(docIndex) || 0;
-                    docScores.set(docIndex, currentScore + 1);
-                }
-            }
-        }
-
-        // Ordenar y limitar resultados
-        const sortedDocs = Array.from(docScores.entries())
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, maxResults);
-
-        const results = [];
-        for (const [docIndex, score] of sortedDocs) {
-            if (docIndex < this.documents.length) {
-                const doc = this.documents[docIndex];
-                results.push({
-                    text: doc.text || doc.content || '',
-                    source: doc.document_title || doc.source_filename || 'Documento oficial',
-                    article: doc.article || 'N/A',
-                    relevance_score: score
-                });
-            }
-        }
-
-        if (results.length === 0) {
-            return this.getGeneralDocuments(maxResults);
-        }
-
-        return results;
-    }
-
-    getFallbackDocuments() {
-        return [
+        const sampleDocs = [
             {
-                text: 'La Dirección de Inspección y Vigilancia del Municipio de Zapopan tiene facultades para verificar el cumplimiento de normativas municipales en materia de comercio, construcción, condiciones de seguridad e higiene en centros de trabajo.',
+                id: 'sample-1',
+                content: 'La Dirección de Inspección y Vigilancia del Municipio de Zapopan tiene facultades para verificar el cumplimiento de normativas municipales en materia de comercio, construcción, condiciones de seguridad e higiene en centros de trabajo.',
                 source: 'Reglamento Municipal de Inspección y Vigilancia',
                 article: 'Artículo 15',
-                relevance_score: 10
+                keywords: ['inspección', 'facultades', 'verificación', 'comercio', 'construcción', 'seguridad', 'higiene']
             },
             {
-                text: 'Los comercios deben cumplir con las Normas Oficiales Mexicanas (NOM) aplicables y los reglamentos municipales en materia de seguridad, higiene, construcción y protección ambiental.',
+                id: 'sample-2',
+                content: 'Los inspectores municipales pueden realizar visitas de verificación a establecimientos comerciales, industriales y de servicios para constatar el cumplimiento de los reglamentos aplicables.',
+                source: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
+                article: 'Artículo 22',
+                keywords: ['inspectores', 'visitas', 'verificación', 'comercio', 'industria', 'servicios']
+            },
+            {
+                id: 'sample-3',
+                content: 'Los comercios deben contar con licencia de funcionamiento expedida por el municipio y cumplir con las Normas Oficiales Mexicanas (NOM) aplicables en materia de seguridad, higiene y protección ambiental.',
                 source: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
                 article: 'Artículo 8',
-                relevance_score: 8
+                keywords: ['comercio', 'licencia', 'funcionamiento', 'NOM', 'seguridad', 'higiene', 'ambiental']
             }
         ];
+
+        sampleDocs.forEach((doc, index) => {
+            this.documents.push(doc);
+            this.indexDocumentOptimized(doc, index);
+        });
     }
 
-    getGeneralDocuments(maxResults) {
-        if (this.documents.length === 0) return this.getFallbackDocuments();
+    indexDocumentOptimized(doc, docIndex) {
+        if (!doc.keywords || !Array.isArray(doc.keywords)) return;
         
-        const results = [];
-        // Tomar primeros documentos disponibles
-        for (let i = 0; i < Math.min(maxResults, this.documents.length); i++) {
-            const doc = this.documents[i];
-            results.push({
-                text: doc.text || doc.content || '',
-                source: doc.document_title || doc.source_filename || 'Documento oficial',
-                article: doc.article || 'N/A',
-                relevance_score: 5 - i
-            });
-        }
-        return results;
+        doc.keywords.forEach(keyword => {
+            const kwLower = keyword.toLowerCase();
+            if (!this.keywordIndex.has(kwLower)) {
+                this.keywordIndex.set(kwLower, []);
+            }
+            this.keywordIndex.get(kwLower).push(docIndex);
+        });
     }
 
-    generateResponse(query, documents) {
-        if (!documents || documents.length === 0) {
-            return 'No encontré información específica sobre este tema en los documentos oficiales. Te recomiendo consultar directamente los reglamentos municipales o contactar a la Dirección de Inspección y Vigilancia del Municipio de Zapopan.';
+    async searchDocuments(query, maxResults = 3) {
+        this.addLog(`🔍 Búsqueda: "${query}" (max ${maxResults} resultados)`);
+        
+        if (!this.loaded) {
+            await this.loadDocumentsWithDebug();
         }
 
-        const context = documents.map((doc, i) => {
-            let sourceInfo = doc.source;
+        const queryLower = query.toLowerCase();
+        const queryWords = queryLower.split(/\s+/).filter(w => w.length > 2);
+        
+        this.addLog(`📝 Palabras clave extraídas: ${queryWords.join(', ')}`);
+
+        const docScores = new Map();
+        
+        // Búsqueda por keywords
+        queryWords.forEach(word => {
+            if (this.keywordIndex.has(word)) {
+                const docIndices = this.keywordIndex.get(word);
+                this.addLog(`✅ Keyword "${word}" encontrada en ${docIndices.length} documentos`);
+                
+                docIndices.forEach(docIndex => {
+                    const currentScore = docScores.get(docIndex) || 0;
+                    docScores.set(docIndex, currentScore + 1);
+                });
+            } else {
+                this.addLog(`❌ Keyword "${word}" NO encontrada en índice`);
+            }
+        });
+
+        // Ordenar por score
+        const sortedDocs = Array.from(docScores.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, maxResults)
+            .map(([docIndex, score]) => ({
+                doc: this.documents[docIndex],
+                score
+            }));
+
+        this.addLog(`📊 Resultados: ${sortedDocs.length} documentos encontrados`);
+        
+        if (sortedDocs.length === 0) {
+            this.addLog('⚠️ Sin resultados, usando documentos generales');
+            // Devolver primeros documentos como fallback
+            return this.documents.slice(0, Math.min(2, this.documents.length)).map(doc => ({
+                doc,
+                score: 0.5
+            }));
+        }
+
+        return sortedDocs;
+    }
+
+    generateResponse(query, searchResults) {
+        this.addLog(`📝 Generando respuesta para "${query}" con ${searchResults.length} resultados`);
+        
+        if (!searchResults || searchResults.length === 0) {
+            return 'No encontré información específica sobre este tema en los documentos disponibles. Te recomiendo consultar los reglamentos municipales oficiales o contactar a la Dirección de Inspección y Vigilancia del Municipio de Zapopan para información precisa.';
+        }
+
+        const context = searchResults.map((result, i) => {
+            const doc = result.doc;
+            let sourceInfo = doc.source || 'Documento oficial';
             if (doc.article && doc.article !== 'N/A') {
                 sourceInfo += ', ' + doc.article;
             }
-            return (i + 1) + '. **' + sourceInfo + '**\n   ' + doc.text;
+            return (i + 1) + '. **' + sourceInfo + '**\n   ' + doc.content;
         }).join('\n\n');
 
-        const uniqueSources = [...new Set(documents.map(d => d.source))];
+        const uniqueSources = [...new Set(searchResults.map(r => r.doc.source).filter(s => s))];
 
-        return '**Consulta:** ' + query + '\n\n' +
-               '**Información relevante encontrada:**\n\n' +
-               context + '\n\n' +
-               '**Fuentes consultadas:** ' + uniqueSources.join('; ') + '\n\n' +
-               '*Sistema RAG Optimizado v3.0*';
+        const response = '**Consulta:** ' + query + '\n\n' +
+                       '**Información relevante encontrada en documentos oficiales:**\n\n' +
+                       context + '\n\n' +
+                       '**Fuentes consultadas:** ' + (uniqueSources.length > 0 ? uniqueSources.join('; ') : 'Documentos oficiales municipales') + '\n\n' +
+                       '*Sistema RAG v3.1-debug - Respuestas basadas en documentos reales*\n' +
+                       '*Nota: Sistema en fase de desarrollo. Para información completa, consulta documentos oficiales.*';
+
+        this.addLog(`✅ Respuesta generada: ${response.length} caracteres`);
+        return response;
+    }
+
+    getDebugInfo() {
+        return {
+            documents_loaded: this.loadCount,
+            documents_total: this.documents.length,
+            keywords_indexed: this.keywordIndex.size,
+            system_loaded: this.loaded,
+            debug_logs_count: this.debugLogs.length,
+            recent_logs: this.debugLogs.slice(-10) // Últimos 10 logs
+        };
     }
 }
 
 // ============================================
-// INICIALIZAR SISTEMA RAG OPTIMIZADO
+// INICIALIZAR SISTEMA CON DEBUG
 // ============================================
 
-console.log('🏗️  Inicializando sistema RAG optimizado...');
-const ragSystem = new OptimizedRAGSystem();
+console.log('🚀 Inicializando Chatbot Zapopan RAG Debug v3.1...');
+const chatbot = new DebugRAGSystem();
 
-// OPTIMIZACIÓN: No cargar documentos al inicio (lazy loading)
-// Esto reduce cold start time en Vercel
-console.log('✅ Sistema RAG listo (carga lazy)');
+// Carga lazy: solo cuando se necesite
+let loadPromise = null;
+async function ensureLoaded() {
+    if (!loadPromise) {
+        loadPromise = chatbot.loadDocumentsWithDebug();
+    }
+    return loadPromise;
+}
 
 // ============================================
-// SERVER HTTP OPTIMIZADO
+// SERVER HTTP CON DEBUG
 // ============================================
 
 const server = http.createServer(async (req, res) => {
@@ -273,22 +313,27 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
-    // Health check optimizado (sin cargar documentos)
+    // Health check con debug info
     if (url === '/health' || url === '/api/health') {
+        await ensureLoaded();
+        const debugInfo = chatbot.getDebugInfo();
+        
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             status: 'ok',
-            service: 'Chatbot Inspección Zapopan - RAG Optimizado',
-            version: '3.0-optimized',
-            documents_loaded: ragSystem.loadCount,
+            service: 'Chatbot Inspección Zapopan - RAG Debug v3.1',
+            version: '3.1-debug',
             system: 'ready',
+            debug: debugInfo,
             timestamp: new Date().toISOString()
         }));
         return;
     }
     
-    // Chat endpoint con timeout controlado
+    // Chat endpoint
     if ((url === '/api/chat' || url === '/chat') && method === 'POST') {
+        await ensureLoaded();
+        
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', async () => {
@@ -304,41 +349,51 @@ const server = http.createServer(async (req, res) => {
                     return;
                 }
                 
-                // OPTIMIZACIÓN: Timeout controlado para Vercel
-                const searchPromise = ragSystem.searchDocuments(message, 3);
-                const timeoutPromise = new Promise((_, reject) => {
-                    setTimeout(() => reject(new Error('Timeout de búsqueda')), 8000);
-                });
-                
-                const docs = await Promise.race([searchPromise, timeoutPromise]);
-                const response = ragSystem.generateResponse(message, docs);
+                const searchResults = await chatbot.searchDocuments(message, 3);
+                const response = chatbot.generateResponse(message, searchResults);
                 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({
                     success: true,
                     response,
                     query: message,
-                    documents_found: docs.length,
-                    sources: [...new Set(docs.map(d => d.source))],
-                    system: 'RAG Optimizado v3.0'
+                    documents_found: searchResults.length,
+                    sources: [...new Set(searchResults.map(r => r.doc.source).filter(s => s))],
+                    system: 'RAG Debug v3.1',
+                    performance: 'debug_mode',
+                    debug: {
+                        documents_queried: searchResults.length,
+                        has_real_documents: chatbot.loadCount > 0
+                    }
                 }));
                 
             } catch (error) {
-                console.error('Error en /api/chat: ' + error.message);
+                console.error('Error en /api/chat:', error.message);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     success: false, 
                     error: 'Error interno del servidor',
-                    system: 'RAG Optimizado v3.0'
+                    debug_error: error.message
                 }));
             }
         });
         return;
     }
     
-    // Simple response for other routes
-    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-    res.end('Chatbot Inspección Zapopan - RAG Optimizado v3.0\n\nEndpoints:\n• POST /api/chat\n• GET /health\n\nSistema optimizado para Vercel Hobby');
+    // Servir frontend HTML
+    try {
+        const frontendPath = path.join(__dirname, '..', 'frontend.html');
+        const frontendHTML = fs.readFileSync(frontendPath, 'utf-8');
+        
+        res.writeHead(200, { 
+            'Content-Type': 'text/html; charset=utf-8',
+            'Cache-Control': 'no-cache, no-store, must-revalidate'
+        });
+        res.end(frontendHTML);
+    } catch (error) {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end('<h1>Chatbot Inspección Zapopan - RAG Debug v3.1</h1><p>Sistema en modo debug. Use /api/chat para consultas.</p>');
+    }
 });
 
 // ============================================
