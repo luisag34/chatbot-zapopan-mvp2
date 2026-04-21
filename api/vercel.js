@@ -253,12 +253,31 @@ class SistemaConsultaNormativaZapopan {
                 // 2. Determinar si ocurre en Zapopan (asumimos que sí para este sistema)
                 const enZapopan = true; // Sistema especializado en Zapopan
                 
-                // 3. Identificar palabras clave normativas
+                // 3. Identificar palabras clave normativas (basado en GirosXAreas_2025.pdf)
                 const palabrasClaveNormativas = [
-                    'comercio', 'construcción', 'uso de suelo', 'anuncios', 'residuos', 'ruido', 
-                    'medio ambiente', 'animales', 'tianguis', 'licencias', 'vía pública', 'urbanización',
-                    'área natural', 'protegida', 'conservación', 'ecológica', 'barda', 'muro', 'obra',
-                    'permiso', 'autorización', 'regulación', 'normativa', 'municipal'
+                    // COMERCIO
+                    'comercio', 'venta', 'alcohol', 'restaurante', 'bar', 'hotel', 'farmacia', 'tienda',
+                    'negocio', 'establecimiento', 'giro', 'licencia comercial', 'permiso comercial',
+                    
+                    // CONSTRUCCIÓN
+                    'construcción', 'obra', 'demolición', 'pavimento', 'banqueta', 'edificación',
+                    'urbanización', 'barda', 'muro', 'lote', 'terreno', 'edificio',
+                    
+                    // MEDIO AMBIENTE (sin mencionar "medio ambiente")
+                    'tala', 'poda', 'árbol', 'árboles', 'humo', 'quema', 'basura', 'escombro',
+                    'residuos', 'desperdicio', 'contaminación', 'olores', 'descarga', 'agua',
+                    'tiradero', 'maleza', 'fauna', 'animal', 'maltrato', 'veterinaria',
+                    
+                    // RUIDO Y MOLESTIAS
+                    'ruido', 'sonido', 'volumen', 'molestia', 'música', 'altavoz', 'parlante',
+                    
+                    // VÍA PÚBLICA
+                    'vía pública', 'calle', 'banqueta', 'ocupación', 'puesto', 'ambulante',
+                    'tianguis', 'mercado', 'espacio público', 'andador', 'glorieta',
+                    
+                    // GENERAL
+                    'licencia', 'permiso', 'autorización', 'regulación', 'normativa', 'municipal',
+                    'infracción', 'clausura', 'multa', 'sanción', 'irregular', 'ilegal'
                 ];
                 const tieneRelevanciaNormativa = palabrasClaveNormativas.some(palabra => consultaLower.includes(palabra));
                 
