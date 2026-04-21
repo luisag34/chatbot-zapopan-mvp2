@@ -67,7 +67,8 @@ class SistemaConsultaNormativaZapopan {
                 citation_short: 'Código Urbano, Art. 10',
                 citation_full: 'Código Urbano para el Estado de Jalisco, Artículo 10',
                 texto_normativo: 'Los municipios tienen la facultad y obligación de vigilar que toda edificación cuente con los permisos necesarios para garantizar la seguridad de la población.',
-                keywords: ['municipio', 'facultad', 'obligación', 'vigilar', 'edificación', 'permisos', 'seguridad']
+                keywords: ['municipio', 'facultad', 'obligación', 'vigilar', 'edificación', 'permisos', 'seguridad'],
+                tiene_facultad_inspeccion: true // Facultad municipal incluye Inspección
             },
             {
                 id_juridico: 'mx|jal|jal|mun|zapopan|codigo_urbano|v2023|art_283|c001',
@@ -78,7 +79,8 @@ class SistemaConsultaNormativaZapopan {
                 citation_short: 'Código Urbano, Art. 283',
                 citation_full: 'Código Urbano para el Estado de Jalisco, Artículo 283',
                 texto_normativo: 'Otorga validez legal a la facultad del municipio para expedir licencias y vigilar que las construcciones se ajusten a la ley estatal y municipal.',
-                keywords: ['municipio', 'facultad', 'licencias', 'vigilar', 'construcciones', 'ley']
+                keywords: ['municipio', 'facultad', 'licencias', 'vigilar', 'construcciones', 'ley'],
+                tiene_facultad_inspeccion: true // Facultad municipal incluye Inspección
             },
             
             // ========== NIVEL 2: REGLAMENTOS MUNICIPALES ==========
@@ -91,7 +93,8 @@ class SistemaConsultaNormativaZapopan {
                 citation_short: 'Reglamento de Construcción, Art. 34',
                 citation_full: 'Reglamento de Construcción para el Municipio de Zapopan, Artículo 34',
                 texto_normativo: 'Establece que todo propietario debe tramitar ante la Dirección la licencia correspondiente para realizar cualquier obra de construcción o bardeo.',
-                keywords: ['propietario', 'tramitar', 'licencia', 'obra', 'construcción', 'bardeo']
+                keywords: ['propietario', 'tramitar', 'licencia', 'obra', 'construcción', 'bardeo'],
+                tiene_facultad_inspeccion: true // La Dirección mencionada es Inspección
             },
             {
                 id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_45|c001',
@@ -102,7 +105,8 @@ class SistemaConsultaNormativaZapopan {
                 citation_short: 'Reglamento de Construcción, Art. 45',
                 citation_full: 'Reglamento de Construcción para el Municipio de Zapopan, Artículo 45',
                 texto_normativo: 'Cualquier obra que supere los 40 m² requiere obligatoriamente un Director Responsable de Obra (D.R.O.) y una bitácora oficial.',
-                keywords: ['obra', '40 m²', 'director responsable', 'bitácora', 'obligatorio']
+                keywords: ['obra', '40 m²', 'director responsable', 'bitácora', 'obligatorio'],
+                tiene_facultad_inspeccion: true // Reglamento de Inspección
             },
             {
                 id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_149|c001',
@@ -359,54 +363,66 @@ class SistemaConsultaNormativaZapopan {
         };
     }
     
-    // BÚSQUEDA EN DATASET RAG CON PRIORIZACIÓN POR ÁREA
-    buscarEnDatasetRAG(consulta, areaIdentificada = 'construccion', maxResultados = 5) {
+    // BÚSQUEDA EN DATASET RAG CON PRIORIZACIÓN POR FACULTADES DE INSPECCIÓN
+    buscarEnDatasetRAG(consulta, areaIdentificada = 'construccion', maxResultados = 8) {
         const consultaLower = consulta.toLowerCase();
         const resultados = [];
         
-        // Determinar reglamentos prioritarios según área
-        const reglamentosPrioritarios = this.routerAreas[areaIdentificada]?.reglamentos_prioritarios || [];
+        // Palabras clave que indican facultades de Inspección y Vigilancia
+        const palabrasFacultadInspeccion = [
+            'inspección', 'vigilancia', 'verificar', 'verificación', 'sancionar', 'clausura',
+            'multa', 'infracción', 'acta', 'medida de seguridad', 'facultad', 'competencia',
+            'atribución', 'dirección', 'autoridad municipal', 'municipio'
+        ];
         
         for (const documento of this.datasetRAG) {
             let relevancia = 0;
+            let tieneFacultadInspeccion = false;
             
-            // 1. PRIORIDAD ALTA: Documentos del área identificada
-            if (reglamentosPrioritarios.includes(documento.document_title)) {
-                relevancia += 30; // Máxima prioridad para documentos del área
+            // 1. PRIORIDAD MÁXIMA: Documentos que otorgan facultades a Inspección
+            const textoLower = documento.texto_normativo.toLowerCase();
+            for (const palabra of palabrasFacultadInspeccion) {
+                if (textoLower.includes(palabra)) {
+                    relevancia += 25; // Máxima prioridad para facultades de Inspección
+                    tieneFacultadInspeccion = true;
+                    break;
+                }
             }
             
-            // 2. Keyword matching en texto normativo
-            if (documento.texto_normativo.toLowerCase().includes(consultaLower.split(' ')[0])) {
-                relevancia += 10;
+            // 2. PRIORIDAD ALTA: Documentos relevantes a la consulta
+            // Keyword matching en texto normativo
+            if (textoLower.includes(consultaLower.split(' ')[0])) {
+                relevancia += 15;
             }
             
             // 3. Keyword matching en keywords del documento
             for (const keyword of documento.keywords) {
                 if (consultaLower.includes(keyword)) {
-                    relevancia += 5;
+                    relevancia += 8;
                 }
             }
             
             // 4. Detección de números específicos
-            if (consultaLower.includes('134') && documento.texto_normativo.includes('40 m²')) {
+            if (consultaLower.includes('134') && textoLower.includes('40 m²')) {
                 relevancia += 20; // Obra de 134 m² vs límite de 40 m²
             }
-            if (consultaLower.includes('320') && documento.texto_normativo.includes('bardeo')) {
+            if (consultaLower.includes('320') && textoLower.includes('bardeo')) {
                 relevancia += 20; // Muro de 320 ml
             }
             
-            // 5. PENALIZAR: Documentos de áreas no relevantes
-            if (areaIdentificada === 'construccion' && documento.document_title.includes('Comercio')) {
-                relevancia -= 15; // Penalizar documentos de comercio en consulta de construcción
-            }
-            if (areaIdentificada === 'comercio' && documento.document_title.includes('Construcción')) {
-                relevancia -= 15; // Penalizar documentos de construcción en consulta de comercio
+            // 5. Detección de área natural protegida
+            if (consultaLower.includes('área natural') || consultaLower.includes('protegida')) {
+                if (textoLower.includes('medio ambiente') || textoLower.includes('ambiental') || 
+                    textoLower.includes('conservación') || textoLower.includes('ecológica')) {
+                    relevancia += 25; // Alta prioridad para protección ambiental
+                }
             }
             
             if (relevancia > 0) {
                 resultados.push({
                     ...documento,
-                    relevancia
+                    relevancia,
+                    tiene_facultad_inspeccion: tieneFacultadInspeccion
                 });
             }
         }
@@ -479,26 +495,34 @@ class SistemaConsultaNormativaZapopan {
         if (documentosRecuperados.length === 0) {
             respuesta += `No se encontraron artículos específicos aplicables a esta situación.\n\n`;
         } else {
-            // Separar por tipo de fundamento
+            // SEPARAR POR FACULTADES DE INSPECCIÓN (PRIORIDAD 1)
             const fundamentosInspeccion = documentosRecuperados.filter(d => 
-                d.texto_normativo.toLowerCase().includes('inspección') || 
-                d.texto_normativo.toLowerCase().includes('vigilancia') ||
-                d.texto_normativo.toLowerCase().includes('sancionar') ||
-                d.texto_normativo.toLowerCase().includes('clausura')
+                d.tiene_facultad_inspeccion === true
             );
             
-            const otrosFundamentos = documentosRecuperados.filter(d => !fundamentosInspeccion.includes(d));
+            // Documentos sin facultad explícita de Inspección
+            const otrosFundamentos = documentosRecuperados.filter(d => 
+                d.tiene_facultad_inspeccion !== true
+            );
             
+            // 1. FUNDAMENTOS DE INSPECCIÓN Y VIGILANCIA (OBLIGATORIO SI EXISTEN)
             if (fundamentosInspeccion.length > 0) {
-                respuesta += `**Fundamento de Inspección y Vigilancia:**\n`;
+                respuesta += `**Fundamento de Inspección y Vigilancia (facultades específicas):**\n`;
+                // Ordenar por relevancia descendente
+                fundamentosInspeccion.sort((a, b) => b.relevancia - a.relevancia);
                 fundamentosInspeccion.forEach((doc, index) => {
                     respuesta += `${index + 1}. ${doc.citation_full}: ${doc.texto_normativo}\n`;
                 });
                 respuesta += `\n`;
+            } else {
+                respuesta += `**Nota:** No se encontraron artículos que otorguen facultades específicas a la Dirección de Inspección y Vigilancia para esta situación.\n\n`;
             }
             
+            // 2. FUNDAMENTOS DE OTRAS DEPENDENCIAS (SI APLICAN)
             if (otrosFundamentos.length > 0) {
-                respuesta += `**Fundamento de otras dependencias:**\n`;
+                respuesta += `**Fundamento normativo general (otras dependencias):**\n`;
+                // Ordenar por relevancia descendente
+                otrosFundamentos.sort((a, b) => b.relevancia - a.relevancia);
                 otrosFundamentos.forEach((doc, index) => {
                     respuesta += `${index + 1}. ${doc.citation_full}: ${doc.texto_normativo}\n`;
                 });
