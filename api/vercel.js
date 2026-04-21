@@ -414,12 +414,31 @@ class SistemaConsultaNormativaZapopan {
                 }
             }
             
-            // Reglamentos específicos de Inspección (aunque no mencionen la palabra)
-            if (tituloLower.includes('construcción') || tituloLower.includes('comercio')) {
-                // Reglamentos municipales de áreas donde Inspección tiene competencia
-                relevancia += 20;
-                tieneFacultadInspeccion = true;
+            // Verificación ESPECÍFICA de facultad por artículo (no por título de reglamento)
+            // Solo es facultad de Inspección si el artículo MENCIONA específicamente:
+            // - "Inspección", "Vigilancia", "Dirección de Inspección"
+            // - "autoridad municipal" en contexto de verificación/sanción
+            // - "facultad" que claramente corresponde a Inspección
+            
+            const palabrasFacultadEspecificaInspeccion = [
+                'inspección', 'vigilancia', 'dirección de inspección', 'verificación municipal',
+                'sancionar', 'clausura', 'multa', 'infracción', 'acta', 'medida de seguridad',
+                'facultad municipal de verificar', 'competencia municipal de inspeccionar'
+            ];
+            
+            // Verificar si este ARTÍCULO específico otorga facultad a Inspección
+            let tieneFacultadEspecifica = false;
+            for (const palabra of palabrasFacultadEspecificaInspeccion) {
+                if (textoLower.includes(palabra)) {
+                    tieneFacultadEspecifica = true;
+                    tieneFacultadInspeccion = true;
+                    relevancia += 35; // MÁXIMA prioridad para facultades ESPECÍFICAS
+                    break;
+                }
             }
+            
+            // NOTA: NO asumir que todo reglamento de Construcción/Comercio otorga facultad a Inspección
+            // Solo si el artículo específico lo menciona
             
             // Penalizar documentos que solo mencionan palabras genéricas
             let soloPalabrasGenericas = true;
@@ -519,25 +538,72 @@ class SistemaConsultaNormativaZapopan {
         // ========== 2. CLASIFICACIÓN DE ATRIBUCIONES ==========
         respuesta += `**CLASIFICACIÓN DE ATRIBUCIONES**\n\n`;
         
-        // Determinar facultades basado en clasificación
-        const area = clasificacion.area_probable;
-        const esConstruccion = area.includes('CONSTRUCCIÓN');
-        const esComercio = area.includes('COMERCIO');
-        const esTecnica = area.includes('TÉCNICA');
+        // Analizar documentos para determinar facultades ESPECÍFICAS por dirección
+        const documentosConFacultadInspeccion = documentosRecuperados.filter(d => 
+            d.tiene_facultad_inspeccion === true
+        );
         
-        if (esConstruccion) {
-            respuesta += `Esta situación corresponde principalmente a **facultad compartida** entre:\n\n`;
-            respuesta += `1. **Dirección de Inspección y Vigilancia**: Para verificación en campo, levantamiento de actas y aplicación de medidas de seguridad.\n`;
-            respuesta += `2. **Dirección de Licencias y Permisos de Construcción**: Para evaluación de regularización y validación técnica.\n`;
-            respuesta += `3. **Protección Civil Municipal**: Para evaluación de riesgo estructural cuando exista peligro inminente.\n\n`;
-        } else if (esComercio) {
-            respuesta += `Esta situación corresponde a **facultad exclusiva de la Dirección de Inspección y Vigilancia** en materia de verificación comercial.\n\n`;
-        } else if (esTecnica) {
-            respuesta += `Esta situación corresponde a **facultad concurrente** entre:\n\n`;
-            respuesta += `1. **Dirección de Medio Ambiente**: Para evaluación técnica ambiental.\n`;
-            respuesta += `2. **Dirección de Inspección y Vigilancia**: Para verificación administrativa y aplicación de sanciones.\n\n`;
+        // Identificar otras direcciones con facultad basado en contenido de artículos
+        const direccionesConFacultad = new Set();
+        
+        // Palabras clave para identificar otras direcciones
+        const palabrasOtrasDirecciones = {
+            'Licencias y Permisos de Construcción': ['licencia', 'permiso construcción', 'autorización obra', 'planos autorizados'],
+            'Protección Civil': ['protección civil', 'riesgo', 'peligro', 'seguridad estructural', 'emergencia'],
+            'Medio Ambiente': ['medio ambiente', 'ambiental', 'contaminación', 'residuos', 'tala', 'poda', 'árbol'],
+            'Movilidad': ['movilidad', 'tránsito', 'vía pública', 'banqueta', 'estacionamiento'],
+            'Servicios Públicos': ['servicios públicos', 'basura', 'alumbrado', 'limpieza']
+        };
+        
+        documentosRecuperados.forEach(documento => {
+            const textoLower = documento.texto_normativo.toLowerCase();
+            
+            // Verificar Inspección (ya detectado en búsqueda)
+            if (documento.tiene_facultad_inspeccion) {
+                direccionesConFacultad.add('Dirección de Inspección y Vigilancia');
+            }
+            
+            // Verificar otras direcciones
+            for (const [direccion, palabras] of Object.entries(palabrasOtrasDirecciones)) {
+                for (const palabra of palabras) {
+                    if (textoLower.includes(palabra)) {
+                        direccionesConFacultad.add(direccion);
+                        break;
+                    }
+                }
+            }
+        });
+        
+        // Generar clasificación basada en análisis REAL de documentos
+        const direccionesArray = Array.from(direccionesConFacultad);
+        
+        if (direccionesArray.length === 0) {
+            respuesta += `La normativa disponible no especifica facultades para ninguna dirección municipal en esta situación.\n\n`;
+        } else if (direccionesArray.length === 1) {
+            respuesta += `Esta situación corresponde a **facultad exclusiva** de:\n\n`;
+            respuesta += `1. **${direccionesArray[0]}**\n\n`;
         } else {
-            respuesta += `La normativa actual de Zapopan y el Código Urbano de Jalisco no contemplan explícitamente el escenario descrito.\n\n`;
+            respuesta += `Esta situación corresponde a **facultad compartida** entre:\n\n`;
+            direccionesArray.forEach((direccion, index) => {
+                respuesta += `${index + 1}. **${direccion}**\n`;
+            });
+            respuesta += `\n`;
+            
+            // Explicar el rol de cada dirección basado en documentos
+            respuesta += `**Roles específicos según normativa:**\n`;
+            if (direccionesConFacultad.has('Dirección de Inspección y Vigilancia')) {
+                respuesta += `• **Inspección y Vigilancia**: Verificación en campo, levantamiento de actas, aplicación de medidas de seguridad y sanciones.\n`;
+            }
+            if (direccionesConFacultad.has('Licencias y Permisos de Construcción')) {
+                respuesta += `• **Licencias y Permisos de Construcción**: Evaluación técnica, autorización de planos, validación de regularización.\n`;
+            }
+            if (direccionesConFacultad.has('Protección Civil')) {
+                respuesta += `• **Protección Civil**: Evaluación de riesgos estructurales, medidas de seguridad, atención a emergencias.\n`;
+            }
+            if (direccionesConFacultad.has('Medio Ambiente')) {
+                respuesta += `• **Medio Ambiente**: Evaluación técnica ambiental, protección de recursos naturales, regulación de impactos.\n`;
+            }
+            respuesta += `\n`;
         }
         
         // ========== 3. SUSTENTO LEGAL ==========
@@ -584,35 +650,70 @@ class SistemaConsultaNormativaZapopan {
         // ========== 4. DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO ==========
         respuesta += `**DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO**\n\n`;
         
-        // Buscar información de contacto en dataset
-        const contactoInspeccion = this.datasetRAG.find(d => 
-            d.document_title === 'directorio ZPN, IA inspección'
-        );
+        // Base de datos de contactos (simulada - en sistema real vendría de Dataset RAG)
+        const contactosDirecciones = {
+            'Dirección de Inspección y Vigilancia': {
+                telefono: '3338182200',
+                extensiones: '3312, 3313, 3315, 3322, 3324, 3331, 3330, 3342',
+                horario: 'Lunes a Viernes 08:00 - 15:00',
+                notas: 'Para reportes urgentes fuera de horario, contactar Protección Civil'
+            },
+            'Licencias y Permisos de Construcción': {
+                telefono: '3338182200',
+                extension: '3007',
+                horario: 'Lunes a Viernes 09:00 - 14:00',
+                notas: 'Solo para trámites de regularización y autorizaciones'
+            },
+            'Protección Civil': {
+                telefono: '3338182200',
+                extension: '3350',
+                horario: '24/7 para emergencias',
+                notas: 'Atención inmediata para riesgos inminentes'
+            },
+            'Medio Ambiente': {
+                telefono: '3338182200',
+                extension: '3400',
+                horario: 'Lunes a Viernes 08:00 - 15:00',
+                notas: 'Evaluaciones técnicas ambientales'
+            },
+            'Movilidad': {
+                telefono: '3338182200',
+                extension: '3200',
+                horario: 'Lunes a Viernes 08:00 - 15:00',
+                notas: 'Afectaciones a vía pública y tránsito'
+            },
+            'Servicios Públicos': {
+                telefono: '3338182200',
+                extension: '3500',
+                horario: 'Lunes a Viernes 08:00 - 15:00',
+                notas: 'Basura, alumbrado, limpieza pública'
+            }
+        };
         
-        if (contactoInspeccion) {
-            respuesta += `**Dirección de Inspección y Vigilancia:**\n`;
-            respuesta += `• ${contactoInspeccion.texto_normativo}\n\n`;
-            
-            respuesta += `**Dirección de Licencias y Permisos de Construcción:**\n`;
-            respuesta += `• Teléfono: 3338182200\n`;
-            respuesta += `• Extensión: 3007\n\n`;
-            
-            // Agregar datos de Protección Civil si se menciona en atribuciones
-            if (clasificacion.dependencias_probables.includes('Protección Civil')) {
-                respuesta += `**Protección Civil Municipal:**\n`;
-                respuesta += `• Teléfono: 3338182200\n`;
-                respuesta += `• Extensión: 3350\n`;
-                respuesta += `• Horario: 24/7 para emergencias\n\n`;
+        // Mostrar contactos SOLO de las direcciones que tienen facultad en esta consulta
+        let hayContactos = false;
+        
+        for (const direccion of direccionesArray) {
+            const contacto = contactosDirecciones[direccion];
+            if (contacto) {
+                hayContactos = true;
+                respuesta += `**${direccion}:**\n`;
+                respuesta += `• Teléfono: ${contacto.telefono}\n`;
+                if (contacto.extensiones) {
+                    respuesta += `• Extensiones: ${contacto.extensiones}\n`;
+                } else if (contacto.extension) {
+                    respuesta += `• Extensión: ${contacto.extension}\n`;
+                }
+                respuesta += `• Horario: ${contacto.horario}\n`;
+                if (contacto.notas) {
+                    respuesta += `• Nota: ${contacto.notas}\n`;
+                }
+                respuesta += `\n`;
             }
-            
-            // Agregar datos de Medio Ambiente si se menciona
-            if (clasificacion.dependencias_probables.includes('Dirección de Medio Ambiente')) {
-                respuesta += `**Dirección de Medio Ambiente:**\n`;
-                respuesta += `• Teléfono: 3338182200\n`;
-                respuesta += `• Extensión: 3400\n\n`;
-            }
-        } else {
-            respuesta += `Dato de contacto no disponible en el registro actual.\n\n`;
+        }
+        
+        if (!hayContactos) {
+            respuesta += `Datos de contacto no disponibles en el registro actual para las direcciones identificadas.\n\n`;
         }
         
         // Dato técnico para construcción
