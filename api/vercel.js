@@ -359,32 +359,48 @@ class SistemaConsultaNormativaZapopan {
         };
     }
     
-    // BÚSQUEDA EN DATASET RAG
-    buscarEnDatasetRAG(consulta, maxResultados = 5) {
+    // BÚSQUEDA EN DATASET RAG CON PRIORIZACIÓN POR ÁREA
+    buscarEnDatasetRAG(consulta, areaIdentificada = 'construccion', maxResultados = 5) {
         const consultaLower = consulta.toLowerCase();
         const resultados = [];
+        
+        // Determinar reglamentos prioritarios según área
+        const reglamentosPrioritarios = this.routerAreas[areaIdentificada]?.reglamentos_prioritarios || [];
         
         for (const documento of this.datasetRAG) {
             let relevancia = 0;
             
-            // 1. Keyword matching en texto normativo
+            // 1. PRIORIDAD ALTA: Documentos del área identificada
+            if (reglamentosPrioritarios.includes(documento.document_title)) {
+                relevancia += 30; // Máxima prioridad para documentos del área
+            }
+            
+            // 2. Keyword matching en texto normativo
             if (documento.texto_normativo.toLowerCase().includes(consultaLower.split(' ')[0])) {
                 relevancia += 10;
             }
             
-            // 2. Keyword matching en keywords del documento
+            // 3. Keyword matching en keywords del documento
             for (const keyword of documento.keywords) {
                 if (consultaLower.includes(keyword)) {
                     relevancia += 5;
                 }
             }
             
-            // 3. Detección de números específicos
+            // 4. Detección de números específicos
             if (consultaLower.includes('134') && documento.texto_normativo.includes('40 m²')) {
                 relevancia += 20; // Obra de 134 m² vs límite de 40 m²
             }
             if (consultaLower.includes('320') && documento.texto_normativo.includes('bardeo')) {
                 relevancia += 20; // Muro de 320 ml
+            }
+            
+            // 5. PENALIZAR: Documentos de áreas no relevantes
+            if (areaIdentificada === 'construccion' && documento.document_title.includes('Comercio')) {
+                relevancia -= 15; // Penalizar documentos de comercio en consulta de construcción
+            }
+            if (areaIdentificada === 'comercio' && documento.document_title.includes('Construcción')) {
+                relevancia -= 15; // Penalizar documentos de construcción en consulta de comercio
             }
             
             if (relevancia > 0) {
@@ -505,6 +521,21 @@ class SistemaConsultaNormativaZapopan {
             respuesta += `**Dirección de Licencias y Permisos de Construcción:**\n`;
             respuesta += `• Teléfono: 3338182200\n`;
             respuesta += `• Extensión: 3007\n\n`;
+            
+            // Agregar datos de Protección Civil si se menciona en atribuciones
+            if (clasificacion.dependencias_probables.includes('Protección Civil')) {
+                respuesta += `**Protección Civil Municipal:**\n`;
+                respuesta += `• Teléfono: 3338182200\n`;
+                respuesta += `• Extensión: 3350\n`;
+                respuesta += `• Horario: 24/7 para emergencias\n\n`;
+            }
+            
+            // Agregar datos de Medio Ambiente si se menciona
+            if (clasificacion.dependencias_probables.includes('Dirección de Medio Ambiente')) {
+                respuesta += `**Dirección de Medio Ambiente:**\n`;
+                respuesta += `• Teléfono: 3338182200\n`;
+                respuesta += `• Extensión: 3400\n\n`;
+            }
         } else {
             respuesta += `Dato de contacto no disponible en el registro actual.\n\n`;
         }
@@ -527,11 +558,8 @@ class SistemaConsultaNormativaZapopan {
             });
         }
         
-        // Footer del sistema
-        respuesta += `\n---\n`;
-        respuesta += `**Sistema de Consulta Normativa Zapopan v5.0 - Respuesta basada en Dataset RAG estructurado*\n`;
-        respuesta += `*Arquitectura: Núcleo de Documentos + Router de Áreas + Protocolos Especializados + Sistema de Auditoría*\n`;
-        respuesta += `*Nota: Para información completa, consulta los documentos originales o contacta a las dependencias municipales.*`;
+        // Nota final útil para el usuario
+        respuesta += `\n*Nota: Para información completa y oficial, consulta los documentos originales en las dependencias municipales correspondientes.*`;
         
         return respuesta;
     }
@@ -556,8 +584,13 @@ class SistemaConsultaNormativaZapopan {
         // 2. Clasificar con Router Semántico Avanzado
         const clasificacion = this.clasificarConsulta(consulta);
         
-        // 3. Buscar en Dataset RAG
-        const documentosRecuperados = this.buscarEnDatasetRAG(consulta, 5);
+        // 3. Determinar área para búsqueda priorizada
+        const areaParaBusqueda = clasificacion.area_probable.includes('CONSTRUCCIÓN') ? 'construccion' :
+                                clasificacion.area_probable.includes('COMERCIO') ? 'comercio' :
+                                clasificacion.area_probable.includes('TÉCNICA') ? 'tecnica' : 'general';
+        
+        // 4. Buscar en Dataset RAG con priorización por área
+        const documentosRecuperados = this.buscarEnDatasetRAG(consulta, areaParaBusqueda, 5);
         
         // 4. Generar respuesta con Protocolo estricto
         const respuesta = this.generarRespuestaConProtocolo(consulta, documentosRecuperados, clasificacion);
