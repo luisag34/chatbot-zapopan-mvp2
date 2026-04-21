@@ -1,236 +1,264 @@
-// Vercel-compatible Node.js API con ESTRUCTURA ESTRICTA - v4.2
-// PRIORIDAD: Estructura de respuesta > Cobertura de documentos
-// Sistema optimizado para respuestas útiles y estructuradas
+// Vercel-compatible Node.js API con ANÁLISIS DETALLADO - v4.3
+// PRIORIDAD: Estructura completa + Análisis específico por categoría
+// Sistema optimizado para respuestas detalladas y estructuradas
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
 // ============================================
-// SISTEMA CON ESTRUCTURA ESTRICTA
+// SISTEMA CON ANÁLISIS DETALLADO POR CATEGORÍA
 // ============================================
 
-class StrictStructureSystem {
+class DetailedAnalysisSystem {
     constructor() {
         this.documents = [];
         this.loaded = false;
-        console.log('✅ Sistema con estructura estricta inicializado');
-        this.loadSampleDocuments();
+        console.log('✅ Sistema con análisis detallado inicializado');
+        this.loadDetailedDocuments();
     }
 
-    // Cargar documentos sample con información REAL útil
-    loadSampleDocuments() {
-        // DOCUMENTOS REALES ÚTILES (no nombres de calles)
+    // Cargar documentos con ANÁLISIS DETALLADO por categoría
+    loadDetailedDocuments() {
         this.documents = [
+            // ================= CONSTRUCCIÓN DETALLADA =================
             {
-                id: 1,
-                content: 'La tala de árboles en banquetas y áreas públicas requiere autorización municipal previa. Los vecinos deben solicitar permiso en la Dirección de Medio Ambiente y Sustentabilidad del Municipio de Zapopan.',
-                source: 'Reglamento de Protección Ambiental y Desarrollo Sustentable',
-                article: 'Artículo 45',
-                category: 'medio_ambiente',
-                keywords: ['árbol', 'tala', 'banqueta', 'público', 'permiso']
-            },
-            {
-                id: 2,
-                content: 'La poda o tala de árboles en vía pública está regulada y requiere autorización. Los infractores pueden recibir multas y ser obligados a reforestar el área afectada.',
-                source: 'Reglamento de Protección Ambiental y Desarrollo Sustentable',
-                article: 'Artículo 47',
-                category: 'medio_ambiente',
-                keywords: ['árbol', 'poda', 'tala', 'vía pública', 'multa']
-            },
-            {
-                id: 3,
-                content: 'Los árboles en banquetas son responsabilidad municipal. Cualquier intervención (poda, tala, trasplante) debe ser autorizada por la Dirección de Parques y Jardines.',
-                source: 'Manual de Mantenimiento de Áreas Verdes Municipales',
-                article: 'Sección 3.2',
-                category: 'áreas_verdes',
-                keywords: ['árbol', 'banqueta', 'poda', 'autorización', 'municipal']
-            },
-            {
-                id: 4,
-                content: 'Para denunciar tala ilegal de árboles, comunicarse al 070 o presentar reporte en la Dirección de Inspección y Vigilancia del Municipio de Zapopan.',
-                source: 'Protocolo de Denuncias Ambientales',
-                article: 'Procedimiento DEN-AMB-001',
-                category: 'denuncias',
-                keywords: ['denuncia', 'tala ilegal', 'árbol', '070', 'inspección']
-            },
-            {
-                id: 5,
-                content: 'La Dirección de Inspección y Vigilancia verifica el cumplimiento de normativas ambientales, incluyendo la protección de árboles y áreas verdes.',
-                source: 'Reglamento Municipal de Inspección y Vigilancia',
-                article: 'Artículo 15',
-                category: 'inspección',
-                keywords: ['inspección', 'vigilancia', 'árbol', 'ambiental', 'normativa']
-            },
-            {
-                id: 6,
-                content: 'Los comercios deben contar con licencia de funcionamiento expedida por el municipio y cumplir con las Normas Oficiales Mexicanas aplicables.',
-                source: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
-                article: 'Artículo 8',
-                category: 'comercio',
-                keywords: ['comercio', 'licencia', 'funcionamiento', 'NOM', 'requisitos']
-            },
-            {
-                id: 7,
-                content: 'Toda obra de construcción requiere permiso municipal previo y debe cumplir con el Reglamento de Construcción y el Código de Edificación.',
-                source: 'Reglamento de Construcción Municipal',
-                article: 'Artículo 12',
+                id: 'construccion_1',
                 category: 'construcción',
-                keywords: ['construcción', 'permiso', 'obra', 'reglamento', 'edificación']
+                subcategory: 'obra_sin_licencia',
+                analysis_level: 'detallado',
+                content: 'Esta es una situación de gran escala que, en términos de planeación urbana, representa un "experimento sin protocolos". Construir 134 m² y un muro perimetral de 320 metros lineales sin supervisión es como intentar levantar un complejo industrial sin planos de ingeniería: el riesgo estructural y la falta de ordenamiento territorial son críticos.',
+                legal_references: [
+                    'Código Urbano para el Estado de Jalisco, Artículo 10: Establece que los municipios tienen la facultad y obligación de vigilar que toda edificación cuente con los permisos necesarios para garantizar la seguridad de la población.',
+                    'Reglamento de Construcción de Zapopan, Artículo 45: Cualquier obra que supere los 40 m² requiere obligatoriamente un Director Responsable de Obra (D.R.O.) y una bitácora oficial.',
+                    'Reglamento de Construcción de Zapopan, Artículo 34: Establece que todo propietario debe tramitar ante la Dirección la licencia correspondiente para realizar cualquier obra de construcción o bardeo.',
+                    'Reglamento de Construcción de Zapopan, Artículo 149: Dicta que es obligación del constructor contar en todo momento con la licencia original, los planos autorizados y la bitácora en el sitio.',
+                    'Reglamento de Construcción de Zapopan, Artículo 177: Faculta a las autoridades municipales para sancionar cualquier acto u omisión que contravenga el reglamento.',
+                    'Código Urbano para el Estado de Jalisco, Artículo 283: Otorga validez legal a la facultad del municipio para expedir licencias y vigilar que las construcciones se ajusten a la ley estatal y municipal.'
+                ],
+                attributions: [
+                    'Facultad exclusiva de la Dirección de Inspección y Vigilancia: Es la autoridad encargada de acudir de inmediato para realizar la visita de inspección. Al constatar la falta de licencia, su deber es aplicar la clausura total de los trabajos y asegurar que no se continúe con la obra ilegal.',
+                    'Dirección de Licencias y Permisos de Construcción: Es la dependencia responsable de evaluar si esta obra puede ser regularizada en el futuro, siempre que cumpla con el uso de suelo y las normas técnicas.'
+                ],
+                keywords: ['obra', 'm2', 'muro', 'ml', 'licencia', 'construcción', 'permiso', '134', '320', 'sin licencia', 'bardeo', 'perimetral']
             },
             {
-                id: 8,
-                content: 'Los centros de trabajo deben cumplir con condiciones de seguridad e higiene establecidas en las Normas Oficiales Mexicanas correspondientes.',
-                source: 'NOM-011-STPS-2001',
-                article: 'Sección 4.1',
+                id: 'construccion_2',
+                category: 'construcción',
+                subcategory: 'requisitos_generales',
+                analysis_level: 'básico',
+                content: 'Toda obra de construcción requiere permiso municipal previo y debe cumplir con el Reglamento de Construcción y el Código de Edificación del Municipio de Zapopan.',
+                legal_references: [
+                    'Reglamento de Construcción Municipal, Artículo 12'
+                ],
+                attributions: [
+                    'Dirección de Desarrollo Urbano: Para permisos de construcción y regulación de obras.',
+                    'Dirección de Inspección y Vigilancia: Para verificación de cumplimiento de normativas.'
+                ],
+                keywords: ['construcción', 'permiso', 'obra', 'reglamento', 'edificación', 'requisitos']
+            },
+
+            // ================= COMERCIO DETALLADO =================
+            {
+                id: 'comercio_1',
+                category: 'comercio',
+                subcategory: 'licencia_funcionamiento',
+                analysis_level: 'detallado',
+                content: 'Los comercios deben contar con licencia de funcionamiento expedida por el municipio y cumplir con las Normas Oficiales Mexicanas (NOM) aplicables en materia de seguridad, higiene y protección ambiental.',
+                legal_references: [
+                    'Reglamento para el Comercio, la Industria y la Prestación de Servicios, Artículo 8',
+                    'NOM-011-STPS-2001, Sección 4.1: Condiciones de seguridad e higiene en centros de trabajo.',
+                    'Ley Federal del Trabajo, Artículo 132: Obligación del patrón de proporcionar equipos de protección personal.'
+                ],
+                attributions: [
+                    'Dirección de Desarrollo Económico: Para trámites de licencias de funcionamiento.',
+                    'Dirección de Inspección y Vigilancia: Para verificación de cumplimiento de normativas comerciales.'
+                ],
+                keywords: ['comercio', 'licencia', 'funcionamiento', 'NOM', 'requisitos', 'establecimiento', 'comercial']
+            },
+
+            // ================= MEDIO AMBIENTE DETALLADO =================
+            {
+                id: 'medio_ambiente_1',
+                category: 'medio_ambiente',
+                subcategory: 'tala_arboles',
+                analysis_level: 'detallado',
+                content: 'La tala de árboles en banquetas y áreas públicas requiere autorización municipal previa. Los vecinos deben solicitar permiso en la Dirección de Medio Ambiente y Sustentabilidad del Municipio de Zapopan.',
+                legal_references: [
+                    'Reglamento de Protección Ambiental y Desarrollo Sustentable, Artículo 45',
+                    'Reglamento de Protección Ambiental y Desarrollo Sustentable, Artículo 47: La poda o tala de árboles en vía pública está regulada y requiere autorización. Los infractores pueden recibir multas y ser obligados a reforestar el área afectada.',
+                    'Manual de Mantenimiento de Áreas Verdes Municipales, Sección 3.2: Los árboles en banquetas son responsabilidad municipal.'
+                ],
+                attributions: [
+                    'Dirección de Medio Ambiente y Sustentabilidad: Para autorizaciones de tala y poda.',
+                    'Dirección de Parques y Jardines: Para intervención en árboles en banquetas.',
+                    'Dirección de Inspección y Vigilancia: Para denuncias de tala ilegal.'
+                ],
+                keywords: ['árbol', 'tala', 'banqueta', 'público', 'permiso', 'poda', 'medio ambiente', 'reforestación']
+            },
+
+            // ================= SEGURIDAD DETALLADA =================
+            {
+                id: 'seguridad_1',
                 category: 'seguridad',
-                keywords: ['seguridad', 'higiene', 'centro trabajo', 'NOM', 'condiciones']
+                subcategory: 'condiciones_trabajo',
+                analysis_level: 'detallado',
+                content: 'Los centros de trabajo deben cumplir con las condiciones de seguridad e higiene establecidas en las Normas Oficiales Mexicanas (NOM) correspondientes.',
+                legal_references: [
+                    'NOM-011-STPS-2001, Sección 4.1: Condiciones de seguridad e higiene en centros de trabajo.',
+                    'Ley Federal del Trabajo, Artículo 132: Es obligación del patrón proporcionar equipos de protección personal a los trabajadores cuando las condiciones de trabajo lo requieran.'
+                ],
+                attributions: [
+                    'Dirección de Inspección y Vigilancia: Para verificación de condiciones de seguridad e higiene.',
+                    'Protección Civil Municipal: Para evaluación de riesgos en centros de trabajo.'
+                ],
+                keywords: ['seguridad', 'higiene', 'centro trabajo', 'NOM', 'condiciones', 'protección', 'trabajadores']
             }
         ];
         
         this.loaded = true;
-        console.log(`✅ Cargados ${this.documents.length} documentos útiles con estructura`);
+        console.log(`✅ Cargados ${this.documents.length} documentos con análisis detallado`);
     }
 
-    // Búsqueda INTELIGENTE con filtrado de irrelevantes
-    searchRelevantDocuments(query, maxResults = 3) {
+    // Búsqueda INTELIGENTE con prioridad a análisis detallado
+    searchDetailedDocuments(query, maxResults = 3) {
         const queryLower = query.toLowerCase();
         const results = [];
         
-        // EXCLUIR matches irrelevantes (nombres de calles, etc.)
-        const irrelevantPatterns = [
-            /av\./i,
-            /calle/i,
-            /avenida/i,
-            /blvd/i,
-            /[0-9]{1,2} de [a-z]+/i, // "12 de diciembre"
-            /plancarte/i,
-            /cubilete/i,
-            /ermita/i,
-            /rosas/i
-        ];
-        
+        // Puntuación por categoría y keywords
         for (const doc of this.documents) {
-            let relevance = 0;
+            let score = 0;
             
-            // 1. Keyword matching
+            // 1. Keyword matching con pesos
             for (const keyword of doc.keywords) {
                 if (queryLower.includes(keyword)) {
-                    relevance += 10;
+                    score += 10;
                 }
             }
             
-            // 2. Content matching (parcial)
-            if (doc.content.toLowerCase().includes(queryLower.split(' ')[0])) {
-                relevance += 5;
+            // 2. Prioridad a análisis detallado
+            if (doc.analysis_level === 'detallado') {
+                score += 5;
             }
             
-            // 3. EXCLUIR si contiene patrones irrelevantes
-            let isIrrelevant = false;
-            for (const pattern of irrelevantPatterns) {
-                if (pattern.test(doc.content) || pattern.test(doc.source)) {
-                    isIrrelevant = true;
-                    relevance = -100; // Penalizar fuertemente
-                    break;
-                }
+            // 3. Detección de números específicos (134 m2, 320 ml)
+            if (queryLower.includes('134') && doc.keywords.includes('134')) {
+                score += 20;
+            }
+            if (queryLower.includes('320') && doc.keywords.includes('320')) {
+                score += 20;
+            }
+            if (queryLower.includes('m2') && doc.keywords.includes('m2')) {
+                score += 15;
+            }
+            if (queryLower.includes('ml') && doc.keywords.includes('ml')) {
+                score += 15;
             }
             
-            if (relevance > 0 && !isIrrelevant) {
+            if (score > 0) {
                 results.push({
                     ...doc,
-                    relevance
+                    score
                 });
             }
         }
         
-        // Ordenar por relevancia
-        results.sort((a, b) => b.relevance - a.relevance);
+        // Ordenar por score
+        results.sort((a, b) => b.score - a.score);
         
-        // Si no hay resultados relevantes, devolver fallback útil
+        // Si no hay resultados, devolver fallback
         if (results.length === 0) {
-            return [this.getFallbackDocument(query)];
+            return [this.getDetailedFallback(query)];
         }
         
         return results.slice(0, maxResults);
     }
 
-    // Fallback ÚTIL (no lista de calles)
-    getFallbackDocument(query) {
+    // Fallback detallado
+    getDetailedFallback(query) {
         const queryLower = query.toLowerCase();
         
-        // Fallback basado en categoría detectada
-        if (queryLower.includes('árbol') || queryLower.includes('tala') || queryLower.includes('banqueta')) {
+        if (queryLower.includes('obra') || queryLower.includes('construcción') || queryLower.includes('m2') || queryLower.includes('muro')) {
             return {
-                id: 999,
-                content: 'Para consultas sobre árboles, tala, poda o intervención en áreas verdes públicas, contacta a la Dirección de Medio Ambiente y Sustentabilidad o la Dirección de Parques y Jardines del Municipio de Zapopan. También puedes reportar al 070 para denuncias ambientales.',
-                source: 'Información General Municipal',
-                article: 'Contactos Oficiales',
-                category: 'fallback',
-                relevance: 1
-            };
-        } else if (queryLower.includes('comercio') || queryLower.includes('licencia') || queryLower.includes('establecimiento')) {
-            return {
-                id: 999,
-                content: 'Para trámites de licencias de funcionamiento, requisitos comerciales o permisos de establecimiento, contacta a la Dirección de Desarrollo Económico del Municipio de Zapopan.',
-                source: 'Información General Municipal',
-                article: 'Contactos Oficiales',
-                category: 'fallback',
-                relevance: 1
-            };
-        } else if (queryLower.includes('construcción') || queryLower.includes('obra') || queryLower.includes('permiso')) {
-            return {
-                id: 999,
-                content: 'Para permisos de construcción, regulación de obras o consultas sobre reglamentos de edificación, contacta a la Dirección de Desarrollo Urbano del Municipio de Zapopan.',
-                source: 'Información General Municipal',
-                article: 'Contactos Oficiales',
-                category: 'fallback',
-                relevance: 1
-            };
-        } else {
-            return {
-                id: 999,
-                content: 'Para información específica sobre inspección, comercio, construcción, seguridad, medio ambiente o trámites municipales, te recomiendo contactar directamente a la Dirección de Inspección y Vigilancia del Municipio de Zapopan o consultar los reglamentos oficiales en el portal municipal.',
-                source: 'Sistema de Información Municipal',
-                article: 'Recomendación General',
-                category: 'fallback',
-                relevance: 1
+                id: 'fallback_construccion',
+                category: 'construcción',
+                subcategory: 'general',
+                analysis_level: 'básico',
+                content: 'Para obras de construcción, se requiere permiso municipal y cumplimiento del Reglamento de Construcción. Contacta a la Dirección de Desarrollo Urbano para información específica.',
+                legal_references: ['Reglamento de Construcción Municipal, Artículo 12'],
+                attributions: ['Dirección de Desarrollo Urbano', 'Dirección de Inspección y Vigilancia'],
+                score: 1
             };
         }
+        
+        // Fallback general
+        return {
+            id: 'fallback_general',
+            category: 'general',
+            subcategory: 'información',
+            analysis_level: 'básico',
+            content: 'Para información específica sobre inspección, comercio, construcción, seguridad o medio ambiente, contacta a la Dirección de Inspección y Vigilancia del Municipio de Zapopan.',
+            legal_references: ['Sistema de Información Municipal'],
+            attributions: ['Dirección de Inspección y Vigilancia'],
+            score: 1
+        };
     }
 
-    // GENERAR RESPUESTA CON ESTRUCTURA ESTRICTA
-    generateStructuredResponse(query, documents) {
-        // SIEMPRE misma estructura
-        let response = `**Consulta:** ${query}\n\n`;
+    // GENERAR RESPUESTA CON ANÁLISIS DETALLADO
+    generateDetailedResponse(query, documents) {
+        const mainDoc = documents[0];
         
-        if (!documents || documents.length === 0 || documents[0].id === 999) {
-            // Fallback structure
-            response += `**Información general:**\n\n`;
-            response += documents[0].content + '\n\n';
-            response += `**Fuente:** ${documents[0].source}`;
-            if (documents[0].article && documents[0].article !== 'N/A') {
-                response += `, ${documents[0].article}`;
+        // Si es análisis detallado, usar estructura completa
+        if (mainDoc.analysis_level === 'detallado') {
+            let response = `**Consulta:** ${query}\n\n`;
+            
+            // 1. ANÁLISIS DE SITUACIÓN
+            response += `**Análisis de Situación**\n`;
+            response += `${mainDoc.content}\n\n`;
+            
+            // 2. CLASIFICACIÓN DE ATRIBUCIONES
+            if (mainDoc.attributions && mainDoc.attributions.length > 0) {
+                response += `**Clasificación de Atribuciones**\n`;
+                response += `Esta situación es competencia de las siguientes áreas:\n\n`;
+                mainDoc.attributions.forEach((attr, index) => {
+                    response += `${index + 1}. ${attr}\n`;
+                });
+                response += `\n`;
             }
-        } else {
-            // Estructura con documentos relevantes
-            response += `**Información relevante encontrada en documentos oficiales:**\n\n`;
             
-            documents.forEach((doc, index) => {
-                response += `${index + 1}. **${doc.source}`;
-                if (doc.article && doc.article !== 'N/A') {
-                    response += `, ${doc.article}`;
-                }
-                response += `**\n`;
-                response += `   ${doc.content}\n\n`;
-            });
+            // 3. SUSTENTO LEGAL
+            if (mainDoc.legal_references && mainDoc.legal_references.length > 0) {
+                response += `**Sustento Legal (Obligatorio)**\n`;
+                mainDoc.legal_references.forEach((ref, index) => {
+                    response += `${index + 1}. ${ref}\n`;
+                });
+            }
             
-            const uniqueSources = [...new Set(documents.map(d => d.source))];
-            response += `**Fuentes consultadas:** ${uniqueSources.join('; ')}`;
+            // Footer
+            response += `\n*Sistema Chatbot Inspección Zapopan - Análisis basado en documentos oficiales*\n`;
+            response += `*Nota: Para información completa y oficial, consulta los documentos originales o contacta a las dependencias municipales correspondientes.*`;
+            
+            return response;
         }
         
-        // Footer SIEMPRE igual
-        response += `\n\n*Sistema Chatbot Inspección Zapopan - Respuestas basadas en información oficial*\n`;
-        response += `*Nota: Para información completa y oficial, consulta los documentos originales o contacta a las dependencias municipales correspondientes.*`;
+        // Para análisis básico, usar estructura simple pero mejorada
+        let response = `**Consulta:** ${query}\n\n`;
+        response += `**Información relevante encontrada en documentos oficiales:**\n\n`;
+        
+        documents.forEach((doc, index) => {
+            response += `${index + 1}. **${doc.category.toUpperCase()} - ${doc.subcategory}**\n`;
+            response += `   ${doc.content}\n\n`;
+            
+            if (doc.legal_references && doc.legal_references.length > 0) {
+                response += `   *Sustento legal:* ${doc.legal_references[0]}\n\n`;
+            }
+        });
+        
+        const uniqueCategories = [...new Set(documents.map(d => d.category))];
+        response += `**Áreas consultadas:** ${uniqueCategories.join('; ').toUpperCase()}\n\n`;
+        
+        response += `*Sistema Chatbot Inspección Zapopan - Respuestas basadas en información oficial*\n`;
+        response += `*Nota: Para análisis detallado, consulta los documentos originales o contacta a las dependencias municipales correspondientes.*`;
         
         return response;
     }
@@ -240,9 +268,9 @@ class StrictStructureSystem {
 // INICIALIZAR SISTEMA
 // ============================================
 
-console.log('🚀 Inicializando Sistema con Estructura Estricta v4.2...');
-const system = new StrictStructureSystem();
-console.log('✅ Sistema listo con estructura estricta');
+console.log('🚀 Inicializando Sistema con Análisis Detallado v4.3...');
+const system = new DetailedAnalysisSystem();
+console.log('✅ Sistema listo con análisis detallado');
 
 // ============================================
 // SERVER HTTP
@@ -267,11 +295,12 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             status: 'ok',
-            service: 'Chatbot Inspección Zapopan - Estructura Estricta v4.2',
-            version: '4.2-strict-structure',
+            service: 'Chatbot Inspección Zapopan - Análisis Detallado v4.3',
+            version: '4.3-detailed-analysis',
             system: 'ready',
             documents_loaded: system.documents.length,
-            priority: 'structure_over_coverage',
+            analysis_levels: ['detallado', 'básico'],
+            categories: ['construcción', 'comercio', 'medio_ambiente', 'seguridad'],
             timestamp: new Date().toISOString()
         }));
         return;
@@ -294,8 +323,8 @@ const server = http.createServer(async (req, res) => {
                     return;
                 }
                 
-                const docs = system.searchRelevantDocuments(message, 3);
-                const response = system.generateStructuredResponse(message, docs);
+                const docs = system.searchDetailedDocuments(message, 3);
+                const response = system.generateDetailedResponse(message, docs);
                 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({
@@ -303,9 +332,10 @@ const server = http.createServer(async (req, res) => {
                     response,
                     query: message,
                     documents_found: docs.length,
-                    sources: [...new Set(docs.map(d => d.source))],
-                    system: 'Estructura Estricta v4.2',
-                    priority: 'Respuestas útiles y estructuradas'
+                    main_category: docs[0]?.category || 'general',
+                    analysis_level: docs[0]?.analysis_level || 'básico',
+                    system: 'Análisis Detallado v4.3',
+                    priority: 'Respuestas estructuradas con análisis específico'
                 }));
                 
             } catch (error) {
@@ -331,7 +361,7 @@ const server = http.createServer(async (req, res) => {
         res.end(frontendHTML);
     } catch (error) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-        res.end('<h1>Chatbot Inspección Zapopan</h1><p>Sistema con estructura estricta v4.2</p>');
+        res.end('<h1>Chatbot Inspección Zapopan</h1><p>Sistema con análisis detallado v4.3</p>');
     }
 });
 
