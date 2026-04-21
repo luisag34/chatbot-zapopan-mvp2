@@ -252,7 +252,9 @@ class SistemaConsultaNormativaZapopan {
                 // 3. Identificar palabras clave normativas
                 const palabrasClaveNormativas = [
                     'comercio', 'construcción', 'uso de suelo', 'anuncios', 'residuos', 'ruido', 
-                    'medio ambiente', 'animales', 'tianguis', 'licencias', 'vía pública', 'urbanización'
+                    'medio ambiente', 'animales', 'tianguis', 'licencias', 'vía pública', 'urbanización',
+                    'área natural', 'protegida', 'conservación', 'ecológica', 'barda', 'muro', 'obra',
+                    'permiso', 'autorización', 'regulación', 'normativa', 'municipal'
                 ];
                 const tieneRelevanciaNormativa = palabrasClaveNormativas.some(palabra => consultaLower.includes(palabra));
                 

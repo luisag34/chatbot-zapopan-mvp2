@@ -919,12 +919,15 @@
                 
                 const data = await response.json();
                 
-                if (data.success) {
+                // Mostrar respuesta independientemente de success
+                // El backend siempre devuelve data.response con mensaje útil
+                if (data.response) {
                     addMessage(data.response, 'bot');
                     // Guardar en historial
                     saveToHistory(message, 'user');
                     saveToHistory(data.response, 'bot');
                 } else {
+                    // Fallback si no hay response
                     addMessage(`⚠️ ${data.error || 'No se pudo obtener respuesta del sistema'}`, 'bot');
                 }
                 
