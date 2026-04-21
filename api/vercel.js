@@ -40,8 +40,8 @@ class DebugRAGSystem {
         
         // Intentar múltiples paths
         const possiblePaths = [
-            path.join(__dirname, '..', 'data', 'documents'),
-            path.join(__dirname, '..', '..', 'data', 'documents'),
+            path.join(__dirname, "..", "data", "documents_sample"),
+            path.join(__dirname, "..", "data", "documents_sample"),
             path.join(process.cwd(), 'data', 'documents'),
             '/tmp/data/documents'  // Vercel temp directory
         ];

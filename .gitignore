@@ -57,7 +57,7 @@ Thumbs.db
 /coverage/
 
 # Documentos grandes
-data/documents/  # Mantener fuera del repo
+data/documents/  # Documentos grandes completos
 data/embeddings/
 
 # Secrets
@@ -65,4 +65,4 @@ data/embeddings/
 *token*
 *key*
 *password*
-*credential*
+*credential*data/documents_sample/  # Muestra para RAG incluida en repo
