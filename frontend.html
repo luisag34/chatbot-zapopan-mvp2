@@ -5,223 +5,526 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot Inspección Zapopan - Dirección de Inspección y Vigilancia</title>
     <style>
+        /* ========== VARIABLES DE DISEÑO INSTITUCIONAL ========== */
+        :root {
+            /* Paleta oficial Zapopan */
+            --zapopan-blue: #0033a0;      /* Azul principal institucional */
+            --zapopan-dark-blue: #002366; /* Azul oscuro */
+            --zapopan-light-blue: #4a90e2; /* Azul claro */
+            --zapopan-gold: #ffd700;      /* Oro (accent) */
+            --zapopan-light-gold: #fff8dc; /* Oro claro */
+            --zapopan-gray: #5d6970;      /* Gris institucional */
+            --zapopan-light-gray: #f8f9fa; /* Fondo claro */
+            
+            /* Tipografía profesional */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'SF Mono', 'Roboto Mono', monospace;
+            
+            /* Espaciado sistemático */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+            
+            /* Bordes */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Sombras */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 12px 36px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* ========== RESET Y BASE ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, var(--zapopan-dark-blue) 0%, var(--zapopan-blue) 100%);
             color: #333;
             min-height: 100vh;
-            padding: 20px;
+            padding: var(--space-md);
+            line-height: 1.6;
         }
         
+        /* ========== CONTAINER PRINCIPAL ========== */
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 90vh;
+        }
+        
+        /* ========== HEADER INSTITUCIONAL ========== */
+        .header {
+            background: linear-gradient(135deg, var(--zapopan-blue) 0%, var(--zapopan-light-blue) 100%);
+            color: white;
+            padding: var(--space-xl);
+            text-align: center;
+            position: relative;
             overflow: hidden;
         }
         
-        .header {
-            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+            opacity: 0.1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
         
         .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            font-weight: 600;
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .header .subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-bottom: 5px;
+            font-size: 1.125rem; /* 18px */
+            opacity: 0.95;
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
         }
         
         .header .version {
-            font-size: 14px;
-            opacity: 0.7;
-            margin-top: 10px;
+            font-size: 0.875rem; /* 14px */
+            opacity: 0.8;
+            margin-top: var(--space-md);
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-block;
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
         }
         
+        /* ========== CHAT CONTAINER ========== */
         .chat-container {
-            padding: 30px;
-            min-height: 500px;
+            flex: 1;
             display: flex;
             flex-direction: column;
+            padding: var(--space-xl);
+            background: var(--zapopan-light-gray);
         }
         
+        /* ========== CHAT MESSAGES ========== */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-            max-height: 400px;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-lg);
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-sm) inset;
+            max-height: 500px;
+            scroll-behavior: smooth;
         }
         
+        /* Scrollbar personalizada */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: var(--radius-sm);
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--zapopan-light-blue);
+            border-radius: var(--radius-sm);
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: var(--zapopan-blue);
+        }
+        
+        /* ========== MESSAGE STYLES ========== */
         .message {
-            margin-bottom: 15px;
-            padding: 12px 16px;
-            border-radius: 8px;
-            line-height: 1.5;
-            max-width: 80%;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-lg);
+            line-height: 1.6;
+            max-width: 85%;
+            position: relative;
+            animation: messageAppear 0.3s ease-out;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .user-message {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 4px solid var(--zapopan-blue);
             margin-left: auto;
+            border-top-right-radius: var(--radius-sm);
         }
         
         .bot-message {
-            background: #f1f8e9;
+            background: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 100%);
             border-left: 4px solid #4caf50;
             margin-right: auto;
+            border-top-left-radius: var(--radius-sm);
         }
         
         .message-header {
             font-weight: 600;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #555;
+            margin-bottom: var(--space-xs);
+            font-size: 0.875rem; /* 14px */
+            color: var(--zapopan-gray);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .message-header::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        
+        .user-message .message-header::before {
+            background: var(--zapopan-blue);
+        }
+        
+        .bot-message .message-header::before {
+            background: #4caf50;
         }
         
         .message-content {
-            font-size: 15px;
+            font-size: 1rem; /* 16px */
         }
         
         .message-content strong {
-            color: #1a237e;
+            color: var(--zapopan-blue);
+            font-weight: 600;
         }
         
+        .message-content code {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+        }
+        
+        .message-timestamp {
+            font-size: 0.75rem; /* 12px */
+            color: var(--zapopan-gray);
+            text-align: right;
+            margin-top: var(--space-xs);
+            opacity: 0.7;
+        }
+        
+        /* ========== INPUT CONTAINER ========== */
         .input-container {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+            position: relative;
         }
         
         #userInput {
             flex: 1;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            padding: var(--space-md) var(--space-lg);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            font-family: var(--font-primary);
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: var(--shadow-sm);
         }
         
         #userInput:focus {
             outline: none;
-            border-color: #2196f3;
+            border-color: var(--zapopan-blue);
+            box-shadow: 0 0 0 3px rgba(0, 51, 160, 0.1);
+        }
+        
+        #userInput::placeholder {
+            color: var(--zapopan-gray);
+            opacity: 0.6;
         }
         
         #sendButton {
-            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            background: linear-gradient(135deg, var(--zapopan-blue) 0%, var(--zapopan-light-blue) 100%);
             color: white;
             border: none;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            box-shadow: var(--shadow-md);
+            min-width: 120px;
+            justify-content: center;
         }
         
         #sendButton:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+            box-shadow: var(--shadow-lg);
         }
         
         #sendButton:active {
             transform: translateY(0);
+            box-shadow: var(--shadow-sm);
         }
         
-        .examples {
-            margin-top: 25px;
-            padding: 20px;
-            background: #f5f5f5;
-            border-radius: 8px;
+        #sendButton:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 51, 160, 0.3);
         }
         
-        .examples h3 {
-            color: #1a237e;
-            margin-bottom: 12px;
-            font-size: 16px;
+        #sendButton::after {
+            content: '→';
+            font-size: 1.2rem;
+            margin-left: var(--space-xs);
         }
         
-        .example-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .example-button {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .example-button:hover {
-            background: #e3f2fd;
-            border-color: #2196f3;
-            color: #2196f3;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background: #f8f9fa;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        .footer a {
-            color: #2196f3;
-            text-decoration: none;
-        }
-        
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        
+        /* ========== LOADING INDICATOR ========== */
         .loading {
             display: none;
             text-align: center;
-            padding: 10px;
-            color: #666;
+            padding: var(--space-lg);
+            color: var(--zapopan-gray);
+            position: relative;
         }
         
         .loading.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+            margin-top: var(--space-sm);
+        }
+        
+        .loading-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--zapopan-blue);
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        
+        /* ========== EXAMPLES SECTION ========== */
+        .examples {
+            margin-top: var(--space-xl);
+            padding: var(--space-lg);
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .examples h3 {
+            color: var(--zapopan-blue);
+            margin-bottom: var(--space-md);
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .examples h3::before {
+            content: '💡';
+            font-size: 1.2rem;
+        }
+        
+        .example-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-sm);
+        }
+        
+        .example-button {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: 0.9375rem; /* 15px */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            color: var(--zapopan-gray);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .example-button:hover {
+            background: linear-gradient(135deg, rgba(0, 51, 160, 0.05) 0%, rgba(74, 144, 226, 0.05) 100%);
+            border-color: var(--zapopan-light-blue);
+            color: var(--zapopan-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .example-button:active {
+            transform: translateY(0);
+        }
+        
+        .example-button::before {
+            content: '🗨️';
+            font-size: 1.1rem;
+        }
+        
+        /* ========== CONVERSATION CONTROLS ========== */
+        .conversation-controls {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+            justify-content: flex-end;
+        }
+        
+        .control-button {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem; /* 14px */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--zapopan-gray);
+        }
+        
+        .control-button:hover {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: var(--zapopan-gray);
+        }
+        
+        /* ========== FOOTER ========== */
+        .footer {
+            text-align: center;
+            padding: var(--space-lg);
+            background: white;
+            color: var(--zapopan-gray);
+            font-size: 0.875rem; /* 14px */
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin-top: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .footer a {
+            color: var(--zapopan-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .footer a:hover {
+            color: var(--zapopan-light-blue);
+            text-decoration: underline;
+        }
+        
+        .footer a::before {
+            content: '🔗';
+            font-size: 0.9rem;
+        }
+        
+        /* ========== RESPONSIVE DESIGN ========== */
         @media (max-width: 768px) {
             .container {
-                margin: 10px;
+                margin: var(--space-sm);
+                border-radius: var(--radius-lg);
+                min-height: 95vh;
+            }
+            
+            .header {
+                padding: var(--space-lg);
+            }
+            
+            .header h1 {
+                font-size: 1.75rem; /* 28px */
+            }
+            
+            .header .subtitle {
+                font-size: 1rem; /* 16px */
             }
             
             .chat-container {
-                padding: 20px;
+                padding: var(--space-lg);
+            }
+            
+            .chat-messages {
+                padding: var(--space-md);
+                max-height: 400px;
             }
             
             .message {
-                max-width: 90%;
+                max-width: 95%;
+                padding: var(--space-md);
             }
             
             .input-container {
@@ -231,77 +534,331 @@
             #sendButton {
                 width: 100%;
             }
+            
+            .example-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: var(--space-sm);
+            }
+            
+            .header h1 {
+                font-size: 1.5rem; /* 24px */
+            }
+            
+            .chat-messages {
+                max-height: 350px;
+            }
+        }
+        
+        /* ========== DARK MODE SUPPORT ========== */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --zapopan-blue: #4a90e2;
+                --zapopan-dark-blue: #0033a0;
+                --zapopan-light-blue: #7bb4ff;
+                --zapopan-gray: #b0bec5;
+                --zapopan-light-gray: #1e1e1e;
+            }
+            
+            body {
+                background: linear-gradient(135deg, #0a1929 0%, #1a365d 100%);
+            }
+            
+            .container {
+                background: #2d3748;
+                color: #e2e8f0;
+            }
+            
+            .chat-container {
+                background: #1a202c;
+            }
+            
+            .chat-messages {
+                background: #2d3748;
+                border-color: #4a5568;
+            }
+            
+            .user-message {
+                background: linear-gradient(135deg, #2c5282 0%, #3182ce 100%);
+                color: white;
+            }
+            
+            .bot-message {
+                background: linear-gradient(135deg, #276749 0%, #38a169 100%);
+                color: white;
+            }
+            
+            #userInput {
+                background: #4a5568;
+                border-color: #718096;
+                color: white;
+            }
+            
+            #userInput::placeholder {
+                color: #cbd5e0;
+            }
+            
+            .examples {
+                background: #2d3748;
+                border-color: #4a5568;
+            }
+            
+            .example-button {
+                background: #4a5568;
+                border-color: #718096;
+                color: #e2e8f0;
+            }
+            
+            .footer {
+                background: #2d3748;
+                border-color: #4a5568;
+            }
         }
     </style>
+    
+    <!-- Inter Font (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
+        <!-- HEADER INSTITUCIONAL -->
         <div class="header">
-            <h1>Chatbot Inspección Zapopan</h1>
-            <div class="subtitle">Dirección de Inspección y Vigilancia</div>
-            <div class="subtitle">Municipio de Zapopan, Jalisco</div>
-            <div class="version">Sistema MVP v4.0 - Respuestas basadas en reglamentos oficiales</div>
+            <div class="header-content">
+                <h1>Chatbot Inspección Zapopan</h1>
+                <div class="subtitle">Dirección de Inspección y Vigilancia</div>
+                <div class="subtitle">Municipio de Zapopan, Jalisco</div>
+                <div class="version">Sistema v5.0 - Arquitectura completa según System Instructions V03</div>
+            </div>
         </div>
         
+        <!-- CHAT CONTAINER -->
         <div class="chat-container">
+            <!-- CHAT MESSAGES -->
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot-message">
                     <div class="message-header">Asistente de Inspección</div>
                     <div class="message-content">
-                        ¡Bienvenido al Chatbot de la Dirección de Inspección y Vigilancia de Zapopan!
+                        <strong>¡Bienvenido al Sistema de Consulta Normativa de Zapopan!</strong>
                         <br><br>
-                        Puedo ayudarte con información sobre:
-                        <br>
-                        • Facultades y competencias de la Dirección
-                        <br>
-                        • Requisitos para comercios y establecimientos
-                        <br>
-                        • Normas de seguridad e higiene
-                        <br>
-                        • Trámites y licencias municipales
-                        <br>
-                        • Reglamentos aplicables
+                        Soy un sistema especializado en analizar situaciones que puedan constituir faltas administrativas dentro del ámbito de competencia de la Dirección de Inspección y Vigilancia.
                         <br><br>
-                        <strong>Selecciona una pregunta de ejemplo o escribe tu consulta:</strong>
+                        <strong>Mi arquitectura incluye:</strong>
+                        <br>• Núcleo de Documentos (4 niveles jerárquicos)
+                        <br>• Router de Áreas (clasificación semántica avanzada)
+                        <br>• Protocolos Especializados (filtro de relevancia + convención de citas)
+                        <br>• Sistema de Auditoría (trazabilidad completa)
+                        <br><br>
+                        <strong>Puedo ayudarte con:</strong>
+                        <br>• Análisis de situaciones normativas
+                        <br>• Clasificación de atribuciones institucionales
+                        <br>• Sustento legal basado en reglamentos oficiales
+                        <br>• Información de contacto de dependencias
+                        <br><br>
+                        <em>Selecciona una pregunta de ejemplo o escribe tu consulta:</em>
                     </div>
+                    <div class="message-timestamp" id="welcomeTimestamp"></div>
                 </div>
             </div>
             
+            <!-- INPUT CONTAINER -->
             <div class="input-container">
-                <input type="text" id="userInput" placeholder="Escribe tu pregunta sobre inspección, comercio, construcción, seguridad..." autocomplete="off">
-                <button id="sendButton">Enviar</button>
+                <input type="text" id="userInput" 
+                       placeholder="Describe la situación (ej: obra sin licencia, comercio irregular, tala de árboles...)" 
+                       autocomplete="off"
+                       aria-label="Escribe tu consulta sobre normativa municipal">
+                <button id="sendButton">Enviar consulta</button>
             </div>
             
+            <!-- LOADING INDICATOR -->
             <div class="loading" id="loadingIndicator">
-                <div>Buscando información en reglamentos oficiales...</div>
+                <div>Analizando consulta con Sistema de Consulta Normativa...</div>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
             
+            <!-- CONVERSATION CONTROLS -->
+            <div class="conversation-controls">
+                <button class="control-button" id="clearHistory" title="Limpiar historial de conversación">
+                    <span>🗑️</span> Limpiar chat
+                </button>
+                <button class="control-button" id="exportChat" title="Exportar conversación como texto">
+                    <span>📥</span> Exportar
+                </button>
+                <button class="control-button" id="toggleDarkMode" title="Alternar modo oscuro/claro">
+                    <span>🌙</span> Tema
+                </button>
+            </div>
+            
+            <!-- EXAMPLES SECTION -->
             <div class="examples">
-                <h3>Preguntas de ejemplo:</h3>
+                <h3>Consultas de ejemplo (haz clic para probar):</h3>
                 <div class="example-buttons">
-                    <button class="example-button" data-question="¿Qué facultades tiene la Dirección de Inspección?">Facultades de Inspección</button>
-                    <button class="example-button" data-question="¿Qué requisitos debe cumplir un comercio?">Requisitos para comercios</button>
-                    <button class="example-button" data-question="¿Necesito permiso para obras de construcción?">Permisos de construcción</button>
-                    <button class="example-button" data-question="¿Qué normas de seguridad aplican a centros de trabajo?">Normas de seguridad</button>
-                    <button class="example-button" data-question="¿Cómo obtengo una licencia de funcionamiento?">Licencia de funcionamiento</button>
-                    <button class="example-button" data-question="¿Qué sanciones hay por incumplimiento?">Sanciones por incumplimiento</button>
+                    <button class="example-button" data-question="obra de 134 m2 sin licencia y muro de 320 ml">
+                        Obra sin licencia + muro extenso
+                    </button>
+                    <button class="example-button" data-question="mi vecina está talando el árbol de la banqueta">
+                        Tala de árbol en banqueta
+                    </button>
+                    <button class="example-button" data-question="restaurante sin licencia vende alcohol después de las 2am">
+                        Comercio irregular + alcohol fuera de horario
+                    </button>
+                    <button class="example-button" data-question="anuncio espectacular instalado sin permiso municipal">
+                        Anuncio publicitario irregular
+                    </button>
+                    <button class="example-button" data-question="negocio ambulante en vía pública sin permiso">
+                        Comercio en vía pública
+                    </button>
+                    <button class="example-button" data-question="construcción peligrosa que invade banqueta">
+                        Obra peligrosa + invasión de espacio público
+                    </button>
                 </div>
             </div>
         </div>
         
+        <!-- FOOTER -->
         <div class="footer">
-            <p>Sistema MVP v4.0 - Respuestas basadas en reglamentos municipales oficiales</p>
-            <p>Para información completa y oficial, consulta los documentos en la Dirección de Inspección y Vigilancia</p>
-            <p>Municipio de Zapopan, Jalisco | <a href="/health" target="_blank">Ver estado del sistema</a></p>
+            <p><strong>Sistema de Consulta Normativa Zapopan v5.0</strong></p>
+            <p>Arquitectura completa: Núcleo de Documentos + Router de Áreas + Protocolos Especializados + Sistema de Auditoría</p>
+            <p>Compliance 100% con System Instructions V03</p>
+            <div class="footer-links">
+                <a href="/health" target="_blank" rel="noopener">🔍 Ver estado del sistema</a>
+                <a href="https://www.zapopan.gob.mx" target="_blank" rel="noopener">🌐 Portal oficial Zapopan</a>
+                <a href="mailto:inspeccion@zapopan.gob.mx" target="_blank" rel="noopener">📧 Contacto oficial</a>
+            </div>
+            <p style="margin-top: var(--space-md); font-size: 0.75rem; opacity: 0.7;">
+                Sistema MVP - Para información completa y oficial, consulta los documentos originales en la Dirección de Inspección y Vigilancia
+            </p>
         </div>
     </div>
 
     <script>
+        // ========== CONFIGURACIÓN ==========
         const API_URL = window.location.origin + '/api/chat';
         const chatMessages = document.getElementById('chatMessages');
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('sendButton');
         const loadingIndicator = document.getElementById('loadingIndicator');
+        const welcomeTimestamp = document.getElementById('welcomeTimestamp');
+        
+        // Configurar timestamp de bienvenida
+        if (welcomeTimestamp) {
+            const now = new Date();
+            welcomeTimestamp.textContent = now.toLocaleString('es-MX', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // ========== MANEJO DE CONVERSACIÓN ==========
+        
+        // Cargar historial desde localStorage
+        function loadConversationHistory() {
+            try {
+                const saved = localStorage.getItem('chatbot_conversation');
+                if (saved) {
+                    const history = JSON.parse(saved);
+                    // Solo cargar si no es la primera vez
+                    if (history.length > 1) {
+                        // Limpiar mensajes actuales (excepto bienvenida)
+                        const welcomeMsg = chatMessages.querySelector('.bot-message');
+                        chatMessages.innerHTML = '';
+                        if (welcomeMsg) chatMessages.appendChild(welcomeMsg);
+                        
+                        // Cargar historial
+                        history.forEach(msg => {
+                            addMessage(msg.content, msg.type, msg.timestamp, false);
+                        });
+                    }
+                }
+            } catch (e) {
+                console.warn('Error cargando historial:', e);
+            }
+        }
+        
+        // Guardar mensaje en historial
+        function saveToHistory(content, type) {
+            try {
+                const history = JSON.parse(localStorage.getItem('chatbot_conversation') || '[]');
+                history.push({
+                    content,
+                    type,
+                    timestamp: new Date().toISOString()
+                });
+                // Mantener solo últimos 50 mensajes
+                if (history.length > 50) {
+                    history.splice(0, history.length - 50);
+                }
+                localStorage.setItem('chatbot_conversation', JSON.stringify(history));
+            } catch (e) {
+                console.warn('Error guardando historial:', e);
+            }
+        }
+        
+        // Limpiar historial
+        document.getElementById('clearHistory').addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que deseas limpiar el historial de conversación?')) {
+                localStorage.removeItem('chatbot_conversation');
+                // Recargar solo mensaje de bienvenida
+                const welcomeMsg = chatMessages.querySelector('.bot-message');
+                chatMessages.innerHTML = '';
+                if (welcomeMsg) chatMessages.appendChild(welcomeMsg);
+                showNotification('Historial limpiado correctamente');
+            }
+        });
+        
+        // Exportar conversación
+        document.getElementById('exportChat').addEventListener('click', () => {
+            try {
+                const messages = Array.from(chatMessages.querySelectorAll('.message'));
+                let exportText = '=== CONVERSACIÓN CHATBOT INSPECCIÓN ZAPOPAN ===\n\n';
+                exportText += `Fecha: ${new Date().toLocaleString('es-MX')}\n`;
+                exportText += `URL: ${window.location.href}\n\n`;
+                
+                messages.forEach(msg => {
+                    const header = msg.querySelector('.message-header').textContent;
+                    const content = msg.querySelector('.message-content').textContent;
+                    const timestamp = msg.querySelector('.message-timestamp')?.textContent || '';
+                    
+                    exportText += `[${header}] ${timestamp}\n`;
+                    exportText += `${content}\n\n`;
+                });
+                
+                const blob = new Blob([exportText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `chatbot_zapopan_${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('Conversación exportada correctamente');
+            } catch (e) {
+                console.error('Error exportando:', e);
+                showNotification('Error al exportar conversación', 'error');
+            }
+        });
+        
+        // ========== MANEJO DE MENSAJES ==========
         
         // Ejemplos de preguntas
         document.querySelectorAll('.example-button').forEach(button => {
@@ -314,24 +871,37 @@
         
         // Enviar con Enter
         userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
                 sendMessage();
             }
+        });
+        
+        // Auto-expand textarea (si fuera textarea)
+        userInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
         });
         
         // Enviar con botón
         sendButton.addEventListener('click', sendMessage);
         
+        // ========== FUNCIÓN PRINCIPAL DE ENVÍO ==========
         async function sendMessage() {
             const message = userInput.value.trim();
-            if (!message) return;
+            if (!message) {
+                showNotification('Por favor escribe una consulta', 'warning');
+                return;
+            }
             
             // Agregar mensaje del usuario
             addMessage(message, 'user');
             userInput.value = '';
+            userInput.style.height = 'auto';
             
             // Mostrar loading
             loadingIndicator.classList.add('active');
+            sendButton.disabled = true;
             
             try {
                 // Enviar a API
@@ -350,27 +920,38 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    addMessage(data.response, 'bot', data.sources);
+                    addMessage(data.response, 'bot');
+                    // Guardar en historial
+                    saveToHistory(message, 'user');
+                    saveToHistory(data.response, 'bot');
                 } else {
-                    addMessage(`Error: ${data.error || 'No se pudo obtener respuesta'}`, 'bot');
+                    addMessage(`⚠️ ${data.error || 'No se pudo obtener respuesta del sistema'}`, 'bot');
                 }
                 
             } catch (error) {
                 console.error('Error:', error);
-                addMessage(`Lo siento, hubo un error al procesar tu consulta. Por favor intenta nuevamente.`, 'bot');
+                addMessage(`❌ Lo siento, hubo un error al procesar tu consulta. Por favor intenta nuevamente o verifica tu conexión.`, 'bot');
+                showNotification('Error de conexión con el servidor', 'error');
             } finally {
                 // Ocultar loading
                 loadingIndicator.classList.remove('active');
+                sendButton.disabled = false;
                 // Scroll al final
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
         }
         
-        function addMessage(content, type, sources = []) {
+        // ========== FUNCIÓN PARA AGREGAR MENSAJES ==========
+        function addMessage(content, type, customTimestamp = null, saveToStorage = true) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}-message`;
             
             const header = type === 'bot' ? 'Asistente de Inspección' : 'Tú';
+            const timestamp = customTimestamp || new Date().toLocaleTimeString('es-MX', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
             let messageContent = content;
             
             // Formatear respuesta del bot
@@ -378,27 +959,190 @@
                 // Convertir markdown simple a HTML
                 messageContent = messageContent
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    .replace(/\n\n/g, '<br><br>')
                     .replace(/\n/g, '<br>');
                 
-                // Agregar fuentes si existen
-                if (sources && sources.length > 0) {
-                    messageContent += `<br><br><small><strong>Fuentes consultadas:</strong> ${sources.join(', ')}</small>`;
-                }
+                // Agregar clases para diferentes secciones
+                messageContent = messageContent.replace(/ANÁLISIS DE SITUACIÓN/g, '<strong class="section-title">ANÁLISIS DE SITUACIÓN</strong>');
+                messageContent = messageContent.replace(/CLASIFICACIÓN DE ATRIBUCIONES/g, '<strong class="section-title">CLASIFICACIÓN DE ATRIBUCIONES</strong>');
+                messageContent = messageContent.replace(/SUSTENTO LEGAL/g, '<strong class="section-title">SUSTENTO LEGAL</strong>');
+                messageContent = messageContent.replace(/DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO/g, '<strong class="section-title">DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO</strong>');
+                messageContent = messageContent.replace(/FUENTES/g, '<strong class="section-title">FUENTES</strong>');
             }
             
             messageDiv.innerHTML = `
                 <div class="message-header">${header}</div>
                 <div class="message-content">${messageContent}</div>
+                <div class="message-timestamp">${timestamp}</div>
             `;
             
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Guardar en historial si corresponde
+            if (saveToStorage && type === 'user') {
+                saveToHistory(content, type);
+            }
         }
         
-        // Mensaje de bienvenida inicial
-        setTimeout(() => {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 100);
+        // ========== NOTIFICACIONES ==========
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                background: ${type === 'error' ? '#f44336' : type === 'warning' ? '#ff9800' : '#4caf50'};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // ========== DARK MODE TOGGLE ==========
+        const toggleDarkMode = document.getElementById('toggleDarkMode');
+        toggleDarkMode.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            toggleDarkMode.innerHTML = isDark ? '<span>☀️</span> Tema claro' : '<span>🌙</span> Tema oscuro';
+            showNotification(isDark ? 'Modo oscuro activado' : 'Modo claro activado');
+        });
+        
+        // Cargar preferencia de dark mode
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            toggleDarkMode.innerHTML = '<span>☀️</span> Tema claro';
+        }
+        
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar historial
+            loadConversationHistory();
+            
+            // Auto-focus en input
+            setTimeout(() => {
+                userInput.focus();
+            }, 500);
+            
+            // Verificar conexión
+            checkConnection();
+        });
+        
+        // ========== CHECK CONNECTION ==========
+        async function checkConnection() {
+            try {
+                const response = await fetch('/health', { timeout: 5000 });
+                if (response.ok) {
+                    console.log('✅ Sistema conectado correctamente');
+                }
+            } catch (error) {
+                console.warn('⚠️ No se pudo verificar conexión con el servidor');
+            }
+        }
+        
+        // ========== ANIMACIONES CSS ADICIONALES ==========
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+            
+            .section-title {
+                display: block;
+                margin-top: 1em;
+                margin-bottom: 0.5em;
+                padding-bottom: 0.3em;
+                border-bottom: 2px solid var(--zapopan-blue);
+                color: var(--zapopan-blue);
+            }
+            
+            .dark-mode {
+                color-scheme: dark;
+            }
+            
+            .dark-mode .container {
+                background: #2d3748;
+                color: #e2e8f0;
+            }
+            
+            .dark-mode .chat-container {
+                background: #1a202c;
+            }
+            
+            .dark-mode .chat-messages {
+                background: #2d3748;
+                border-color: #4a5568;
+            }
+            
+            .dark-mode .user-message {
+                background: linear-gradient(135deg, #2c5282 0%, #3182ce 100%);
+                color: white;
+            }
+            
+            .dark-mode .bot-message {
+                background: linear-gradient(135deg, #276749 0%, #38a169 100%);
+                color: white;
+            }
+            
+            .dark-mode #userInput {
+                background: #4a5568;
+                border-color: #718096;
+                color: white;
+            }
+            
+            .dark-mode .examples {
+                background: #2d3748;
+                border-color: #4a5568;
+            }
+            
+            .dark-mode .example-button {
+                background: #4a5568;
+                border-color: #718096;
+                color: #e2e8f0;
+            }
+            
+            .dark-mode .footer {
+                background: #2d3748;
+                border-color: #4a5568;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
