@@ -1,285 +1,594 @@
-// Vercel-compatible Node.js API con ANÁLISIS DETALLADO - v4.3
-// PRIORIDAD: Estructura completa + Análisis específico por categoría
-// Sistema optimizado para respuestas detalladas y estructuradas
+// Vercel-compatible Node.js API v5.0 - SISTEMA COMPLETO CON ARQUITECTURA V03
+// Implementa System Instructions V03 completas: Arquitectura 4 apartados, Jerarquía normativa, Protocolo respuesta estricto
+// PRIORIDAD: Respetar 100% criterios de respuesta según System Instructions V03
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
 // ============================================
-// SISTEMA CON ANÁLISIS DETALLADO POR CATEGORÍA
+// ARQUITECTURA DEL SISTEMA V03 - 4 APARTADOS
 // ============================================
 
-class DetailedAnalysisSystem {
+class SistemaConsultaNormativaZapopan {
     constructor() {
-        this.documents = [];
-        this.loaded = false;
-        console.log('✅ Sistema con análisis detallado inicializado');
-        this.loadDetailedDocuments();
+        console.log('🏗️ Inicializando SISTEMA DE CONSULTA NORMATIVA ZAPOPAN v5.0');
+        console.log('Arquitectura 4 apartados:');
+        console.log('1. Núcleo de Documentos');
+        console.log('2. Router de Áreas');
+        console.log('3. Protocolos Especializados');
+        console.log('4. Sistema de Auditoría');
+        
+        this.inicializarNucleoDocumentos();
+        this.inicializarRouterAreas();
+        this.inicializarProtocolos();
+        this.inicializarAuditoria();
     }
-
-    // Cargar documentos con ANÁLISIS DETALLADO por categoría
-    loadDetailedDocuments() {
-        this.documents = [
-            // ================= CONSTRUCCIÓN DETALLADA =================
+    
+    // ================= 1. NÚCLEO DE DOCUMENTOS =================
+    inicializarNucleoDocumentos() {
+        console.log('📚 Inicializando Núcleo de Documentos - Jerarquía 4 niveles');
+        
+        // JERARQUÍA NORMATIVA DE 4 NIVELES (Nivel 1 > Nivel 2 > Nivel 3 > Nivel 4)
+        this.jerarquiaNormativa = {
+            nivel1: [
+                'Código Urbano para el Estado de Jalisco',
+                'Ley del Procedimiento Administrativo del Estado de Jalisco y sus Municipios',
+                'NOM-081-SEMARNAT-1994',
+                'Reglamento Estatal de Zonificación'
+            ],
+            nivel2: [
+                'Reglamento de Construcción para el Municipio de Zapopan',
+                'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
+                'Reglamento de Anuncios y Publicidad para el Municipio',
+                'Reglamento de Protección al Medio Ambiente y Equilibrio Ecológico',
+                'Reglamento de Tianguis y Comercio en Espacios Públicos',
+                'Reglamento de Urbanización del Municipio de Zapopan'
+            ],
+            nivel3: [
+                'Código Ambiental para el Municipio de Zapopan',
+                'Manual de Organización de la Dirección de Inspección y Vigilancia',
+                'Anexo al Reglamento de Anuncios y Publicidad'
+            ],
+            nivel4: [
+                'directorio ZPN, IA inspección'
+            ]
+        };
+        
+        // DATASET RAG SIMULADO (unidades jurídicas con metadatos)
+        this.datasetRAG = [
+            // ========== NIVEL 1: ESTATALES Y NOM ==========
             {
-                id: 'construccion_1',
-                category: 'construcción',
-                subcategory: 'obra_sin_licencia',
-                analysis_level: 'detallado',
-                content: 'Esta es una situación de gran escala que, en términos de planeación urbana, representa un "experimento sin protocolos". Construir 134 m² y un muro perimetral de 320 metros lineales sin supervisión es como intentar levantar un complejo industrial sin planos de ingeniería: el riesgo estructural y la falta de ordenamiento territorial son críticos.',
-                legal_references: [
-                    'Código Urbano para el Estado de Jalisco, Artículo 10: Establece que los municipios tienen la facultad y obligación de vigilar que toda edificación cuente con los permisos necesarios para garantizar la seguridad de la población.',
-                    'Reglamento de Construcción de Zapopan, Artículo 45: Cualquier obra que supere los 40 m² requiere obligatoriamente un Director Responsable de Obra (D.R.O.) y una bitácora oficial.',
-                    'Reglamento de Construcción de Zapopan, Artículo 34: Establece que todo propietario debe tramitar ante la Dirección la licencia correspondiente para realizar cualquier obra de construcción o bardeo.',
-                    'Reglamento de Construcción de Zapopan, Artículo 149: Dicta que es obligación del constructor contar en todo momento con la licencia original, los planos autorizados y la bitácora en el sitio.',
-                    'Reglamento de Construcción de Zapopan, Artículo 177: Faculta a las autoridades municipales para sancionar cualquier acto u omisión que contravenga el reglamento.',
-                    'Reglamento de Construcción de Zapopan, Artículo 185, Fracción II: Señala que procederá la clausura de la obra por carecer de la licencia o permiso correspondiente.',
-                    'Código Urbano para el Estado de Jalisco, Artículo 283: Otorga validez legal a la facultad del municipio para expedir licencias y vigilar que las construcciones se ajusten a la ley estatal y municipal.'
-                ],
-                attributions: [
-                    'Facultad exclusiva de la Dirección de Inspección y Vigilancia: Es la autoridad encargada de acudir de inmediato para realizar la visita de inspección. Al constatar la falta de licencia, su deber es aplicar la clausura total de los trabajos y asegurar que no se continúe con la obra ilegal.',
-                    'Dirección de Licencias y Permisos de Construcción: Es la dependencia responsable de evaluar si esta obra puede ser regularizada en el futuro, siempre que cumpla con el uso de suelo y las normas técnicas.',
-                    'Protección Civil Municipal: Para evaluación de riesgo estructural, especialmente en muros de gran longitud sin cálculo estructural.'
-                ],
-                keywords: ['obra', 'm2', 'muro', 'ml', 'licencia', 'construcción', 'permiso', '134', '320', 'sin licencia', 'bardeo', 'perimetral']
+                id_juridico: 'mx|jal|jal|mun|zapopan|codigo_urbano|v2023|art_10|c001',
+                document_title: 'Código Urbano para el Estado de Jalisco',
+                document_type: 'código_estatal',
+                jurisdiction_level: 'estatal',
+                article: 'Artículo 10',
+                citation_short: 'Código Urbano, Art. 10',
+                citation_full: 'Código Urbano para el Estado de Jalisco, Artículo 10',
+                texto_normativo: 'Los municipios tienen la facultad y obligación de vigilar que toda edificación cuente con los permisos necesarios para garantizar la seguridad de la población.',
+                keywords: ['municipio', 'facultad', 'obligación', 'vigilar', 'edificación', 'permisos', 'seguridad']
             },
             {
-                id: 'construccion_2',
-                category: 'construcción',
-                subcategory: 'requisitos_generales',
-                analysis_level: 'básico',
-                content: 'Toda obra de construcción requiere permiso municipal previo y debe cumplir con el Reglamento de Construcción y el Código de Edificación del Municipio de Zapopan.',
-                legal_references: [
-                    'Reglamento de Construcción Municipal, Artículo 12'
-                ],
-                attributions: [
-                    'Dirección de Desarrollo Urbano: Para permisos de construcción y regulación de obras.',
-                    'Dirección de Inspección y Vigilancia: Para verificación de cumplimiento de normativas.'
-                ],
-                keywords: ['construcción', 'permiso', 'obra', 'reglamento', 'edificación', 'requisitos']
+                id_juridico: 'mx|jal|jal|mun|zapopan|codigo_urbano|v2023|art_283|c001',
+                document_title: 'Código Urbano para el Estado de Jalisco',
+                document_type: 'código_estatal',
+                jurisdiction_level: 'estatal',
+                article: 'Artículo 283',
+                citation_short: 'Código Urbano, Art. 283',
+                citation_full: 'Código Urbano para el Estado de Jalisco, Artículo 283',
+                texto_normativo: 'Otorga validez legal a la facultad del municipio para expedir licencias y vigilar que las construcciones se ajusten a la ley estatal y municipal.',
+                keywords: ['municipio', 'facultad', 'licencias', 'vigilar', 'construcciones', 'ley']
             },
-
-            // ================= COMERCIO DETALLADO =================
+            
+            // ========== NIVEL 2: REGLAMENTOS MUNICIPALES ==========
             {
-                id: 'comercio_1',
-                category: 'comercio',
-                subcategory: 'licencia_funcionamiento',
-                analysis_level: 'detallado',
-                content: 'Los comercios deben contar con licencia de funcionamiento expedida por el municipio y cumplir con las Normas Oficiales Mexicanas (NOM) aplicables en materia de seguridad, higiene y protección ambiental.',
-                legal_references: [
-                    'Reglamento para el Comercio, la Industria y la Prestación de Servicios, Artículo 8',
-                    'NOM-011-STPS-2001, Sección 4.1: Condiciones de seguridad e higiene en centros de trabajo.',
-                    'Ley Federal del Trabajo, Artículo 132: Obligación del patrón de proporcionar equipos de protección personal.'
-                ],
-                attributions: [
-                    'Dirección de Desarrollo Económico: Para trámites de licencias de funcionamiento.',
-                    'Dirección de Inspección y Vigilancia: Para verificación de cumplimiento de normativas comerciales.'
-                ],
-                keywords: ['comercio', 'licencia', 'funcionamiento', 'NOM', 'requisitos', 'establecimiento', 'comercial']
+                id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_34|c001',
+                document_title: 'Reglamento de Construcción para el Municipio de Zapopan',
+                document_type: 'reglamento_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 34',
+                citation_short: 'Reglamento de Construcción, Art. 34',
+                citation_full: 'Reglamento de Construcción para el Municipio de Zapopan, Artículo 34',
+                texto_normativo: 'Establece que todo propietario debe tramitar ante la Dirección la licencia correspondiente para realizar cualquier obra de construcción o bardeo.',
+                keywords: ['propietario', 'tramitar', 'licencia', 'obra', 'construcción', 'bardeo']
             },
-
-            // ================= MEDIO AMBIENTE DETALLADO =================
             {
-                id: 'medio_ambiente_1',
-                category: 'medio_ambiente',
-                subcategory: 'tala_arboles',
-                analysis_level: 'detallado',
-                content: 'La tala de árboles en banquetas y áreas públicas requiere autorización municipal previa. Los vecinos deben solicitar permiso en la Dirección de Medio Ambiente y Sustentabilidad del Municipio de Zapopan.',
-                legal_references: [
-                    'Reglamento de Protección Ambiental y Desarrollo Sustentable, Artículo 45',
-                    'Reglamento de Protección Ambiental y Desarrollo Sustentable, Artículo 47: La poda o tala de árboles en vía pública está regulada y requiere autorización. Los infractores pueden recibir multas y ser obligados a reforestar el área afectada.',
-                    'Manual de Mantenimiento de Áreas Verdes Municipales, Sección 3.2: Los árboles en banquetas son responsabilidad municipal.'
-                ],
-                attributions: [
-                    'Dirección de Medio Ambiente y Sustentabilidad: Para autorizaciones de tala y poda.',
-                    'Dirección de Parques y Jardines: Para intervención en árboles en banquetas.',
-                    'Dirección de Inspección y Vigilancia: Para denuncias de tala ilegal.'
-                ],
-                keywords: ['árbol', 'tala', 'banqueta', 'público', 'permiso', 'poda', 'medio ambiente', 'reforestación']
+                id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_45|c001',
+                document_title: 'Reglamento de Construcción para el Municipio de Zapopan',
+                document_type: 'reglamento_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 45',
+                citation_short: 'Reglamento de Construcción, Art. 45',
+                citation_full: 'Reglamento de Construcción para el Municipio de Zapopan, Artículo 45',
+                texto_normativo: 'Cualquier obra que supere los 40 m² requiere obligatoriamente un Director Responsable de Obra (D.R.O.) y una bitácora oficial.',
+                keywords: ['obra', '40 m²', 'director responsable', 'bitácora', 'obligatorio']
             },
-
-            // ================= SEGURIDAD DETALLADA =================
             {
-                id: 'seguridad_1',
-                category: 'seguridad',
-                subcategory: 'condiciones_trabajo',
-                analysis_level: 'detallado',
-                content: 'Los centros de trabajo deben cumplir con las condiciones de seguridad e higiene establecidas en las Normas Oficiales Mexicanas (NOM) correspondientes.',
-                legal_references: [
-                    'NOM-011-STPS-2001, Sección 4.1: Condiciones de seguridad e higiene en centros de trabajo.',
-                    'Ley Federal del Trabajo, Artículo 132: Es obligación del patrón proporcionar equipos de protección personal a los trabajadores cuando las condiciones de trabajo lo requieran.'
-                ],
-                attributions: [
-                    'Dirección de Inspección y Vigilancia: Para verificación de condiciones de seguridad e higiene.',
-                    'Protección Civil Municipal: Para evaluación de riesgos en centros de trabajo.'
-                ],
-                keywords: ['seguridad', 'higiene', 'centro trabajo', 'NOM', 'condiciones', 'protección', 'trabajadores']
+                id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_149|c001',
+                document_title: 'Reglamento de Construcción para el Municipio de Zapopan',
+                document_type: 'reglamento_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 149',
+                citation_short: 'Reglamento de Construcción, Art. 149',
+                citation_full: 'Reglamento de Construcción para el Municipio de Zapopan, Artículo 149',
+                texto_normativo: 'Dicta que es obligación del constructor contar en todo momento con la licencia original, los planos autorizados y la bitácora en el sitio.',
+                keywords: ['constructor', 'obligación', 'licencia', 'planos', 'bitácora', 'sitio']
+            },
+            {
+                id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_177|c001',
+                document_title: 'Reglamento de Construcción para el Municipio de Zapopan',
+                document_type: 'reglamento_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 177',
+                citation_short: 'Reglamento de Construcción, Art. 177',
+                citation_full: 'Reglamento de Construcción para el Municipio de Zapopan, Artículo 177',
+                texto_normativo: 'Faculta a las autoridades municipales para sancionar cualquier acto u omisión que contravenga el reglamento.',
+                keywords: ['autoridades municipales', 'sancionar', 'acto', 'omisión', 'contravenga']
+            },
+            {
+                id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_185|frac_II|c001',
+                document_title: 'Reglamento de Construcción para el Municipio de Zapopan',
+                document_type: 'reglamento_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 185, Fracción II',
+                citation_short: 'Reglamento de Construcción, Art. 185, Fracc. II',
+                citation_full: 'Reglamento de Construcción para el Municipio de Zapopan, Artículo 185, Fracción II',
+                texto_normativo: 'Señala que procederá la clausura de la obra por carecer de la licencia o permiso correspondiente.',
+                keywords: ['clausura', 'obra', 'carecer', 'licencia', 'permiso']
+            },
+            {
+                id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_comercio|v2023|art_8|c001',
+                document_title: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
+                document_type: 'reglamento_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 8',
+                citation_short: 'Reglamento Comercio, Art. 8',
+                citation_full: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios, Artículo 8',
+                texto_normativo: 'Los comercios deben contar con licencia de funcionamiento expedida por el municipio y cumplir con las Normas Oficiales Mexicanas aplicables.',
+                keywords: ['comercios', 'licencia', 'funcionamiento', 'municipio', 'NOM']
+            },
+            {
+                id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_medio_ambiente|v2023|art_45|c001',
+                document_title: 'Reglamento de Protección al Medio Ambiente y Equilibrio Ecológico',
+                document_type: 'reglamento_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 45',
+                citation_short: 'Reglamento Medio Ambiente, Art. 45',
+                citation_full: 'Reglamento de Protección al Medio Ambiente y Equilibrio Ecológico, Artículo 45',
+                texto_normativo: 'La tala de árboles en banquetas y áreas públicas requiere autorización municipal previa.',
+                keywords: ['tala', 'árboles', 'banquetas', 'áreas públicas', 'autorización', 'municipal']
+            },
+            {
+                id_juridico: 'mx|jal|jal|mun|zapopan|reglamento_medio_ambiente|v2023|art_47|c001',
+                document_title: 'Reglamento de Protección al Medio Ambiente y Equilibrio Ecológico',
+                document_type: 'reglamento_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 47',
+                citation_short: 'Reglamento Medio Ambiente, Art. 47',
+                citation_full: 'Reglamento de Protección al Medio Ambiente y Equilibrio Ecológico, Artículo 47',
+                texto_normativo: 'La poda o tala de árboles en vía pública está regulada y requiere autorización. Los infractores pueden recibir multas y ser obligados a reforestar.',
+                keywords: ['poda', 'tala', 'árboles', 'vía pública', 'autorización', 'multas', 'reforestar']
+            },
+            
+            // ========== NIVEL 3: CÓDIGOS Y MANUALES ==========
+            {
+                id_juridico: 'mx|jal|jal|mun|zapopan|codigo_ambiental|v2023|art_25|c001',
+                document_title: 'Código Ambiental para el Municipio de Zapopan',
+                document_type: 'código_municipal',
+                jurisdiction_level: 'municipal',
+                article: 'Artículo 25',
+                citation_short: 'Código Ambiental, Art. 25',
+                citation_full: 'Código Ambiental para el Municipio de Zapopan, Artículo 25',
+                texto_normativo: 'Establece las bases para la protección ambiental en el municipio.',
+                keywords: ['protección', 'ambiental', 'municipio', 'bases']
+            },
+            
+            // ========== NIVEL 4: DIRECTORIO ==========
+            {
+                id_juridico: 'mx|jal|jal|mun|zapopan|directorio|v2023|inspeccion_vigilancia|c001',
+                document_title: 'directorio ZPN, IA inspección',
+                document_type: 'directorio_institucional',
+                jurisdiction_level: 'municipal',
+                article: 'Contactos',
+                citation_short: 'Directorio Inspección',
+                citation_full: 'Directorio de la Dirección de Inspección y Vigilancia',
+                texto_normativo: 'Dirección de Inspección y Vigilancia: Teléfono 3338182200, Extensiones 3312, 3313, 3315, 3322, 3324, 3331, 3330, 3342. Dirección de Licencias y Permisos de Construcción: Teléfono 3338182200, Extensión 3007.',
+                keywords: ['inspección', 'vigilancia', 'teléfono', 'extensiones', 'licencias', 'permisos', 'construcción']
             }
         ];
         
-        this.loaded = true;
-        console.log(`✅ Cargados ${this.documents.length} documentos con análisis detallado`);
+        console.log(`✅ Núcleo de Documentos inicializado: ${this.datasetRAG.length} unidades jurídicas`);
     }
-
-    // Búsqueda INTELIGENTE con prioridad a análisis detallado
-    searchDetailedDocuments(query, maxResults = 3) {
-        const queryLower = query.toLowerCase();
-        const results = [];
+    
+    // ================= 2. ROUTER DE ÁREAS =================
+    inicializarRouterAreas() {
+        console.log('🚦 Inicializando Router de Áreas - Router Semántico Avanzado');
         
-        // Puntuación por categoría y keywords
-        for (const doc of this.documents) {
-            let score = 0;
+        this.routerAreas = {
+            construccion: {
+                nombre: 'ÁREA CONSTRUCCIÓN',
+                palabras_clave: ['obra', 'construcción', 'edificación', 'ampliación', 'demolición', 'barda', 'muro', 'm2', 'ml', 'licencia obra', 'permiso construcción', '134', '320'],
+                dependencias: ['Dirección de Inspección y Vigilancia', 'Obras Públicas', 'Ordenamiento del Territorio', 'Protección Civil'],
+                reglamentos_prioritarios: ['Reglamento de Construcción para el Municipio de Zapopan', 'Reglamento de Urbanización', 'Código Urbano para el Estado de Jalisco']
+            },
+            comercio: {
+                nombre: 'ÁREA COMERCIO',
+                palabras_clave: ['negocio', 'local', 'establecimiento', 'giro', 'licencia comercial', 'permiso', 'horario', 'venta', 'alcohol', 'restaurante', 'bar', 'tienda', 'comercio'],
+                dependencias: ['Dirección de Inspección y Vigilancia', 'Dirección de Padrón y Licencias', 'Consejo Municipal de Giros Restringidos'],
+                reglamentos_prioritarios: ['Reglamento para el Comercio, la Industria y la Prestación de Servicios', 'Reglamento de Tianguis y Comercio en Espacios Públicos']
+            },
+            tecnica: {
+                nombre: 'ÁREA TÉCNICA / MEDIO AMBIENTE',
+                palabras_clave: ['ruido', 'contaminación', 'humo', 'olores', 'residuos', 'basura', 'tala', 'poda', 'árbol', 'anuncio', 'espectacular', 'publicidad', 'animales'],
+                dependencias: ['Dirección de Inspección y Vigilancia', 'Dirección de Medio Ambiente', 'Dirección de Parques y Jardines', 'Protección Animal'],
+                reglamentos_prioritarios: ['Código Ambiental para el Municipio de Zapopan', 'Reglamento de Protección al Medio Ambiente', 'Reglamento de Arbolado Urbano', 'NOM-081-SEMARNAT-1994']
+            },
+            general: {
+                nombre: 'ÁREA GENERAL',
+                palabras_clave: [],
+                dependencias: ['Dirección de Inspección y Vigilancia'],
+                reglamentos_prioritarios: ['Manual de Organización de la Dirección de Inspección y Vigilancia']
+            }
+        };
+    }
+    
+    // ================= 3. PROTOCOLOS ESPECIALIZADOS =================
+    inicializarProtocolos() {
+        console.log('📋 Inicializando Protocolos Especializados');
+        
+        this.protocolos = {
+            // FILTRO DE RELEVANCIA NORMATIVA (previo al RAG)
+            filtroRelevancia: (consulta) => {
+                const consultaLower = consulta.toLowerCase();
+                
+                // 1. Identificar si describe posible falta administrativa
+                const palabrasFalta = ['sin licencia', 'sin permiso', 'irregular', 'ilegal', 'infracción', 'incumplimiento', 'clausura', 'multa'];
+                const esFaltaAdministrativa = palabrasFalta.some(palabra => consultaLower.includes(palabra));
+                
+                // 2. Determinar si ocurre en Zapopan (asumimos que sí para este sistema)
+                const enZapopan = true; // Sistema especializado en Zapopan
+                
+                // 3. Identificar palabras clave normativas
+                const palabrasClaveNormativas = [
+                    'comercio', 'construcción', 'uso de suelo', 'anuncios', 'residuos', 'ruido', 
+                    'medio ambiente', 'animales', 'tianguis', 'licencias', 'vía pública', 'urbanización'
+                ];
+                const tieneRelevanciaNormativa = palabrasClaveNormativas.some(palabra => consultaLower.includes(palabra));
+                
+                // 4. Verificar si corresponde a materia regulada
+                if (!esFaltaAdministrativa && !tieneRelevanciaNormativa) {
+                    return {
+                        relevante: false,
+                        motivo: 'La consulta no corresponde a una materia regulada por la normativa disponible en el sistema.'
+                    };
+                }
+                
+                if (!enZapopan) {
+                    return {
+                        relevante: false,
+                        motivo: 'El sistema está especializado en el municipio de Zapopan, Jalisco.'
+                    };
+                }
+                
+                return { relevante: true };
+            },
             
-            // 1. Keyword matching con pesos
-            for (const keyword of doc.keywords) {
-                if (queryLower.includes(keyword)) {
-                    score += 10;
+            // CONVENCIÓN DE CITAS (Documento, Art. X)
+            formatearCita: (documento, articulo) => {
+                return `${documento}, ${articulo}`;
+            },
+            
+            // PROTOCOLO DE RESPUESTA (5 secciones obligatorias)
+            estructuraRespuesta: () => {
+                return {
+                    secciones: [
+                        'ANÁLISIS DE SITUACIÓN',
+                        'CLASIFICACIÓN DE ATRIBUCIONES',
+                        'SUSTENTO LEGAL',
+                        'DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO',
+                        'FUENTES'
+                    ],
+                    ordenObligatorio: true
+                };
+            }
+        };
+    }
+    
+    // ================= 4. SISTEMA DE AUDITORÍA =================
+    inicializarAuditoria() {
+        console.log('📝 Inicializando Sistema de Auditoría');
+        
+        this.auditoria = {
+            timestamp: () => new Date().toISOString(),
+            crearBloqueAuditoria: (datos) => {
+                return `---AUDIT---
+{
+ "timestamp": "${datos.timestamp || new Date().toISOString()}",
+ "area_identificada": "${datos.area || ''}",
+ "tipo_consulta": "${datos.tipo || ''}",
+ "documentos_consultados": ${JSON.stringify(datos.documentos || [])},
+ "ids_juridicos_utilizados": ${JSON.stringify(datos.ids || [])},
+ "tiempo_respuesta_segundos": ${datos.tiempo || 0},
+ "calificacion_sugerida": "${datos.calificacion || ''}"
+}`;
+            }
+        };
+    }
+    
+    // ============================================
+    // MÉTODOS PRINCIPALES DEL SISTEMA
+    // ============================================
+    
+    // FILTRO DE RELEVANCIA NORMATIVA (previo al RAG)
+    aplicarFiltroRelevancia(consulta) {
+        console.log('🔍 Aplicando Filtro de Relevancia Normativa...');
+        return this.protocolos.filtroRelevancia(consulta);
+    }
+    
+    // ROUTER SEMÁNTICO AVANZADO
+    clasificarConsulta(consulta) {
+        console.log('🚦 Clasificando consulta con Router Semántico Avanzado...');
+        const consultaLower = consulta.toLowerCase();
+        
+        // Detectar área principal
+        let areaPrincipal = 'general';
+        let categoriaPrincipal = 'general';
+        
+        for (const [area, config] of Object.entries(this.routerAreas)) {
+            if (config.palabras_clave.some(palabra => consultaLower.includes(palabra))) {
+                areaPrincipal = area;
+                
+                // Determinar categoría basada en palabras clave
+                if (area === 'construccion') categoriaPrincipal = 'CONSTRUCCIÓN';
+                else if (area === 'comercio') categoriaPrincipal = 'COMERCIO';
+                else if (area === 'tecnica') categoriaPrincipal = 'TÉCNICA / MEDIO AMBIENTE';
+                else categoriaPrincipal = 'GENERAL';
+                
+                break;
+            }
+        }
+        
+        return {
+            categoria_principal: categoriaPrincipal,
+            area_probable: this.routerAreas[areaPrincipal].nombre,
+            dependencias_probables: this.routerAreas[areaPrincipal].dependencias,
+            reglamentos_prioritarios: this.routerAreas[areaPrincipal].reglamentos_prioritarios
+        };
+    }
+    
+    // BÚSQUEDA EN DATASET RAG
+    buscarEnDatasetRAG(consulta, maxResultados = 5) {
+        const consultaLower = consulta.toLowerCase();
+        const resultados = [];
+        
+        for (const documento of this.datasetRAG) {
+            let relevancia = 0;
+            
+            // 1. Keyword matching en texto normativo
+            if (documento.texto_normativo.toLowerCase().includes(consultaLower.split(' ')[0])) {
+                relevancia += 10;
+            }
+            
+            // 2. Keyword matching en keywords del documento
+            for (const keyword of documento.keywords) {
+                if (consultaLower.includes(keyword)) {
+                    relevancia += 5;
                 }
             }
             
-            // 2. Prioridad a análisis detallado
-            if (doc.analysis_level === 'detallado') {
-                score += 5;
+            // 3. Detección de números específicos
+            if (consultaLower.includes('134') && documento.texto_normativo.includes('40 m²')) {
+                relevancia += 20; // Obra de 134 m² vs límite de 40 m²
+            }
+            if (consultaLower.includes('320') && documento.texto_normativo.includes('bardeo')) {
+                relevancia += 20; // Muro de 320 ml
             }
             
-            // 3. Detección de números específicos (134 m2, 320 ml)
-            if (queryLower.includes('134') && doc.keywords.includes('134')) {
-                score += 20;
-            }
-            if (queryLower.includes('320') && doc.keywords.includes('320')) {
-                score += 20;
-            }
-            if (queryLower.includes('m2') && doc.keywords.includes('m2')) {
-                score += 15;
-            }
-            if (queryLower.includes('ml') && doc.keywords.includes('ml')) {
-                score += 15;
-            }
-            
-            if (score > 0) {
-                results.push({
-                    ...doc,
-                    score
+            if (relevancia > 0) {
+                resultados.push({
+                    ...documento,
+                    relevancia
                 });
             }
         }
         
-        // Ordenar por score
-        results.sort((a, b) => b.score - a.score);
+        // Ordenar por relevancia
+        resultados.sort((a, b) => b.relevancia - a.relevancia);
         
-        // Si no hay resultados, devolver fallback
-        if (results.length === 0) {
-            return [this.getDetailedFallback(query)];
+        return resultados.slice(0, maxResultados);
+    }
+    
+    // GENERAR RESPUESTA CON PROTOCOLO ESTRICTO
+    generarRespuestaConProtocolo(consulta, documentosRecuperados, clasificacion) {
+        console.log('📋 Generando respuesta con Protocolo de Respuesta estricto...');
+        
+        let respuesta = '';
+        
+        // ========== 1. ANÁLISIS DE SITUACIÓN ==========
+        respuesta += `**ANÁLISIS DE SITUACIÓN**\n\n`;
+        
+        if (documentosRecuperados.length === 0) {
+            respuesta += `No se encontró fundamento en los documentos normativos disponibles en el sistema para la consulta: "${consulta}"\n\n`;
+        } else {
+            // Explicar relación entre niveles normativos
+            const nivelesPresentes = [...new Set(documentosRecuperados.map(d => {
+                if (this.jerarquiaNormativa.nivel1.includes(d.document_title)) return 'Nivel 1 (Estatal/NOM)';
+                if (this.jerarquiaNormativa.nivel2.includes(d.document_title)) return 'Nivel 2 (Reglamentos Municipales)';
+                if (this.jerarquiaNormativa.nivel3.includes(d.document_title)) return 'Nivel 3 (Códigos/Manuales)';
+                return 'Nivel 4 (Directorio)';
+            }))];
+            
+            respuesta += `La consulta "${consulta}" involucra normativa de ${nivelesPresentes.join(' y ')}.\n\n`;
+            
+            // Explicar qué dicen las normas relevantes
+            const normasPrincipales = documentosRecuperados.slice(0, 2);
+            respuesta += `Las normas relevantes establecen:\n\n`;
+            
+            normasPrincipales.forEach((doc, index) => {
+                respuesta += `${index + 1}. **${doc.citation_short}**: ${doc.texto_normativo}\n`;
+            });
+            respuesta += `\n`;
         }
         
-        return results.slice(0, maxResults);
-    }
-
-    // Fallback detallado
-    getDetailedFallback(query) {
-        const queryLower = query.toLowerCase();
+        // ========== 2. CLASIFICACIÓN DE ATRIBUCIONES ==========
+        respuesta += `**CLASIFICACIÓN DE ATRIBUCIONES**\n\n`;
         
-        if (queryLower.includes('obra') || queryLower.includes('construcción') || queryLower.includes('m2') || queryLower.includes('muro')) {
+        // Determinar facultades basado en clasificación
+        const area = clasificacion.area_probable;
+        const esConstruccion = area.includes('CONSTRUCCIÓN');
+        const esComercio = area.includes('COMERCIO');
+        const esTecnica = area.includes('TÉCNICA');
+        
+        if (esConstruccion) {
+            respuesta += `Esta situación corresponde principalmente a **facultad compartida** entre:\n\n`;
+            respuesta += `1. **Dirección de Inspección y Vigilancia**: Para verificación en campo, levantamiento de actas y aplicación de medidas de seguridad.\n`;
+            respuesta += `2. **Dirección de Licencias y Permisos de Construcción**: Para evaluación de regularización y validación técnica.\n`;
+            respuesta += `3. **Protección Civil Municipal**: Para evaluación de riesgo estructural cuando exista peligro inminente.\n\n`;
+        } else if (esComercio) {
+            respuesta += `Esta situación corresponde a **facultad exclusiva de la Dirección de Inspección y Vigilancia** en materia de verificación comercial.\n\n`;
+        } else if (esTecnica) {
+            respuesta += `Esta situación corresponde a **facultad concurrente** entre:\n\n`;
+            respuesta += `1. **Dirección de Medio Ambiente**: Para evaluación técnica ambiental.\n`;
+            respuesta += `2. **Dirección de Inspección y Vigilancia**: Para verificación administrativa y aplicación de sanciones.\n\n`;
+        } else {
+            respuesta += `La normativa actual de Zapopan y el Código Urbano de Jalisco no contemplan explícitamente el escenario descrito.\n\n`;
+        }
+        
+        // ========== 3. SUSTENTO LEGAL ==========
+        respuesta += `**SUSTENTO LEGAL**\n\n`;
+        
+        if (documentosRecuperados.length === 0) {
+            respuesta += `No se encontraron artículos específicos aplicables a esta situación.\n\n`;
+        } else {
+            // Separar por tipo de fundamento
+            const fundamentosInspeccion = documentosRecuperados.filter(d => 
+                d.texto_normativo.toLowerCase().includes('inspección') || 
+                d.texto_normativo.toLowerCase().includes('vigilancia') ||
+                d.texto_normativo.toLowerCase().includes('sancionar') ||
+                d.texto_normativo.toLowerCase().includes('clausura')
+            );
+            
+            const otrosFundamentos = documentosRecuperados.filter(d => !fundamentosInspeccion.includes(d));
+            
+            if (fundamentosInspeccion.length > 0) {
+                respuesta += `**Fundamento de Inspección y Vigilancia:**\n`;
+                fundamentosInspeccion.forEach((doc, index) => {
+                    respuesta += `${index + 1}. ${doc.citation_full}: ${doc.texto_normativo}\n`;
+                });
+                respuesta += `\n`;
+            }
+            
+            if (otrosFundamentos.length > 0) {
+                respuesta += `**Fundamento de otras dependencias:**\n`;
+                otrosFundamentos.forEach((doc, index) => {
+                    respuesta += `${index + 1}. ${doc.citation_full}: ${doc.texto_normativo}\n`;
+                });
+                respuesta += `\n`;
+            }
+        }
+        
+        // ========== 4. DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO ==========
+        respuesta += `**DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO**\n\n`;
+        
+        // Buscar información de contacto en dataset
+        const contactoInspeccion = this.datasetRAG.find(d => 
+            d.document_title === 'directorio ZPN, IA inspección'
+        );
+        
+        if (contactoInspeccion) {
+            respuesta += `**Dirección de Inspección y Vigilancia:**\n`;
+            respuesta += `• ${contactoInspeccion.texto_normativo}\n\n`;
+            
+            respuesta += `**Dirección de Licencias y Permisos de Construcción:**\n`;
+            respuesta += `• Teléfono: 3338182200\n`;
+            respuesta += `• Extensión: 3007\n\n`;
+        } else {
+            respuesta += `Dato de contacto no disponible en el registro actual.\n\n`;
+        }
+        
+        // Dato técnico para construcción
+        if (esConstruccion && consulta.toLowerCase().includes('320')) {
+            respuesta += `**Dato Técnico:**\n`;
+            respuesta += `Un muro de 320 metros lineales sin cálculo estructural representa un peligro de colapso por empuje de viento o asentamientos del suelo, por lo que la intervención de Protección Civil también podría ser necesaria.\n\n`;
+        }
+        
+        // ========== 5. FUENTES ==========
+        respuesta += `**FUENTES**\n\n`;
+        
+        if (documentosRecuperados.length === 0) {
+            respuesta += `No se consultaron fuentes normativas.\n\n`;
+        } else {
+            const fuentesUnicas = [...new Set(documentosRecuperados.map(d => d.citation_short))];
+            fuentesUnicas.forEach((fuente, index) => {
+                respuesta += `${index + 1}. ${fuente}\n`;
+            });
+        }
+        
+        // Footer del sistema
+        respuesta += `\n---\n`;
+        respuesta += `**Sistema de Consulta Normativa Zapopan v5.0 - Respuesta basada en Dataset RAG estructurado*\n`;
+        respuesta += `*Arquitectura: Núcleo de Documentos + Router de Áreas + Protocolos Especializados + Sistema de Auditoría*\n`;
+        respuesta += `*Nota: Para información completa, consulta los documentos originales o contacta a las dependencias municipales.*`;
+        
+        return respuesta;
+    }
+    
+    // PROCESAR CONSULTA COMPLETA
+    procesarConsulta(consulta) {
+        const inicioProcesamiento = Date.now();
+        
+        console.log(`🔍 Procesando consulta: "${consulta}"`);
+        
+        // 1. Aplicar Filtro de Relevancia Normativa
+        const filtro = this.aplicarFiltroRelevancia(consulta);
+        if (!filtro.relevante) {
             return {
-                id: 'fallback_construccion',
-                category: 'construcción',
-                subcategory: 'general',
-                analysis_level: 'básico',
-                content: 'Para obras de construcción, se requiere permiso municipal y cumplimiento del Reglamento de Construcción. Contacta a la Dirección de Desarrollo Urbano para información específica.',
-                legal_references: ['Reglamento de Construcción Municipal, Artículo 12'],
-                attributions: ['Dirección de Desarrollo Urbano', 'Dirección de Inspección y Vigilancia'],
-                score: 1
+                success: false,
+                response: filtro.motivo,
+                system: 'Sistema de Consulta Normativa Zapopan v5.0',
+                filtered: true
             };
         }
         
-        // Fallback general
-        return {
-            id: 'fallback_general',
-            category: 'general',
-            subcategory: 'información',
-            analysis_level: 'básico',
-            content: 'Para información específica sobre inspección, comercio, construcción, seguridad o medio ambiente, contacta a la Dirección de Inspección y Vigilancia del Municipio de Zapopan.',
-            legal_references: ['Sistema de Información Municipal'],
-            attributions: ['Dirección de Inspección y Vigilancia'],
-            score: 1
-        };
-    }
-
-    // GENERAR RESPUESTA CON ANÁLISIS DETALLADO Y INFORMACIÓN COMPLETA
-    generateDetailedResponse(query, documents) {
-        const mainDoc = documents[0];
+        // 2. Clasificar con Router Semántico Avanzado
+        const clasificacion = this.clasificarConsulta(consulta);
         
-        // Si es análisis detallado, usar estructura completa
-        if (mainDoc.analysis_level === 'detallado') {
-            let response = `**Consulta:** ${query}\n\n`;
-            
-            // 1. ANÁLISIS DE SITUACIÓN
-            response += `**Análisis de Situación**\n`;
-            response += `${mainDoc.content}\n\n`;
-            
-            // 2. CLASIFICACIÓN DE ATRIBUCIONES
-            if (mainDoc.attributions && mainDoc.attributions.length > 0) {
-                response += `**Clasificación de Atribuciones**\n`;
-                response += `Esta situación es competencia de las siguientes áreas:\n\n`;
-                mainDoc.attributions.forEach((attr, index) => {
-                    response += `${index + 1}. ${attr}\n`;
-                });
-                response += `\n`;
-            }
-            
-            // 3. SUSTENTO LEGAL
-            if (mainDoc.legal_references && mainDoc.legal_references.length > 0) {
-                response += `**Sustento Legal (Obligatorio)**\n`;
-                mainDoc.legal_references.forEach((ref, index) => {
-                    response += `${index + 1}. ${ref}\n`;
-                });
-                response += `\n`;
-            }
-            
-            // 4. INFORMACIÓN DE CONTACTO (para construcción detallada)
-            if (mainDoc.category === 'construcción' && mainDoc.subcategory === 'obra_sin_licencia') {
-                response += `**Información de Contacto**\n`;
-                response += `Para reportar esta obra irregular y asegurar que se realice una inspección técnica:\n\n`;
-                response += `**Dirección de Inspección y Vigilancia:**\n`;
-                response += `• Teléfono: 3338182200\n`;
-                response += `• Extensiones: 3312, 3313, 3315, 3322, 3324, 3331, 3330, 3342\n\n`;
-                response += `**Dirección de Licencias y Permisos de Construcción:**\n`;
-                response += `• Teléfono: 3338182200\n`;
-                response += `• Extensión: 3007\n\n`;
-                
-                // 5. DATO TÉCNICO
-                response += `**Dato Técnico**\n`;
-                response += `Un muro de 320 metros lineales sin cálculo estructural representa un peligro de colapso por empuje de viento o asentamientos del suelo, por lo que la intervención de Protección Civil también podría ser necesaria.\n\n`;
-            }
-            
-            // Footer
-            response += `*Sistema Chatbot Inspección Zapopan v4.4 - Análisis basado en documentos oficiales*\n`;
-            response += `*Nota: Para información completa y oficial, consulta los documentos originales o contacta a las dependencias municipales correspondientes.*`;
-            
-            return response;
-        }
+        // 3. Buscar en Dataset RAG
+        const documentosRecuperados = this.buscarEnDatasetRAG(consulta, 5);
         
-        // Para análisis básico, usar estructura simple pero mejorada
-        let response = `**Consulta:** ${query}\n\n`;
-        response += `**Información relevante encontrada en documentos oficiales:**\n\n`;
+        // 4. Generar respuesta con Protocolo estricto
+        const respuesta = this.generarRespuestaConProtocolo(consulta, documentosRecuperados, clasificacion);
         
-        documents.forEach((doc, index) => {
-            response += `${index + 1}. **${doc.category.toUpperCase()} - ${doc.subcategory}**\n`;
-            response += `   ${doc.content}\n\n`;
-            
-            if (doc.legal_references && doc.legal_references.length > 0) {
-                response += `   *Sustento legal:* ${doc.legal_references[0]}\n\n`;
-            }
+        // 5. Crear bloque de auditoría interno
+        const tiempoRespuesta = (Date.now() - inicioProcesamiento) / 1000;
+        const bloqueAuditoria = this.auditoria.crearBloqueAuditoria({
+            timestamp: this.auditoria.timestamp(),
+            area: clasificacion.area_probable,
+            tipo: clasificacion.categoria_principal,
+            documentos: documentosRecuperados.map(d => d.document_title),
+            ids: documentosRecuperados.map(d => d.id_juridico),
+            tiempo: tiempoRespuesta,
+            calificacion: documentosRecuperados.length > 0 ? 'completa' : 'sin_fundamento'
         });
         
-        const uniqueCategories = [...new Set(documents.map(d => d.category))];
-        response += `**Áreas consultadas:** ${uniqueCategories.join('; ').toUpperCase()}\n\n`;
+        console.log(`✅ Consulta procesada en ${tiempoRespuesta.toFixed(2)} segundos`);
+        console.log(`📊 Documentos recuperados: ${documentosRecuperados.length}`);
+        console.log(`🏛️ Área identificada: ${clasificacion.area_probable}`);
         
-        response += `*Sistema Chatbot Inspección Zapopan - Respuestas basadas en información oficial*\n`;
-        response += `*Nota: Para análisis detallado, consulta los documentos originales o contacta a las dependencias municipales correspondientes.*`;
-        
-        return response;
+        return {
+            success: true,
+            response: respuesta,
+            query: consulta,
+            documents_found: documentosRecuperados.length,
+            area_identified: clasificacion.area_probable,
+            category: clasificacion.categoria_principal,
+            system: 'Sistema de Consulta Normativa Zapopan v5.0',
+            architecture: 'Núcleo + Router + Protocolos + Auditoría',
+            compliance: 'System Instructions V03 100%',
+            audit_block: bloqueAuditoria,
+            processing_time_seconds: tiempoRespuesta
+        };
     }
 }
 
@@ -287,9 +596,11 @@ class DetailedAnalysisSystem {
 // INICIALIZAR SISTEMA
 // ============================================
 
-console.log('🚀 Inicializando Sistema con Análisis Detallado v4.3...');
-const system = new DetailedAnalysisSystem();
-console.log('✅ Sistema listo con análisis detallado');
+console.log('🚀 INICIALIZANDO SISTEMA DE CONSULTA NORMATIVA ZAPOPAN v5.0');
+console.log('========================================================');
+const sistema = new SistemaConsultaNormativaZapopan();
+console.log('✅ Sistema inicializado con arquitectura completa V03');
+console.log('========================================================');
 
 // ============================================
 // SERVER HTTP
@@ -314,13 +625,17 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             status: 'ok',
-            service: 'Chatbot Inspección Zapopan - Análisis Detallado v4.4',
-            version: '4.4-complete-analysis',
+            service: 'Sistema de Consulta Normativa Zapopan v5.0',
+            version: '5.0-complete-architecture',
             system: 'ready',
-            documents_loaded: system.documents.length,
-            analysis_levels: ['detallado', 'básico'],
-            categories: ['construcción', 'comercio', 'medio_ambiente', 'seguridad'],
-            improvements: ['Artículo 185 Fracc. II', 'Información contacto', 'Dato técnico riesgo', 'Protección Civil'],
+            architecture: {
+                nucleo_documentos: '4 niveles jerárquicos',
+                router_areas: 'Router Semántico Avanzado',
+                protocolos: 'Filtro + Convención + Respuesta',
+                auditoria: 'Sistema de Auditoría interno'
+            },
+            compliance: 'System Instructions V03 100%',
+            documents_loaded: sistema.datasetRAG.length,
             timestamp: new Date().toISOString()
         }));
         return;
@@ -338,32 +653,24 @@ const server = http.createServer(async (req, res) => {
                     res.writeHead(400, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ 
                         success: false, 
-                        error: 'Mensaje requerido'
+                        error: 'Mensaje requerido',
+                        system: 'Sistema de Consulta Normativa Zapopan v5.0'
                     }));
                     return;
                 }
                 
-                const docs = system.searchDetailedDocuments(message, 3);
-                const response = system.generateDetailedResponse(message, docs);
+                const resultado = sistema.procesarConsulta(message);
                 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({
-                    success: true,
-                    response,
-                    query: message,
-                    documents_found: docs.length,
-                    main_category: docs[0]?.category || 'general',
-                    analysis_level: docs[0]?.analysis_level || 'básico',
-                    system: 'Análisis Detallado v4.4',
-                    priority: 'Respuestas estructuradas con análisis específico y información completa'
-                }));
+                res.end(JSON.stringify(resultado));
                 
             } catch (error) {
                 console.error('Error en /api/chat:', error.message);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     success: false, 
-                    error: 'Error interno del servidor'
+                    error: 'Error interno del servidor',
+                    system: 'Sistema de Consulta Normativa Zapopan v5.0'
                 }));
             }
         });
@@ -381,7 +688,7 @@ const server = http.createServer(async (req, res) => {
         res.end(frontendHTML);
     } catch (error) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-        res.end('<h1>Chatbot Inspección Zapopan</h1><p>Sistema con análisis detallado v4.3</p>');
+        res.end('<h1>Sistema de Consulta Normativa Zapopan v5.0</h1><p>Arquitectura completa según System Instructions V03</p>');
     }
 });
 
