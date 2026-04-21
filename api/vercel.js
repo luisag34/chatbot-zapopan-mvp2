@@ -34,11 +34,13 @@ class DetailedAnalysisSystem {
                     'Reglamento de Construcción de Zapopan, Artículo 34: Establece que todo propietario debe tramitar ante la Dirección la licencia correspondiente para realizar cualquier obra de construcción o bardeo.',
                     'Reglamento de Construcción de Zapopan, Artículo 149: Dicta que es obligación del constructor contar en todo momento con la licencia original, los planos autorizados y la bitácora en el sitio.',
                     'Reglamento de Construcción de Zapopan, Artículo 177: Faculta a las autoridades municipales para sancionar cualquier acto u omisión que contravenga el reglamento.',
+                    'Reglamento de Construcción de Zapopan, Artículo 185, Fracción II: Señala que procederá la clausura de la obra por carecer de la licencia o permiso correspondiente.',
                     'Código Urbano para el Estado de Jalisco, Artículo 283: Otorga validez legal a la facultad del municipio para expedir licencias y vigilar que las construcciones se ajusten a la ley estatal y municipal.'
                 ],
                 attributions: [
                     'Facultad exclusiva de la Dirección de Inspección y Vigilancia: Es la autoridad encargada de acudir de inmediato para realizar la visita de inspección. Al constatar la falta de licencia, su deber es aplicar la clausura total de los trabajos y asegurar que no se continúe con la obra ilegal.',
-                    'Dirección de Licencias y Permisos de Construcción: Es la dependencia responsable de evaluar si esta obra puede ser regularizada en el futuro, siempre que cumpla con el uso de suelo y las normas técnicas.'
+                    'Dirección de Licencias y Permisos de Construcción: Es la dependencia responsable de evaluar si esta obra puede ser regularizada en el futuro, siempre que cumpla con el uso de suelo y las normas técnicas.',
+                    'Protección Civil Municipal: Para evaluación de riesgo estructural, especialmente en muros de gran longitud sin cálculo estructural.'
                 ],
                 keywords: ['obra', 'm2', 'muro', 'ml', 'licencia', 'construcción', 'permiso', '134', '320', 'sin licencia', 'bardeo', 'perimetral']
             },
@@ -204,7 +206,7 @@ class DetailedAnalysisSystem {
         };
     }
 
-    // GENERAR RESPUESTA CON ANÁLISIS DETALLADO
+    // GENERAR RESPUESTA CON ANÁLISIS DETALLADO Y INFORMACIÓN COMPLETA
     generateDetailedResponse(query, documents) {
         const mainDoc = documents[0];
         
@@ -232,10 +234,27 @@ class DetailedAnalysisSystem {
                 mainDoc.legal_references.forEach((ref, index) => {
                     response += `${index + 1}. ${ref}\n`;
                 });
+                response += `\n`;
+            }
+            
+            // 4. INFORMACIÓN DE CONTACTO (para construcción detallada)
+            if (mainDoc.category === 'construcción' && mainDoc.subcategory === 'obra_sin_licencia') {
+                response += `**Información de Contacto**\n`;
+                response += `Para reportar esta obra irregular y asegurar que se realice una inspección técnica:\n\n`;
+                response += `**Dirección de Inspección y Vigilancia:**\n`;
+                response += `• Teléfono: 3338182200\n`;
+                response += `• Extensiones: 3312, 3313, 3315, 3322, 3324, 3331, 3330, 3342\n\n`;
+                response += `**Dirección de Licencias y Permisos de Construcción:**\n`;
+                response += `• Teléfono: 3338182200\n`;
+                response += `• Extensión: 3007\n\n`;
+                
+                // 5. DATO TÉCNICO
+                response += `**Dato Técnico**\n`;
+                response += `Un muro de 320 metros lineales sin cálculo estructural representa un peligro de colapso por empuje de viento o asentamientos del suelo, por lo que la intervención de Protección Civil también podría ser necesaria.\n\n`;
             }
             
             // Footer
-            response += `\n*Sistema Chatbot Inspección Zapopan - Análisis basado en documentos oficiales*\n`;
+            response += `*Sistema Chatbot Inspección Zapopan v4.4 - Análisis basado en documentos oficiales*\n`;
             response += `*Nota: Para información completa y oficial, consulta los documentos originales o contacta a las dependencias municipales correspondientes.*`;
             
             return response;
@@ -295,12 +314,13 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             status: 'ok',
-            service: 'Chatbot Inspección Zapopan - Análisis Detallado v4.3',
-            version: '4.3-detailed-analysis',
+            service: 'Chatbot Inspección Zapopan - Análisis Detallado v4.4',
+            version: '4.4-complete-analysis',
             system: 'ready',
             documents_loaded: system.documents.length,
             analysis_levels: ['detallado', 'básico'],
             categories: ['construcción', 'comercio', 'medio_ambiente', 'seguridad'],
+            improvements: ['Artículo 185 Fracc. II', 'Información contacto', 'Dato técnico riesgo', 'Protección Civil'],
             timestamp: new Date().toISOString()
         }));
         return;
@@ -334,8 +354,8 @@ const server = http.createServer(async (req, res) => {
                     documents_found: docs.length,
                     main_category: docs[0]?.category || 'general',
                     analysis_level: docs[0]?.analysis_level || 'básico',
-                    system: 'Análisis Detallado v4.3',
-                    priority: 'Respuestas estructuradas con análisis específico'
+                    system: 'Análisis Detallado v4.4',
+                    priority: 'Respuestas estructuradas con análisis específico y información completa'
                 }));
                 
             } catch (error) {
