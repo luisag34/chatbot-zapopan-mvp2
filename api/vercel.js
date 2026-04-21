@@ -283,6 +283,36 @@ class SistemaConsultaNormativaZapopan {
                 
                 // 4. Verificar si corresponde a materia regulada
                 if (!esFaltaAdministrativa && !tieneRelevanciaNormativa) {
+                    // INVESTIGAR si podría ser facultad de otras direcciones (no Inspección)
+                    const posiblesDirecciones = [];
+                    
+                    // Palabras clave para identificar posibles direcciones
+                    const palabrasPorDireccion = {
+                        'Dirección de Agua Potable y Alcantarillado Zapopan': ['agua', 'drenaje', 'alcantarillado', 'fuga', 'tubería'],
+                        'Dirección de Alumbrado Público Zapopan': ['alumbrado', 'luz', 'poste', 'lámpara', 'iluminación'],
+                        'Dirección de Aseo Público Zapopan': ['basura', 'recolección', 'limpieza', 'barrido', 'desechos'],
+                        'Dirección de Movilidad Zapopan': ['tránsito', 'semáforo', 'estacionamiento', 'vialidad', 'peatón'],
+                        'Dirección de Parques y Jardines Zapopan': ['parque', 'jardín', 'área verde', 'plaza', 'banqueta'],
+                        'Dirección de Sanidad Animal / Protección Animal Zapopan': ['animal', 'perro', 'gato', 'maltrato', 'veterinaria']
+                    };
+                    
+                    for (const [direccion, palabras] of Object.entries(palabrasPorDireccion)) {
+                        for (const palabra of palabras) {
+                            if (consultaLower.includes(palabra)) {
+                                posiblesDirecciones.push(direccion);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (posiblesDirecciones.length > 0) {
+                        return {
+                            relevante: false,
+                            motivo: `La consulta no corresponde a facultades de la Dirección de Inspección y Vigilancia. Sin embargo, podría ser atendida por: ${posiblesDirecciones.join(', ')}.`,
+                            otras_direcciones: posiblesDirecciones
+                        };
+                    }
+                    
                     return {
                         relevante: false,
                         motivo: 'La consulta no corresponde a una materia regulada por la normativa disponible en el sistema.'
@@ -650,43 +680,66 @@ class SistemaConsultaNormativaZapopan {
         // ========== 4. DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO ==========
         respuesta += `**DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO**\n\n`;
         
-        // Base de datos de contactos (simulada - en sistema real vendría de Dataset RAG)
+        // Base de datos de contactos REAL del CSV "004 directorio y contactos_directorio ZPN, IA inspección - Hoja 1.csv"
         const contactosDirecciones = {
-            'Dirección de Inspección y Vigilancia': {
+            'Dirección de Inspección y Vigilancia Zapopan': {
                 telefono: '3338182200',
                 extensiones: '3312, 3313, 3315, 3322, 3324, 3331, 3330, 3342',
                 horario: 'Lunes a Viernes 08:00 - 15:00',
                 notas: 'Para reportes urgentes fuera de horario, contactar Protección Civil'
             },
-            'Licencias y Permisos de Construcción': {
+            'Dirección de Licencias y Permisos de Construcción Zapopan': {
                 telefono: '3338182200',
                 extension: '3007',
                 horario: 'Lunes a Viernes 09:00 - 14:00',
                 notas: 'Solo para trámites de regularización y autorizaciones'
             },
-            'Protección Civil': {
+            'Protección Civil Zapopan': {
                 telefono: '3338182200',
-                extension: '3350',
+                extensiones: '3778, 3782, 3783, 4701',
                 horario: '24/7 para emergencias',
                 notas: 'Atención inmediata para riesgos inminentes'
             },
-            'Medio Ambiente': {
+            'Dirección de Ecología y Medio Ambiente Zapopan': {
                 telefono: '3338182200',
-                extension: '3400',
+                extension: '3232',
                 horario: 'Lunes a Viernes 08:00 - 15:00',
                 notas: 'Evaluaciones técnicas ambientales'
             },
-            'Movilidad': {
-                telefono: '3338182200',
-                extension: '3200',
+            'Dirección de Movilidad Zapopan': {
+                telefono: '3310022800',
+                extensiones: '3522, 3534, 3529',
                 horario: 'Lunes a Viernes 08:00 - 15:00',
                 notas: 'Afectaciones a vía pública y tránsito'
             },
-            'Servicios Públicos': {
-                telefono: '3338182200',
-                extension: '3500',
+            'Dirección de Aseo Público Zapopan': {
+                telefonos: '3338332862, 3338332837',
                 horario: 'Lunes a Viernes 08:00 - 15:00',
-                notas: 'Basura, alumbrado, limpieza pública'
+                notas: 'Recolección de basura y limpieza pública'
+            },
+            'Dirección de Agua Potable y Alcantarillado Zapopan': {
+                telefono: '3310022800',
+                extensiones: '3546, 3576',
+                horario: 'Lunes a Viernes 08:00 - 15:00',
+                notas: 'Servicios de agua y drenaje'
+            },
+            'Dirección de Alumbrado Público Zapopan': {
+                telefono: '3310022800',
+                extension: '3560',
+                horario: 'Lunes a Viernes 08:00 - 15:00',
+                notas: 'Mantenimiento de alumbrado público'
+            },
+            'Dirección de Tianguis y Espacios Abiertos Zapopan': {
+                telefono: '3338182200',
+                extensiones: '2730, 2734, 2735',
+                horario: 'Lunes a Viernes 08:00 - 15:00',
+                notas: 'Regulación de tianguis y espacios públicos'
+            },
+            'Dirección de Sanidad Animal / Protección Animal Zapopan': {
+                telefono: '3338182200',
+                extensiones: '3280, 3281',
+                horario: 'Lunes a Viernes 08:00 - 15:00',
+                notas: 'Protección y sanidad animal'
             }
         };
         
@@ -749,11 +802,71 @@ class SistemaConsultaNormativaZapopan {
         // 1. Aplicar Filtro de Relevancia Normativa
         const filtro = this.aplicarFiltroRelevancia(consulta);
         if (!filtro.relevante) {
+            // Si el filtro identificó otras direcciones posibles, incluir sus contactos
+            let respuestaFiltro = filtro.motivo;
+            
+            if (filtro.otras_direcciones && filtro.otras_direcciones.length > 0) {
+                // Base de datos de contactos
+                const contactosDirecciones = {
+                    'Dirección de Agua Potable y Alcantarillado Zapopan': {
+                        telefono: '3310022800',
+                        extensiones: '3546, 3576',
+                        horario: 'Lunes a Viernes 08:00 - 15:00'
+                    },
+                    'Dirección de Alumbrado Público Zapopan': {
+                        telefono: '3310022800',
+                        extension: '3560',
+                        horario: 'Lunes a Viernes 08:00 - 15:00'
+                    },
+                    'Dirección de Aseo Público Zapopan': {
+                        telefonos: '3338332862, 3338332837',
+                        horario: 'Lunes a Viernes 08:00 - 15:00'
+                    },
+                    'Dirección de Movilidad Zapopan': {
+                        telefono: '3310022800',
+                        extensiones: '3522, 3534, 3529',
+                        horario: 'Lunes a Viernes 08:00 - 15:00'
+                    },
+                    'Dirección de Parques y Jardines Zapopan': {
+                        telefonos: '3338332862, 3338332837',
+                        horario: 'Lunes a Viernes 08:00 - 15:00'
+                    },
+                    'Dirección de Sanidad Animal / Protección Animal Zapopan': {
+                        telefono: '3338182200',
+                        extensiones: '3280, 3281',
+                        horario: 'Lunes a Viernes 08:00 - 15:00'
+                    }
+                };
+                
+                respuestaFiltro += `\n\n**DATOS DE CONTACTO DE LAS DIRECCIONES IDENTIFICADAS:**\n\n`;
+                
+                filtro.otras_direcciones.forEach(direccion => {
+                    const contacto = contactosDirecciones[direccion];
+                    if (contacto) {
+                        respuestaFiltro += `**${direccion}:**\n`;
+                        if (contacto.telefono) {
+                            respuestaFiltro += `• Teléfono: ${contacto.telefono}\n`;
+                        }
+                        if (contacto.telefonos) {
+                            respuestaFiltro += `• Teléfonos: ${contacto.telefonos}\n`;
+                        }
+                        if (contacto.extension) {
+                            respuestaFiltro += `• Extensión: ${contacto.extension}\n`;
+                        }
+                        if (contacto.extensiones) {
+                            respuestaFiltro += `• Extensiones: ${contacto.extensiones}\n`;
+                        }
+                        respuestaFiltro += `• Horario: ${contacto.horario}\n\n`;
+                    }
+                });
+            }
+            
             return {
                 success: false,
-                response: filtro.motivo,
+                response: respuestaFiltro,
                 system: 'Sistema de Consulta Normativa Zapopan v5.0',
-                filtered: true
+                filtered: true,
+                otras_direcciones: filtro.otras_direcciones || []
             };
         }
         
