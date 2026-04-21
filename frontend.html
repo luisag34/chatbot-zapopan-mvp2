@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Inspección Zapopan - Dirección de Inspección y Vigilancia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .header .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .header .version {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+        
+        .chat-container {
+            padding: 30px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            max-height: 400px;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            margin-left: auto;
+        }
+        
+        .bot-message {
+            background: #f1f8e9;
+            border-left: 4px solid #4caf50;
+            margin-right: auto;
+        }
+        
+        .message-header {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .message-content {
+            font-size: 15px;
+        }
+        
+        .message-content strong {
+            color: #1a237e;
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        #userInput {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        #userInput:focus {
+            outline: none;
+            border-color: #2196f3;
+        }
+        
+        #sendButton {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        #sendButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+        
+        #sendButton:active {
+            transform: translateY(0);
+        }
+        
+        .examples {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .examples h3 {
+            color: #1a237e;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .example-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .example-button {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .example-button:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #2196f3;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer a {
+            color: #2196f3;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            color: #666;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .chat-container {
+                padding: 20px;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .input-container {
+                flex-direction: column;
+            }
+            
+            #sendButton {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Chatbot Inspección Zapopan</h1>
+            <div class="subtitle">Dirección de Inspección y Vigilancia</div>
+            <div class="subtitle">Municipio de Zapopan, Jalisco</div>
+            <div class="version">Sistema MVP v4.0 - Respuestas basadas en reglamentos oficiales</div>
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-header">Asistente de Inspección</div>
+                    <div class="message-content">
+                        ¡Bienvenido al Chatbot de la Dirección de Inspección y Vigilancia de Zapopan!
+                        <br><br>
+                        Puedo ayudarte con información sobre:
+                        <br>
+                        • Facultades y competencias de la Dirección
+                        <br>
+                        • Requisitos para comercios y establecimientos
+                        <br>
+                        • Normas de seguridad e higiene
+                        <br>
+                        • Trámites y licencias municipales
+                        <br>
+                        • Reglamentos aplicables
+                        <br><br>
+                        <strong>Selecciona una pregunta de ejemplo o escribe tu consulta:</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="Escribe tu pregunta sobre inspección, comercio, construcción, seguridad..." autocomplete="off">
+                <button id="sendButton">Enviar</button>
+            </div>
+            
+            <div class="loading" id="loadingIndicator">
+                <div>Buscando información en reglamentos oficiales...</div>
+            </div>
+            
+            <div class="examples">
+                <h3>Preguntas de ejemplo:</h3>
+                <div class="example-buttons">
+                    <button class="example-button" data-question="¿Qué facultades tiene la Dirección de Inspección?">Facultades de Inspección</button>
+                    <button class="example-button" data-question="¿Qué requisitos debe cumplir un comercio?">Requisitos para comercios</button>
+                    <button class="example-button" data-question="¿Necesito permiso para obras de construcción?">Permisos de construcción</button>
+                    <button class="example-button" data-question="¿Qué normas de seguridad aplican a centros de trabajo?">Normas de seguridad</button>
+                    <button class="example-button" data-question="¿Cómo obtengo una licencia de funcionamiento?">Licencia de funcionamiento</button>
+                    <button class="example-button" data-question="¿Qué sanciones hay por incumplimiento?">Sanciones por incumplimiento</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Sistema MVP v4.0 - Respuestas basadas en reglamentos municipales oficiales</p>
+            <p>Para información completa y oficial, consulta los documentos en la Dirección de Inspección y Vigilancia</p>
+            <p>Municipio de Zapopan, Jalisco | <a href="/health" target="_blank">Ver estado del sistema</a></p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = window.location.origin + '/api/chat';
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        
+        // Ejemplos de preguntas
+        document.querySelectorAll('.example-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const question = button.getAttribute('data-question');
+                userInput.value = question;
+                sendMessage();
+            });
+        });
+        
+        // Enviar con Enter
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Enviar con botón
+        sendButton.addEventListener('click', sendMessage);
+        
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+            
+            // Agregar mensaje del usuario
+            addMessage(message, 'user');
+            userInput.value = '';
+            
+            // Mostrar loading
+            loadingIndicator.classList.add('active');
+            
+            try {
+                // Enviar a API
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addMessage(data.response, 'bot', data.sources);
+                } else {
+                    addMessage(`Error: ${data.error || 'No se pudo obtener respuesta'}`, 'bot');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage(`Lo siento, hubo un error al procesar tu consulta. Por favor intenta nuevamente.`, 'bot');
+            } finally {
+                // Ocultar loading
+                loadingIndicator.classList.remove('active');
+                // Scroll al final
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+        
+        function addMessage(content, type, sources = []) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}-message`;
+            
+            const header = type === 'bot' ? 'Asistente de Inspección' : 'Tú';
+            let messageContent = content;
+            
+            // Formatear respuesta del bot
+            if (type === 'bot') {
+                // Convertir markdown simple a HTML
+                messageContent = messageContent
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+                
+                // Agregar fuentes si existen
+                if (sources && sources.length > 0) {
+                    messageContent += `<br><br><small><strong>Fuentes consultadas:</strong> ${sources.join(', ')}</small>`;
+                }
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-header">${header}</div>
+                <div class="message-content">${messageContent}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Mensaje de bienvenida inicial
+        setTimeout(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 100);
+    </script>
+</body>
+</html>

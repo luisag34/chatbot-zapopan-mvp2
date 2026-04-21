@@ -1,34 +1,90 @@
-// Vercel-compatible Node.js API - VERSIÓN MÍNIMA VIABLE v4.0
-// Sistema mínimo funcional para Vercel Hobby (cold start < 100ms, memory < 10MB)
-// RAG simulado con respuestas predefinidas - FUNCIONALIDAD PRIMERO
+// Vercel-compatible Node.js API con FRONTEND HTML - v4.1
+// Sistema completo: Frontend HTML + API Chat + Health check
+// Optimizado para Vercel Hobby (cold start < 100ms)
 
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
 // ============================================
-// SISTEMA MÍNIMO VIABLE - CERO CARGA INICIAL
+// SISTEMA MÍNIMO VIABLE CON FRONTEND
 // ============================================
 
-class MinimalRAGSystem {
+class ChatbotSystem {
     constructor() {
-        this.loaded = true; // Siempre "cargado"
-        this.loadCount = 0; // Cero documentos reales
-        console.log('✅ Sistema mínimo viable inicializado (0 documentos, 0ms cold start)');
+        this.loaded = true;
+        this.loadCount = 0;
+        console.log('✅ Sistema Chatbot con frontend inicializado');
     }
 
-    // Búsqueda instantánea (siempre responde)
+    // Cargar frontend HTML
+    loadFrontend() {
+        try {
+            const frontendPath = path.join(__dirname, '..', 'frontend.html');
+            return fs.readFileSync(frontendPath, 'utf-8');
+        } catch (error) {
+            console.error('Error cargando frontend:', error.message);
+            return this.getBasicFrontend();
+        }
+    }
+
+    // Frontend básico de respaldo
+    getBasicFrontend() {
+        return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Inspección Zapopan</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+        .header { background: #1a237e; color: white; padding: 30px; border-radius: 10px 10px 0 0; }
+        .chat { padding: 20px; border: 1px solid #ddd; border-radius: 0 0 10px 10px; }
+        input, button { padding: 12px; margin: 10px 0; font-size: 16px; }
+        input { width: 70%; border: 2px solid #1a237e; border-radius: 6px; }
+        button { background: #1a237e; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .response { background: #f5f5f5; padding: 15px; margin: 15px 0; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Chatbot Inspección Zapopan</h1>
+        <p>Dirección de Inspección y Vigilancia - Municipio de Zapopan</p>
+    </div>
+    <div class="chat">
+        <h3>Consulta sobre inspección, comercio, construcción o seguridad:</h3>
+        <input type="text" id="query" placeholder="Escribe tu pregunta..." />
+        <button onclick="sendQuery()">Enviar</button>
+        <div id="response" class="response"></div>
+    </div>
+    <script>
+        async function sendQuery() {
+            const query = document.getElementById('query').value;
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = 'Procesando...';
+            
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: query })
+                });
+                const data = await res.json();
+                responseDiv.innerHTML = data.response.replace(/\\n/g, '<br>').replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
+            } catch (error) {
+                responseDiv.innerHTML = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>`;
+    }
+
+    // Búsqueda de respuestas predefinidas
     async searchDocuments(query, maxResults = 3) {
-        // Respuestas predefinidas basadas en palabras clave
-        const responses = this.getPredefinedResponses(query);
-        return responses.slice(0, maxResults);
-    }
-
-    // Respuestas predefinidas para consultas comunes
-    getPredefinedResponses(query) {
         const queryLower = query.toLowerCase();
         
-        // Mapeo de palabras clave a respuestas
         const keywordMap = {
-            // Inspección y vigilancia
             'inspección': [
                 {
                     text: 'La Dirección de Inspección y Vigilancia del Municipio de Zapopan tiene facultades para verificar el cumplimiento de normativas municipales en materia de comercio, construcción, condiciones de seguridad e higiene en centros de trabajo.',
@@ -44,7 +100,6 @@ class MinimalRAGSystem {
                 }
             ],
             
-            // Comercios
             'comercio': [
                 {
                     text: 'Los comercios deben contar con licencia de funcionamiento expedida por el municipio y cumplir con las Normas Oficiales Mexicanas (NOM) aplicables en materia de seguridad, higiene y protección ambiental.',
@@ -60,7 +115,6 @@ class MinimalRAGSystem {
                 }
             ],
             
-            // Construcción
             'construcción': [
                 {
                     text: 'Toda obra de construcción requiere permiso municipal previo y debe cumplir con el Reglamento de Construcción y el Código de Edificación del Municipio de Zapopan.',
@@ -76,7 +130,6 @@ class MinimalRAGSystem {
                 }
             ],
             
-            // Seguridad e higiene
             'seguridad': [
                 {
                     text: 'Los centros de trabajo deben cumplir con las condiciones de seguridad e higiene establecidas en las Normas Oficiales Mexicanas (NOM) correspondientes.',
@@ -92,7 +145,6 @@ class MinimalRAGSystem {
                 }
             ],
             
-            // Licencias y permisos
             'licencia': [
                 {
                     text: 'La licencia de funcionamiento es el documento que autoriza la operación de un establecimiento comercial, industrial o de servicios dentro del municipio.',
@@ -109,7 +161,6 @@ class MinimalRAGSystem {
             ]
         };
 
-        // Buscar palabras clave en la consulta
         const results = [];
         for (const [keyword, responses] of Object.entries(keywordMap)) {
             if (queryLower.includes(keyword)) {
@@ -117,7 +168,6 @@ class MinimalRAGSystem {
             }
         }
 
-        // Si no hay coincidencias, devolver respuesta general
         if (results.length === 0) {
             return [
                 {
@@ -125,17 +175,11 @@ class MinimalRAGSystem {
                     source: 'Sistema de Información Municipal',
                     article: 'Respuesta general',
                     relevance_score: 5
-                },
-                {
-                    text: 'Puedes encontrar información detallada en: 1) Reglamento Municipal de Inspección y Vigilancia, 2) Reglamento para el Comercio, Industria y Prestación de Servicios, 3) Reglamento de Construcción Municipal, 4) Normas Oficiales Mexicanas (NOM) aplicables.',
-                    source: 'Documentación Oficial',
-                    article: 'Referencias',
-                    relevance_score: 5
                 }
             ];
         }
 
-        return results;
+        return results.slice(0, maxResults);
     }
 
     generateResponse(query, documents) {
@@ -157,21 +201,22 @@ class MinimalRAGSystem {
                '**Información relevante:**\n\n' +
                context + '\n\n' +
                '**Fuentes:** ' + uniqueSources.join('; ') + '\n\n' +
-               '*Sistema MVP v4.0 - Respuestas basadas en reglamentos oficiales*\n' +
+               '*Sistema MVP v4.1 - Respuestas basadas en reglamentos oficiales*\n' +
                '*Nota: Sistema en fase inicial. Para información completa, consulta documentos oficiales.*';
     }
 }
 
 // ============================================
-// INICIALIZAR SISTEMA MÍNIMO VIABLE
+// INICIALIZAR SISTEMA
 // ============================================
 
-console.log('🚀 Inicializando sistema mínimo viable v4.0...');
-const ragSystem = new MinimalRAGSystem();
-console.log('✅ Sistema listo (cold start: ~0ms)');
+console.log('🚀 Inicializando Chatbot Zapopan con frontend v4.1...');
+const chatbot = new ChatbotSystem();
+const frontendHTML = chatbot.loadFrontend();
+console.log('✅ Sistema listo con frontend HTML');
 
 // ============================================
-// SERVER HTTP MÍNIMO VIABLE
+// SERVER HTTP COMPLETO
 // ============================================
 
 const server = http.createServer(async (req, res) => {
@@ -189,23 +234,22 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
-    // Health check instantáneo
+    // Health check
     if (url === '/health' || url === '/api/health') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             status: 'ok',
-            service: 'Chatbot Inspección Zapopan - MVP v4.0',
-            version: '4.0-minimal-viable',
+            service: 'Chatbot Inspección Zapopan - MVP v4.1 con Frontend',
+            version: '4.1-frontend',
             system: 'ready',
-            cold_start: '0ms (sistema mínimo)',
-            documents: 'predefinidos (fase inicial)',
-            timestamp: new Date().toISOString(),
-            note: 'Sistema funcional - Cold start optimizado para Vercel Hobby'
+            frontend: 'loaded',
+            cold_start: 'optimized',
+            timestamp: new Date().toISOString()
         }));
         return;
     }
     
-    // Chat endpoint instantáneo (timeout 3s máximo)
+    // Chat endpoint
     if ((url === '/api/chat' || url === '/chat') && method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -222,9 +266,8 @@ const server = http.createServer(async (req, res) => {
                     return;
                 }
                 
-                // Respuesta instantánea (sin timeout real)
-                const docs = await ragSystem.searchDocuments(message, 3);
-                const response = ragSystem.generateResponse(message, docs);
+                const docs = await chatbot.searchDocuments(message, 3);
+                const response = chatbot.generateResponse(message, docs);
                 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({
@@ -233,34 +276,28 @@ const server = http.createServer(async (req, res) => {
                     query: message,
                     documents_found: docs.length,
                     sources: [...new Set(docs.map(d => d.source))],
-                    system: 'MVP v4.0 - Minimal Viable Product',
-                    performance: 'instant (cold start optimized)',
-                    phase: 'initial (predefined responses)'
+                    system: 'MVP v4.1 con Frontend',
+                    performance: 'optimized'
                 }));
                 
             } catch (error) {
-                console.error('Error en /api/chat: ' + error.message);
+                console.error('Error en /api/chat:', error.message);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     success: false, 
-                    error: 'Error interno del servidor',
-                    system: 'MVP v4.0'
+                    error: 'Error interno del servidor'
                 }));
             }
         });
         return;
     }
     
-    // Simple response for other routes
-    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-    res.end('Chatbot Inspección Zapopan - MVP v4.0 (Minimal Viable Product)\n\n' +
-            '✅ SISTEMA FUNCIONAL - COLD START OPTIMIZADO\n\n' +
-            'Endpoints:\n' +
-            '• POST /api/chat - Chat con respuestas predefinidas\n' +
-            '• GET /health - Health check instantáneo\n\n' +
-            'Fase: Inicial - Respuestas basadas en reglamentos oficiales\n' +
-            'Objetivo: Sistema 100% funcional en Vercel Hobby\n' +
-            'Cold start: < 100ms garantizado');
+    // Servir frontend HTML para cualquier otra ruta
+    res.writeHead(200, { 
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+    });
+    res.end(frontendHTML);
 });
 
 // ============================================
