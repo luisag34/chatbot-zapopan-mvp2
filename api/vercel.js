@@ -1,190 +1,228 @@
-// Vercel-compatible Node.js API con FRONTEND HTML - v4.1
-// Sistema completo: Frontend HTML + API Chat + Health check
-// Optimizado para Vercel Hobby (cold start < 100ms)
+// Vercel-compatible Node.js API con RAG REAL - VERSIÓN OPTIMIZADA
+// Sistema optimizado para Vercel Hobby plan (1GB RAM, 10s timeout)
+// CommonJS para máxima compatibilidad Vercel
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
 // ============================================
-// SISTEMA MÍNIMO VIABLE CON FRONTEND
+// SISTEMA RAG OPTIMIZADO PARA VERCEL
 // ============================================
 
-class ChatbotSystem {
+class OptimizedRAGSystem {
     constructor() {
-        this.loaded = true;
+        this.documents = [];
+        this.keywordIndex = new Map();
+        this.loaded = false;
         this.loadCount = 0;
-        console.log('✅ Sistema Chatbot con frontend inicializado');
+        this.loadStartTime = null;
     }
 
-    // Cargar frontend HTML
-    loadFrontend() {
+    // Carga optimizada: solo cargar cuando sea necesario
+    async loadDocumentsLazy() {
+        if (this.loaded) return this.loadCount;
+
+        console.log('📚 Cargando documentos RAG (modo lazy)...');
+        this.loadStartTime = Date.now();
+        
+        const documentsPath = path.join(__dirname, '..', 'data', 'documents');
+        
         try {
-            const frontendPath = path.join(__dirname, '..', 'frontend.html');
-            return fs.readFileSync(frontendPath, 'utf-8');
+            // OPTIMIZACIÓN: Cargar solo archivos combinados primero
+            const combinedFiles = this.findCombinedJSONLFiles(documentsPath);
+            console.log('Encontrados ' + combinedFiles.length + ' archivos combinados');
+
+            let totalLoaded = 0;
+            
+            // Cargar solo archivos combinados (más eficiente)
+            for (const jsonlFile of combinedFiles.slice(0, 4)) { // Limitar a 4 archivos
+                try {
+                    const fileContent = fs.readFileSync(jsonlFile, 'utf-8');
+                    const lines = fileContent.split('\n').filter(line => line.trim());
+                    
+                    // OPTIMIZACIÓN: Limitar registros por archivo
+                    const maxLines = 1000;
+                    for (let i = 0; i < Math.min(lines.length, maxLines); i++) {
+                        try {
+                            const doc = JSON.parse(lines[i]);
+                            this.documents.push(doc);
+                            this.indexDocumentOptimized(doc, this.documents.length - 1);
+                            totalLoaded++;
+                        } catch (parseError) {
+                            // Ignorar errores de parsing
+                        }
+                    }
+                } catch (fileError) {
+                    console.log('Error leyendo ' + path.basename(jsonlFile));
+                }
+            }
+
+            this.loaded = true;
+            this.loadCount = totalLoaded;
+            const loadTime = Date.now() - this.loadStartTime;
+            
+            console.log('✅ Cargados ' + totalLoaded + ' documentos (optimizado)');
+            console.log('🔍 Índice con ' + this.keywordIndex.size + ' palabras clave');
+            console.log('⏱️  Tiempo carga: ' + loadTime + 'ms');
+            
+            return totalLoaded;
+            
         } catch (error) {
-            console.error('Error cargando frontend:', error.message);
-            return this.getBasicFrontend();
+            console.error('❌ Error cargando documentos: ' + error.message);
+            return 0;
         }
     }
 
-    // Frontend básico de respaldo
-    getBasicFrontend() {
-        return `<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Inspección Zapopan</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        .header { background: #1a237e; color: white; padding: 30px; border-radius: 10px 10px 0 0; }
-        .chat { padding: 20px; border: 1px solid #ddd; border-radius: 0 0 10px 10px; }
-        input, button { padding: 12px; margin: 10px 0; font-size: 16px; }
-        input { width: 70%; border: 2px solid #1a237e; border-radius: 6px; }
-        button { background: #1a237e; color: white; border: none; border-radius: 6px; cursor: pointer; }
-        .response { background: #f5f5f5; padding: 15px; margin: 15px 0; border-radius: 6px; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>Chatbot Inspección Zapopan</h1>
-        <p>Dirección de Inspección y Vigilancia - Municipio de Zapopan</p>
-    </div>
-    <div class="chat">
-        <h3>Consulta sobre inspección, comercio, construcción o seguridad:</h3>
-        <input type="text" id="query" placeholder="Escribe tu pregunta..." />
-        <button onclick="sendQuery()">Enviar</button>
-        <div id="response" class="response"></div>
-    </div>
-    <script>
-        async function sendQuery() {
-            const query = document.getElementById('query').value;
-            const responseDiv = document.getElementById('response');
-            responseDiv.innerHTML = 'Procesando...';
-            
+    // Encontrar solo archivos combinados (más eficientes)
+    findCombinedJSONLFiles(dirPath) {
+        const files = [];
+        const combinedPatterns = [
+            '_combinado.jsonl',
+            '_dataset_rag_combinado.jsonl',
+            '_chunks_ia_combinados.jsonl'
+        ];
+        
+        function traverse(currentPath) {
             try {
-                const res = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: query })
-                });
-                const data = await res.json();
-                responseDiv.innerHTML = data.response.replace(/\\n/g, '<br>').replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
+                const items = fs.readdirSync(currentPath, { withFileTypes: true });
+                
+                for (const item of items) {
+                    const fullPath = path.join(currentPath, item.name);
+                    
+                    if (item.isDirectory()) {
+                        traverse(fullPath);
+                    } else if (item.isFile() && item.name.endsWith('.jsonl')) {
+                        // Solo incluir archivos combinados
+                        if (combinedPatterns.some(pattern => item.name.includes(pattern))) {
+                            files.push(fullPath);
+                        }
+                    }
+                }
             } catch (error) {
-                responseDiv.innerHTML = 'Error: ' + error.message;
+                // Ignorar errores de acceso
             }
         }
-    </script>
-</body>
-</html>`;
+        
+        traverse(dirPath);
+        return files;
     }
 
-    // Búsqueda de respuestas predefinidas
+    // Indexación optimizada
+    indexDocumentOptimized(doc, docIndex) {
+        const text = doc.text || doc.content || '';
+        if (!text) return;
+
+        // OPTIMIZACIÓN: Indexar solo palabras clave importantes
+        const words = text.toLowerCase()
+            .replace(/[^\w\sáéíóúñ]/g, ' ')
+            .split(/\s+/)
+            .filter(word => word.length > 4) // Solo palabras >4 letras
+            .slice(0, 10); // Solo primeras 10 palabras
+
+        for (const word of words) {
+            if (!this.keywordIndex.has(word)) {
+                this.keywordIndex.set(word, []);
+            }
+            // OPTIMIZACIÓN: Limitar índices por palabra
+            if (this.keywordIndex.get(word).length < 100) {
+                this.keywordIndex.get(word).push(docIndex);
+            }
+        }
+    }
+
+    // Búsqueda optimizada
     async searchDocuments(query, maxResults = 3) {
-        const queryLower = query.toLowerCase();
-        
-        const keywordMap = {
-            'inspección': [
-                {
-                    text: 'La Dirección de Inspección y Vigilancia del Municipio de Zapopan tiene facultades para verificar el cumplimiento de normativas municipales en materia de comercio, construcción, condiciones de seguridad e higiene en centros de trabajo.',
-                    source: 'Reglamento Municipal de Inspección y Vigilancia',
-                    article: 'Artículo 15',
-                    relevance_score: 10
-                },
-                {
-                    text: 'Los inspectores municipales pueden realizar visitas de verificación a establecimientos comerciales, industriales y de servicios para constatar el cumplimiento de los reglamentos aplicables.',
-                    source: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
-                    article: 'Artículo 22',
-                    relevance_score: 9
+        if (!this.loaded) {
+            await this.loadDocumentsLazy();
+        }
+
+        if (this.documents.length === 0) {
+            return this.getFallbackDocuments();
+        }
+
+        const queryWords = query.toLowerCase()
+            .replace(/[^\w\sáéíóúñ]/g, ' ')
+            .split(/\s+/)
+            .filter(word => word.length > 3);
+
+        const docScores = new Map();
+
+        // Búsqueda optimizada
+        for (const word of queryWords) {
+            if (this.keywordIndex.has(word)) {
+                const docIndices = this.keywordIndex.get(word);
+                // OPTIMIZACIÓN: Limitar procesamiento
+                for (let i = 0; i < Math.min(docIndices.length, 50); i++) {
+                    const docIndex = docIndices[i];
+                    const currentScore = docScores.get(docIndex) || 0;
+                    docScores.set(docIndex, currentScore + 1);
                 }
-            ],
-            
-            'comercio': [
-                {
-                    text: 'Los comercios deben contar con licencia de funcionamiento expedida por el municipio y cumplir con las Normas Oficiales Mexicanas (NOM) aplicables en materia de seguridad, higiene y protección ambiental.',
-                    source: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
-                    article: 'Artículo 8',
-                    relevance_score: 10
-                },
-                {
-                    text: 'Los establecimientos comerciales deben mantener condiciones adecuadas de seguridad e higiene para protección de trabajadores y clientes.',
-                    source: 'NOM-011-STPS-2001',
-                    article: 'Sección 5.2',
-                    relevance_score: 8
-                }
-            ],
-            
-            'construcción': [
-                {
-                    text: 'Toda obra de construcción requiere permiso municipal previo y debe cumplir con el Reglamento de Construcción y el Código de Edificación del Municipio de Zapopan.',
-                    source: 'Reglamento de Construcción Municipal',
-                    article: 'Artículo 12',
-                    relevance_score: 10
-                },
-                {
-                    text: 'Las obras en ejecución deben contar con medidas de seguridad para protección de trabajadores y peatones, incluyendo señalización y barreras de protección.',
-                    source: 'Reglamento de Construcción Municipal',
-                    article: 'Artículo 34',
-                    relevance_score: 9
-                }
-            ],
-            
-            'seguridad': [
-                {
-                    text: 'Los centros de trabajo deben cumplir con las condiciones de seguridad e higiene establecidas en las Normas Oficiales Mexicanas (NOM) correspondientes.',
-                    source: 'NOM-011-STPS-2001',
-                    article: 'Sección 4.1',
-                    relevance_score: 10
-                },
-                {
-                    text: 'Es obligación del patrón proporcionar equipos de protección personal a los trabajadores cuando las condiciones de trabajo lo requieran.',
-                    source: 'Ley Federal del Trabajo',
-                    article: 'Artículo 132',
-                    relevance_score: 9
-                }
-            ],
-            
-            'licencia': [
-                {
-                    text: 'La licencia de funcionamiento es el documento que autoriza la operación de un establecimiento comercial, industrial o de servicios dentro del municipio.',
-                    source: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
-                    article: 'Artículo 5',
-                    relevance_score: 10
-                },
-                {
-                    text: 'El trámite de licencia de funcionamiento se realiza en la Dirección de Desarrollo Económico del Municipio de Zapopan.',
-                    source: 'Manual de Trámites Municipales',
-                    article: 'Procedimiento LIC-001',
-                    relevance_score: 8
-                }
-            ]
-        };
+            }
+        }
+
+        // Ordenar y limitar resultados
+        const sortedDocs = Array.from(docScores.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, maxResults);
 
         const results = [];
-        for (const [keyword, responses] of Object.entries(keywordMap)) {
-            if (queryLower.includes(keyword)) {
-                results.push(...responses);
+        for (const [docIndex, score] of sortedDocs) {
+            if (docIndex < this.documents.length) {
+                const doc = this.documents[docIndex];
+                results.push({
+                    text: doc.text || doc.content || '',
+                    source: doc.document_title || doc.source_filename || 'Documento oficial',
+                    article: doc.article || 'N/A',
+                    relevance_score: score
+                });
             }
         }
 
         if (results.length === 0) {
-            return [
-                {
-                    text: 'Para información específica sobre inspección, comercio, construcción, seguridad o trámites municipales, te recomiendo consultar los reglamentos oficiales del Municipio de Zapopan o contactar directamente a la Dirección de Inspección y Vigilancia.',
-                    source: 'Sistema de Información Municipal',
-                    article: 'Respuesta general',
-                    relevance_score: 5
-                }
-            ];
+            return this.getGeneralDocuments(maxResults);
         }
 
-        return results.slice(0, maxResults);
+        return results;
+    }
+
+    getFallbackDocuments() {
+        return [
+            {
+                text: 'La Dirección de Inspección y Vigilancia del Municipio de Zapopan tiene facultades para verificar el cumplimiento de normativas municipales en materia de comercio, construcción, condiciones de seguridad e higiene en centros de trabajo.',
+                source: 'Reglamento Municipal de Inspección y Vigilancia',
+                article: 'Artículo 15',
+                relevance_score: 10
+            },
+            {
+                text: 'Los comercios deben cumplir con las Normas Oficiales Mexicanas (NOM) aplicables y los reglamentos municipales en materia de seguridad, higiene, construcción y protección ambiental.',
+                source: 'Reglamento para el Comercio, la Industria y la Prestación de Servicios',
+                article: 'Artículo 8',
+                relevance_score: 8
+            }
+        ];
+    }
+
+    getGeneralDocuments(maxResults) {
+        if (this.documents.length === 0) return this.getFallbackDocuments();
+        
+        const results = [];
+        // Tomar primeros documentos disponibles
+        for (let i = 0; i < Math.min(maxResults, this.documents.length); i++) {
+            const doc = this.documents[i];
+            results.push({
+                text: doc.text || doc.content || '',
+                source: doc.document_title || doc.source_filename || 'Documento oficial',
+                article: doc.article || 'N/A',
+                relevance_score: 5 - i
+            });
+        }
+        return results;
     }
 
     generateResponse(query, documents) {
         if (!documents || documents.length === 0) {
-            return 'No encontré información específica sobre este tema. Te recomiendo consultar los reglamentos municipales oficiales o contactar a la Dirección de Inspección y Vigilancia del Municipio de Zapopan para información precisa.';
+            return 'No encontré información específica sobre este tema en los documentos oficiales. Te recomiendo consultar directamente los reglamentos municipales o contactar a la Dirección de Inspección y Vigilancia del Municipio de Zapopan.';
         }
 
         const context = documents.map((doc, i) => {
@@ -198,25 +236,26 @@ class ChatbotSystem {
         const uniqueSources = [...new Set(documents.map(d => d.source))];
 
         return '**Consulta:** ' + query + '\n\n' +
-               '**Información relevante:**\n\n' +
+               '**Información relevante encontrada:**\n\n' +
                context + '\n\n' +
-               '**Fuentes:** ' + uniqueSources.join('; ') + '\n\n' +
-               '*Sistema MVP v4.1 - Respuestas basadas en reglamentos oficiales*\n' +
-               '*Nota: Sistema en fase inicial. Para información completa, consulta documentos oficiales.*';
+               '**Fuentes consultadas:** ' + uniqueSources.join('; ') + '\n\n' +
+               '*Sistema RAG Optimizado v3.0*';
     }
 }
 
 // ============================================
-// INICIALIZAR SISTEMA
+// INICIALIZAR SISTEMA RAG OPTIMIZADO
 // ============================================
 
-console.log('🚀 Inicializando Chatbot Zapopan con frontend v4.1...');
-const chatbot = new ChatbotSystem();
-const frontendHTML = chatbot.loadFrontend();
-console.log('✅ Sistema listo con frontend HTML');
+console.log('🏗️  Inicializando sistema RAG optimizado...');
+const ragSystem = new OptimizedRAGSystem();
+
+// OPTIMIZACIÓN: No cargar documentos al inicio (lazy loading)
+// Esto reduce cold start time en Vercel
+console.log('✅ Sistema RAG listo (carga lazy)');
 
 // ============================================
-// SERVER HTTP COMPLETO
+// SERVER HTTP OPTIMIZADO
 // ============================================
 
 const server = http.createServer(async (req, res) => {
@@ -234,22 +273,21 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
-    // Health check
+    // Health check optimizado (sin cargar documentos)
     if (url === '/health' || url === '/api/health') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             status: 'ok',
-            service: 'Chatbot Inspección Zapopan - MVP v4.1 con Frontend',
-            version: '4.1-frontend',
+            service: 'Chatbot Inspección Zapopan - RAG Optimizado',
+            version: '3.0-optimized',
+            documents_loaded: ragSystem.loadCount,
             system: 'ready',
-            frontend: 'loaded',
-            cold_start: 'optimized',
             timestamp: new Date().toISOString()
         }));
         return;
     }
     
-    // Chat endpoint
+    // Chat endpoint con timeout controlado
     if ((url === '/api/chat' || url === '/chat') && method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -266,8 +304,14 @@ const server = http.createServer(async (req, res) => {
                     return;
                 }
                 
-                const docs = await chatbot.searchDocuments(message, 3);
-                const response = chatbot.generateResponse(message, docs);
+                // OPTIMIZACIÓN: Timeout controlado para Vercel
+                const searchPromise = ragSystem.searchDocuments(message, 3);
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Timeout de búsqueda')), 8000);
+                });
+                
+                const docs = await Promise.race([searchPromise, timeoutPromise]);
+                const response = ragSystem.generateResponse(message, docs);
                 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({
@@ -276,28 +320,25 @@ const server = http.createServer(async (req, res) => {
                     query: message,
                     documents_found: docs.length,
                     sources: [...new Set(docs.map(d => d.source))],
-                    system: 'MVP v4.1 con Frontend',
-                    performance: 'optimized'
+                    system: 'RAG Optimizado v3.0'
                 }));
                 
             } catch (error) {
-                console.error('Error en /api/chat:', error.message);
+                console.error('Error en /api/chat: ' + error.message);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     success: false, 
-                    error: 'Error interno del servidor'
+                    error: 'Error interno del servidor',
+                    system: 'RAG Optimizado v3.0'
                 }));
             }
         });
         return;
     }
     
-    // Servir frontend HTML para cualquier otra ruta
-    res.writeHead(200, { 
-        'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'no-cache, no-store, must-revalidate'
-    });
-    res.end(frontendHTML);
+    // Simple response for other routes
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Chatbot Inspección Zapopan - RAG Optimizado v3.0\n\nEndpoints:\n• POST /api/chat\n• GET /health\n\nSistema optimizado para Vercel Hobby');
 });
 
 // ============================================
