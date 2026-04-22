@@ -417,9 +417,20 @@ async function aplicarFiltroRelevanciaExacto(consulta) {
     
     // 3. PALABRAS CLAVE NORMATIVAS ESPECÍFICAS
     const palabrasClaveNormativas = [
-        "comercio", "construcción", "uso de suelo", "anuncios", "residuos",
-        "ruido", "medio ambiente", "animales", "tianguis", "licencias",
-        "vía pública", "urbanización", "actividades económicas"
+        // Construcción
+        "construcción", "construir", "barda", "muro", "edificio", "obra",
+        "ampliación", "demolición", "remodelación",
+        
+        // Comercio
+        "comercio", "negocio", "giro", "establecimiento", "licencia", "permiso",
+        
+        // Ambiental
+        "medio ambiente", "contaminación", "residuos", "basura", "desechos",
+        
+        // Varios
+        "anuncios", "publicidad", "cartel", "ruido", "molestia", "animales", "mascota",
+        "tianguis", "mercado", "ambulante", "uso de suelo", "urbanización",
+        "vía pública", "espacio público", "actividades económicas"
     ];
     
     const tienePalabrasClave = palabrasClaveNormativas.some(palabra => 
