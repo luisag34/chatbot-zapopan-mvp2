@@ -1,14 +1,37 @@
-// CHATBOT ZAPOPAN - VERSIÓN CONSTITUCIONAL COMPLETA
-// Respetando los 11 puntos constitutivos definidos por Luis
+// CHATBOT ZAPOPAN v6.0 - EXCELENCIA OPERATIVA
+// Sistema de clase mundial con RAG real y métricas en tiempo real
 // Arquitectura: SISTEMA DE CONSULTA NORMATIVA ZAPOPAN
 
 const fs = require('fs');
 const path = require('path');
 
+// Módulos de Excelencia Operativa
+const RAGIntegration = require('./rag_integration');
+const MetricsDashboard = require('./metrics_dashboard');
+
+// Inicializar sistemas (singleton)
+let ragSystem = null;
+let metricsDashboard = null;
+
+async function initializeSystems() {
+    if (!ragSystem) {
+        ragSystem = new RAGIntegration();
+        await ragSystem.initialize();
+        console.log('✅ Sistema RAG inicializado');
+    }
+    
+    if (!metricsDashboard) {
+        metricsDashboard = new MetricsDashboard();
+        console.log('✅ Dashboard de métricas inicializado');
+    }
+    
+    return { ragSystem, metricsDashboard };
+}
+
 module.exports = async (req, res) => {
     // Configurar CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     
     // Manejar preflight
@@ -17,7 +40,93 @@ module.exports = async (req, res) => {
         return;
     }
     
-    // Solo manejar POST a /api/chat
+    // Inicializar sistemas (una sola vez)
+    if (!ragSystem || !metricsDashboard) {
+        await initializeSystems();
+    }
+    
+    // ============================================
+    // 🌐 ENDPOINTS ADICIONALES PARA EXCELENCIA OPERATIVA
+    // ============================================
+    
+    // Endpoint: Métricas del sistema
+    if (req.method === 'GET' && req.url === '/api/metrics') {
+        const dashboardData = metricsDashboard.getDashboardData();
+        res.status(200).json({
+            success: true,
+            timestamp: new Date().toISOString(),
+            system: 'Chatbot Zapopan v6.0 - Excelencia Operativa',
+            data: dashboardData
+        });
+        return;
+    }
+    
+    // Endpoint: Salud del sistema
+    if (req.method === 'GET' && req.url === '/api/health') {
+        const status = metricsDashboard.checkSystemStatus();
+        res.status(200).json({
+            success: true,
+            timestamp: new Date().toISOString(),
+            status: 'operational',
+            version: 'v6.0',
+            uptime: process.uptime(),
+            metrics: {
+                totalQueries: metricsDashboard.liveMetrics.totalQueries,
+                avgResponseTime: metricsDashboard.liveMetrics.avgResponseTime.toFixed(3) + 's',
+                successRate: ((metricsDashboard.liveMetrics.successfulQueries / metricsDashboard.liveMetrics.totalQueries) * 100).toFixed(2) + '%'
+            },
+            system: status
+        });
+        return;
+    }
+    
+    // Endpoint: Búsqueda semántica directa (para debugging)
+    if (req.method === 'POST' && req.url === '/api/search') {
+        try {
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            
+            req.on('end', async () => {
+                const data = JSON.parse(body);
+                const query = data.query || '';
+                const area = data.area || null;
+                const limit = data.limit || 5;
+                
+                const chunks = await ragSystem.semanticSearch(query, area, limit);
+                
+                res.status(200).json({
+                    success: true,
+                    query: query,
+                    area: area,
+                    chunks_found: chunks.length,
+                    chunks: chunks.map(c => ({
+                        document: c.document_title,
+                        article: c.article,
+                        fraccion: c.fraccion,
+                        citation: c.citation_short,
+                        text_preview: c.texto_normativo.substring(0, 150) + '...',
+                        similarity: c.similarity?.toFixed(3)
+                    }))
+                });
+            });
+            return;
+            
+        } catch (error) {
+            console.error('Error en /api/search:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Error en búsqueda semántica'
+            });
+            return;
+        }
+    }
+    
+    // ============================================
+    // 🎯 ENDPOINT PRINCIPAL: /api/chat
+    // ============================================
+    
     if (req.method === 'POST' && req.url === '/api/chat') {
         try {
             let body = '';
@@ -84,10 +193,10 @@ module.exports = async (req, res) => {
                 }
                 
                 // ============================================
-                // 📚 DATASET RAG ESTRUCTURADO
+                // 🤖 SISTEMA RAG REAL - BÚSQUEDA SEMÁNTICA
                 // ============================================
                 
-                const chunksRecuperados = await recuperarChunksRAG(consulta, areaIdentificada);
+                const chunksRecuperados = await ragSystem.semanticSearch(consulta, areaIdentificada, 7);
                 
                 if (chunksRecuperados.length === 0) {
                     const respuestaSinChunks = generarRespuestaSinFundamento();
@@ -135,19 +244,28 @@ module.exports = async (req, res) => {
                 auditoria.metricas_detalladas = metricas;
                 
                 // ============================================
-                // 🎯 RESPUESTA FINAL
+                // 📊 REGISTRO DE MÉTRICAS EN TIEMPO REAL
                 // ============================================
                 
-                res.status(200).json({
+                const responseData = {
                     success: true,
                     response: respuesta,
                     query: consulta,
                     area_identified: areaIdentificada,
                     documents_found: chunksRecuperados.length,
                     filtered: false,
-                    system: "Sistema de Consulta Normativa Zapopan v5.7",
+                    system: "Chatbot Zapopan v6.0 - Excelencia Operativa",
                     audit: auditoria // Bloque interno para auditoría
-                });
+                };
+                
+                // Registrar en dashboard de métricas
+                metricsDashboard.logQuery(auditoria, responseData);
+                
+                // ============================================
+                // 🎯 RESPUESTA FINAL
+                // ============================================
+                
+                res.status(200).json(responseData);
             });
         } catch (error) {
             console.error('Error en API:', error);
@@ -539,201 +657,7 @@ async function aplicarFiltroRelevancia(consulta) {
  * 📚 RECUPERACIÓN DE CHUNKS RAG
  * Dataset estructurado expandido para mejor cobertura
  */
-async function recuperarChunksRAG(consulta, area) {
-    // Dataset RAG expandido con chunks para múltiples áreas
-    const chunksDataset = {
-        "CONSTRUCCIÓN": [
-            {
-                texto_normativo: "Toda construcción, modificación, ampliación, demolición o reconstrucción de inmuebles requiere permiso municipal previo expedido por la Dirección de Inspección y Vigilancia.",
-                document_title: "Reglamento de Construcción para el Municipio de Zapopan",
-                document_type: "Reglamento Municipal",
-                jurisdiction_level: "Municipal",
-                article: "34",
-                fraccion: "I",
-                citation_short: "Reglamento de Construcción, Art. 34, Fracc. I",
-                citation_full: "Reglamento de Construcción para el Municipio de Zapopan, Artículo 34, Fracción I",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_34|frac_I|c001",
-                tags: ["permiso", "construcción", "obligatorio", "previo"]
-            },
-            {
-                texto_normativo: "Las bardas, muros o cercas perimetrales que excedan 1.80 metros de altura requieren permiso de construcción y deben cumplir con las normas de seguridad estructural establecidas en este reglamento.",
-                document_title: "Reglamento de Construcción para el Municipio de Zapopan",
-                document_type: "Reglamento Municipal",
-                jurisdiction_level: "Municipal",
-                article: "87",
-                fraccion: "III",
-                citation_short: "Reglamento de Construcción, Art. 87, Fracc. III",
-                citation_full: "Reglamento de Construcción para el Municipio de Zapopan, Artículo 87, Fracción III",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_87|frac_III|c001",
-                tags: ["barda", "muro", "cerca", "altura", "1.80m", "permiso"]
-            },
-            {
-                texto_normativo: "Para la construcción de bardas menores a 1.80 metros se requiere presentar aviso previo a la Dirección de Inspección y Vigilancia, adjuntando croquis de localización y características técnicas.",
-                document_title: "Reglamento de Construcción para el Municipio de Zapopan",
-                document_type: "Reglamento Municipal",
-                jurisdiction_level: "Municipal",
-                article: "87",
-                fraccion: "IV",
-                citation_short: "Reglamento de Construcción, Art. 87, Fracc. IV",
-                citation_full: "Reglamento de Construcción para el Municipio de Zapopan, Artículo 87, Fracción IV",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_87|frac_IV|c001",
-                tags: ["barda", "aviso", "menor 1.80m", "croquis", "técnico"]
-            },
-            {
-                texto_normativo: "La Dirección de Inspección y Vigilancia es la autoridad competente para verificar, inspeccionar y, en su caso, sancionar el incumplimiento de las normas de construcción, pudiendo ordenar la suspensión de obras y la demolición de lo construido sin permiso.",
-                document_title: "Manual de Organización de la Dirección de Inspección y Vigilancia",
-                document_type: "Manual Organizacional",
-                jurisdiction_level: "Municipal",
-                article: "5",
-                numeral: "2",
-                citation_short: "Manual Inspección, Art. 5, Num. 2",
-                citation_full: "Manual de Organización de la Dirección de Inspección y Vigilancia, Artículo 5, Numeral 2",
-                id_juridico: "mx|jal|jal|mun|zapopan|manual_inspeccion|v2023|art_5|num_2|c001",
-                tags: ["competencia", "inspección", "sanción", "suspensión", "demolición"]
-            },
-            {
-                texto_normativo: "El Código Urbano para el Estado de Jalisco establece que los municipios tienen la facultad de regular la construcción, conservación y mejoramiento de los inmuebles en su territorio, debiendo expedir los reglamentos correspondientes.",
-                document_title: "Código Urbano para el Estado de Jalisco",
-                document_type: "Código Estatal",
-                jurisdiction_level: "Estatal",
-                article: "45",
-                fraccion: "II",
-                citation_short: "Código Urbano Jalisco, Art. 45, Fracc. II",
-                citation_full: "Código Urbano para el Estado de Jalisco, Artículo 45, Fracción II",
-                id_juridico: "mx|jal|est|codigo_urbano|v2023|art_45|frac_II|c001",
-                tags: ["facultad municipal", "regulación", "construcción", "estatal"]
-            }
-        ],
-        "AMBIENTAL": [
-            {
-                texto_normativo: "Se prohíbe depositar, verter o abandonar residuos sólidos en la vía pública, áreas verdes, barrancas o cualquier espacio no autorizado.",
-                document_title: "Reglamento de Prevención y Gestión Integral de Residuos",
-                document_type: "Reglamento Municipal",
-                jurisdiction_level: "Municipal",
-                article: "42",
-                numeral: "I",
-                citation_short: "Reglamento Residuos, Art. 42",
-                citation_full: "Reglamento de Prevención y Gestión Integral de Residuos, Artículo 42, Fracción I",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_residuos|v2023|art_42|frac_I|c001"
-            },
-            {
-                texto_normativo: "La Dirección de Inspección y Vigilancia, en coordinación con la Dirección de Ecología y Medio Ambiente, es competente para sancionar las infracciones ambientales.",
-                document_title: "Código Ambiental para el Municipio de Zapopan",
-                document_type: "Código Municipal",
-                jurisdiction_level: "Municipal",
-                article: "125",
-                numeral: "III",
-                citation_short: "Código Ambiental, Art. 125",
-                citation_full: "Código Ambiental para el Municipio de Zapopan, Artículo 125, Fracción III",
-                id_juridico: "mx|jal|jal|mun|zapopan|codigo_ambiental|v2023|art_125|frac_III|c001"
-            },
-            {
-                texto_normativo: "Los niveles máximos permisibles de emisión de ruido se establecen en la NOM-081-SEMARNAT-1994, aplicable en todo el territorio municipal.",
-                document_title: "NOM-081-SEMARNAT-1994",
-                document_type: "Norma Oficial Mexicana",
-                jurisdiction_level: "Federal",
-                article: "5.3",
-                citation_short: "NOM-081-SEMARNAT-1994, numeral 5.3",
-                citation_full: "NOM-081-SEMARNAT-1994, numeral 5.3",
-                id_juridico: "mx|fed|nom_081_semarnat|v1994|num_5_3|c001"
-            }
-        ],
-        "COMERCIO": [
-            {
-                texto_normativo: "Todo establecimiento mercantil, industrial o de servicios requiere licencia municipal para su funcionamiento, expedida previa verificación de cumplimiento normativo.",
-                document_title: "Reglamento para el Comercio la Industria y la Prestación de Servicios",
-                document_type: "Reglamento Municipal",
-                jurisdiction_level: "Municipal",
-                article: "15",
-                numeral: "I",
-                citation_short: "Reglamento Comercio, Art. 15",
-                citation_full: "Reglamento para el Comercio la Industria y la Prestación de Servicios, Artículo 15, Fracción I",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_comercio|v2023|art_15|frac_I|c001"
-            },
-            {
-                texto_normativo: "La clasificación de giros comerciales y sus restricciones por zona se establecen en el documento GirosXAreas 2025, el cual determina la compatibilidad de actividades.",
-                document_title: "GirosXAreas 2025",
-                document_type: "Documento Técnico",
-                jurisdiction_level: "Municipal",
-                article: "3",
-                numeral: "2",
-                citation_short: "GirosXAreas 2025, Art. 3",
-                citation_full: "GirosXAreas 2025, Artículo 3, Numeral 2",
-                id_juridico: "mx|jal|jal|mun|zapopan|girosxareas|v2025|art_3|num_2|c001"
-            },
-            {
-                texto_normativo: "La Dirección de Inspección y Vigilancia verifica el cumplimiento de los requisitos para la expedición y renovación de licencias comerciales.",
-                document_title: "Manual de Organización de la Dirección de Inspección y Vigilancia",
-                document_type: "Manual Organizacional",
-                jurisdiction_level: "Municipal",
-                article: "7",
-                numeral: "4",
-                citation_short: "Manual Inspección, Art. 7",
-                citation_full: "Manual de Organización de la Dirección de Inspección y Vigilancia, Artículo 7, Numeral 4",
-                id_juridico: "mx|jal|jal|mun|zapopan|manual_inspeccion|v2023|art_7|num_4|c001"
-            }
-        ],
-        "ANUNCIOS": [
-            {
-                texto_normativo: "Todo anuncio, letrero, espectacular o elemento de publicidad exterior requiere permiso municipal previo a su instalación.",
-                document_title: "Reglamento de Anuncios y Publicidad para el Municipio",
-                document_type: "Reglamento Municipal",
-                jurisdiction_level: "Municipal",
-                article: "22",
-                numeral: "I",
-                citation_short: "Reglamento Anuncios, Art. 22",
-                citation_full: "Reglamento de Anuncios y Publicidad para el Municipio, Artículo 22, Fracción I",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_anuncios|v2023|art_22|frac_I|c001"
-            }
-        ],
-        "TIANGUIS": [
-            {
-                texto_normativo: "La instalación y operación de tianguis y comercio en espacios públicos requiere autorización expresa de la Dirección de Tianguis y Espacios Abiertos.",
-                document_title: "Reglamento de Tianguis y Comercio en Espacios Públicos",
-                document_type: "Reglamento Municipal",
-                jurisdiction_level: "Municipal",
-                article: "18",
-                numeral: "I",
-                citation_short: "Reglamento Tianguis, Art. 18",
-                citation_full: "Reglamento de Tianguis y Comercio en Espacios Públicos, Artículo 18, Fracción I",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_tianguis|v2023|art_18|frac_I|c001"
-            }
-        ],
-        "ANIMALES": [
-            {
-                texto_normativo: "Los propietarios de animales domésticos son responsables de su adecuado cuidado, control y de prevenir molestias a terceros.",
-                document_title: "Reglamento de Sanidad y Protección a los Animales",
-                document_type: "Reglamento Municipal",
-                jurisdiction_level: "Municipal",
-                article: "31",
-                numeral: "I",
-                citation_short: "Reglamento Animales, Art. 31",
-                citation_full: "Reglamento de Sanidad y Protección a los Animales, Artículo 31, Fracción I",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_animales|v2023|art_31|frac_I|c001"
-            }
-        ]
-    };
-    
-    // Si no hay chunks específicos para el área, buscar chunks generales de Inspección
-    const chunksEspecificos = chunksDataset[area] || [];
-    
-    // Añadir chunks generales de Inspección y Vigilancia para todas las áreas
-    const chunksGenerales = [
-        {
-            texto_normativo: "La Dirección de Inspección y Vigilancia del Ayuntamiento de Zapopan es la autoridad competente para la verificación del cumplimiento de la normativa municipal en materia de construcción, comercio, medio ambiente y ordenamiento urbano.",
-            document_title: "Manual de Organización de la Dirección de Inspección y Vigilancia",
-            document_type: "Manual Organizacional",
-            jurisdiction_level: "Municipal",
-            article: "1",
-            numeral: "1",
-            citation_short: "Manual Inspección, Art. 1",
-            citation_full: "Manual de Organización de la Dirección de Inspección y Vigilancia, Artículo 1, Numeral 1",
-            id_juridico: "mx|jal|jal|mun|zapopan|manual_inspeccion|v2023|art_1|num_1|c001"
-        }
-    ];
-    
-    return [...chunksEspecificos, ...chunksGenerales];
-}
+// Función eliminada - Reemplazada por sistema RAG real en rag_integration.js
 
 /**
  * 📋 GENERAR RESPUESTA CONSTITUCIONAL
