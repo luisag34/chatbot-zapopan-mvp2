@@ -1,21 +1,23 @@
-// CHATBOT ZAPOPAN v6.0 FINAL COMPLETO
-// Excelencia Operativa - Sistema híbrido Vercel-compatible
-// Todas las funciones en un solo archivo para evitar problemas de módulos
+// CHATBOT ZAPOPAN v6.2 - ARQUITECTURA EXACTA
+// Sistema de Consulta Normativa Zapopan con arquitectura respetada al 100%
+// Implementación estricta según lineamientos del 22 abril 2026
 
 const fs = require('fs');
 const path = require('path');
 
 // ============================================
-// 🏗️  SISTEMA RAG HÍBRIDO
+// 🏗️  SISTEMA RAG - ARQUITECTURA EXACTA
 // ============================================
 
-class HybridRAGSystem {
+class SistemaRAGExacto {
     constructor() {
         this.initialized = false;
-        this.dataset = this.loadHybridDataset();
+        this.dataset = this.cargarDatasetEstructurado();
     }
     
-    loadHybridDataset() {
+    cargarDatasetEstructurado() {
+        // DATASET RAG ESTRUCTURADO según arquitectura
+        // Unidades jurídicas con metadatos normativos completos
         return {
             "CONSTRUCCIÓN": [
                 {
@@ -75,6 +77,96 @@ class HybridRAGSystem {
                     relevance_score: 0.93
                 }
             ],
+            "ANUNCIOS": [
+                {
+                    texto_normativo: "La instalación de anuncios, carteles o letreros en la vía pública o fachadas de inmuebles requiere autorización municipal previa, la cual se otorga previo pago de derechos y cumplimiento de especificaciones técnicas.",
+                    document_title: "Reglamento de Anuncios y Publicidad Exterior",
+                    document_type: "Reglamento Municipal",
+                    jurisdiction_level: "Municipal",
+                    article: "8",
+                    fraccion: "II",
+                    citation_short: "Reglamento Anuncios, Art. 8, Fracc. II",
+                    citation_full: "Reglamento de Anuncios y Publicidad Exterior del Municipio de Zapopan, Artículo 8, Fracción II",
+                    id_juridico: "mx|jal|jal|mun|zapopan|reglamento_anuncios|v2023|art_8|frac_II|c001",
+                    tags: ["anuncio", "publicidad", "cartel", "autorización", "previo"],
+                    relevance_score: 0.88
+                }
+            ],
+            "TIANGUIS": [
+                {
+                    texto_normativo: "Los tianguis y mercados sobre ruedas requieren permiso municipal para su instalación, el cual se otorga previa verificación del lugar, días y horarios autorizados.",
+                    document_title: "Reglamento para Tianguis y Mercados sobre Ruedas",
+                    document_type: "Reglamento Municipal",
+                    jurisdiction_level: "Municipal",
+                    article: "12",
+                    fraccion: "I",
+                    citation_short: "Reglamento Tianguis, Art. 12, Fracc. I",
+                    citation_full: "Reglamento para Tianguis y Mercados sobre Ruedas del Municipio de Zapopan, Artículo 12, Fracción I",
+                    id_juridico: "mx|jal|jal|mun|zapopan|reglamento_tianguis|v2023|art_12|frac_I|c001",
+                    tags: ["tianguis", "mercado", "permiso", "autorización"],
+                    relevance_score: 0.85
+                }
+            ],
+            "RUIDO": [
+                {
+                    texto_normativo: "Se prohíbe generar ruidos o vibraciones que excedan los límites máximos permisibles establecidos en la normativa municipal, especialmente durante el horario nocturno (22:00 a 07:00 horas).",
+                    document_title: "Reglamento de Protección al Ambiente contra la Contaminación por Ruido",
+                    document_type: "Reglamento Municipal",
+                    jurisdiction_level: "Municipal",
+                    article: "15",
+                    fraccion: "I",
+                    citation_short: "Reglamento Ruido, Art. 15, Fracc. I",
+                    citation_full: "Reglamento de Protección al Ambiente contra la Contaminación por Ruido del Municipio de Zapopan, Artículo 15, Fracción I",
+                    id_juridico: "mx|jal|jal|mun|zapopan|reglamento_ruido|v2023|art_15|frac_I|c001",
+                    tags: ["ruido", "molestia", "vibración", "horario nocturno", "prohibido"],
+                    relevance_score: 0.88
+                }
+            ],
+            "ANIMALES": [
+                {
+                    texto_normativo: "Los propietarios de animales domésticos deben mantenerlos bajo control y evitar que causen molestias a los vecinos, daños a la propiedad o riesgos a la seguridad pública.",
+                    document_title: "Reglamento para la Tenencia Responsable de Animales Domésticos",
+                    document_type: "Reglamento Municipal",
+                    jurisdiction_level: "Municipal",
+                    article: "8",
+                    fraccion: "II",
+                    citation_short: "Reglamento Animales, Art. 8, Fracc. II",
+                    citation_full: "Reglamento para la Tenencia Responsable de Animales Domésticos del Municipio de Zapopan, Artículo 8, Fracción II",
+                    id_juridico: "mx|jal|jal|mun|zapopan|reglamento_animales|v2023|art_8|frac_II|c001",
+                    tags: ["animal", "mascota", "control", "molestia", "vecino"],
+                    relevance_score: 0.83
+                }
+            ],
+            "USO_SUELO": [
+                {
+                    texto_normativo: "Todo cambio de uso de suelo requiere autorización municipal previa, la cual se otorga previo estudio de compatibilidad urbanística y cumplimiento de los requisitos establecidos en el Plan de Desarrollo Urbano.",
+                    document_title: "Reglamento de Desarrollo Urbano y Construcción",
+                    document_type: "Reglamento Municipal",
+                    jurisdiction_level: "Municipal",
+                    article: "56",
+                    fraccion: "I",
+                    citation_short: "Reglamento Desarrollo Urbano, Art. 56, Fracc. I",
+                    citation_full: "Reglamento de Desarrollo Urbano y Construcción del Municipio de Zapopan, Artículo 56, Fracción I",
+                    id_juridico: "mx|jal|jal|mun|zapopan|reglamento_desarrollo_urbano|v2023|art_56|frac_I|c001",
+                    tags: ["uso de suelo", "urbanización", "autorización", "plan desarrollo", "compatibilidad"],
+                    relevance_score: 0.86
+                }
+            ],
+            "VIA_PUBLICA": [
+                {
+                    texto_normativo: "Se prohíbe la ocupación de la vía pública sin autorización municipal para cualquier actividad, incluyendo la instalación de mobiliario, anuncios, puestos o cualquier obstáculo que impida el libre tránsito.",
+                    document_title: "Reglamento de Vía Pública y Espacios Abiertos",
+                    document_type: "Reglamento Municipal",
+                    jurisdiction_level: "Municipal",
+                    article: "12",
+                    fraccion: "III",
+                    citation_short: "Reglamento Vía Pública, Art. 12, Fracc. III",
+                    citation_full: "Reglamento de Vía Pública y Espacios Abiertos del Municipio de Zapopan, Artículo 12, Fracción III",
+                    id_juridico: "mx|jal|jal|mun|zapopan|reglamento_via_publica|v2023|art_12|frac_III|c001",
+                    tags: ["vía pública", "espacio público", "ocupación", "autorización", "prohibido"],
+                    relevance_score: 0.84
+                }
+            ],
             "GENERAL": [
                 {
                     texto_normativo: "La Dirección de Inspección y Vigilancia del Ayuntamiento de Zapopan es la autoridad competente para la verificación del cumplimiento de la normativa municipal en materia de construcción, comercio, medio ambiente y ordenamiento urbano.",
@@ -88,301 +180,263 @@ class HybridRAGSystem {
                     id_juridico: "mx|jal|jal|mun|zapopan|manual_inspeccion|v2023|art_1|num_1|c001",
                     tags: ["competencia", "inspección", "autoridad", "municipal"],
                     relevance_score: 0.85
-                },
-                {
-                    texto_normativo: "Para cualquier trámite, permiso o autorización municipal, el interesado debe presentar solicitud por escrito en el formato oficial, acompañada de la documentación requerida según el tipo de procedimiento.",
-                    document_title: "Manual de Procedimientos Administrativos",
-                    document_type: "Manual Administrativo",
-                    jurisdiction_level: "Municipal",
-                    article: "3",
-                    numeral: "2",
-                    citation_short: "Manual Procedimientos, Art. 3, Num. 2",
-                    citation_full: "Manual de Procedimientos Administrativos del Ayuntamiento de Zapopan, Artículo 3, Numeral 2",
-                    id_juridico: "mx|jal|jal|mun|zapopan|manual_procedimientos|v2023|art_3|num_2|c001",
-                    tags: ["trámite", "permiso", "solicitud", "documentación", "procedimiento"],
-                    relevance_score: 0.80
-                },
-                {
-                    texto_normativo: "Los plazos para la resolución de trámites municipales varían según la complejidad del asunto, desde 5 días hábiles para trámites simples hasta 30 días hábiles para procedimientos que requieren verificación in situ.",
-                    document_title: "Manual de Procedimientos Administrativos",
-                    document_type: "Manual Administrativo",
-                    jurisdiction_level: "Municipal",
-                    article: "7",
-                    numeral: "4",
-                    citation_short: "Manual Procedimientos, Art. 7, Num. 4",
-                    citation_full: "Manual de Procedimientos Administrativos del Ayuntamiento de Zapopan, Artículo 7, Numeral 4",
-                    id_juridico: "mx|jal|jal|mun|zapopan|manual_procedimientos|v2023|art_7|num_4|c001",
-                    tags: ["plazo", "resolución", "trámite", "días hábiles", "verificación"],
-                    relevance_score: 0.78
-                },
-                {
-                    texto_normativo: "El incumplimiento de las disposiciones normativas municipales puede derivar en sanciones administrativas que incluyen multas, suspensiones de actividades e incluso la clausura temporal o definitiva del establecimiento.",
-                    document_title: "Ley de Ingresos del Municipio de Zapopan",
-                    document_type: "Ley Municipal",
-                    jurisdiction_level: "Municipal",
-                    article: "45",
-                    fraccion: "III",
-                    citation_short: "Ley Ingresos, Art. 45, Fracc. III",
-                    citation_full: "Ley de Ingresos del Municipio de Zapopan para el Ejercicio Fiscal 2024, Artículo 45, Fracción III",
-                    id_juridico: "mx|jal|jal|mun|zapopan|ley_ingresos|v2024|art_45|frac_III|c001",
-                    tags: ["sanción", "multa", "incumplimiento", "clausura", "suspensión"],
-                    relevance_score: 0.82
-                },
-                {
-                    texto_normativo: "Los ciudadanos pueden presentar quejas, denuncias o sugerencias ante la Dirección de Inspección y Vigilancia de manera presencial, telefónica o a través del portal electrónico del Ayuntamiento de Zapopan.",
-                    document_title: "Reglamento de Participación Ciudadana",
-                    document_type: "Reglamento Municipal",
-                    jurisdiction_level: "Municipal",
-                    article: "22",
-                    fraccion: "I",
-                    citation_short: "Reglamento Participación, Art. 22, Fracc. I",
-                    citation_full: "Reglamento de Participación Ciudadana del Municipio de Zapopan, Artículo 22, Fracción I",
-                    id_juridico: "mx|jal|jal|mun|zapopan|reglamento_participacion|v2023|art_22|frac_I|c001",
-                    tags: ["queja", "denuncia", "sugerencia", "participación", "ciudadana"],
-                    relevance_score: 0.75
                 }
             ]
         };
     }
     
-    async semanticSearch(query, area = null, limit = 5) {
-        console.log(`🔍 Búsqueda: "${query.substring(0, 50)}..."`);
+    async busquedaSemantica(consulta, area = null, limite = 5) {
+        console.log(`🔍 Búsqueda semántica: "${consulta.substring(0, 50)}..." en área: ${area || 'GENERAL'}`);
         
-        const areaDataset = this.dataset[area] || this.dataset["GENERAL"];
-        const allChunks = Object.values(this.dataset).flat();
-        const queryLower = query.toLowerCase();
-        const scoredChunks = [];
+        const datasetArea = this.dataset[area] || this.dataset["GENERAL"];
+        const todosChunks = Object.values(this.dataset).flat();
+        const consultaLower = consulta.toLowerCase();
+        const chunksPuntuados = [];
         
-        for (const chunk of allChunks) {
-            let score = chunk.relevance_score || 0.5;
+        for (const chunk of todosChunks) {
+            let puntuacion = chunk.relevance_score || 0.5;
             
-            // Bonus por área
+            // Bonus por área coincidente
             if (area && chunk.tags) {
-                const areaMatch = chunk.tags.some(tag => 
+                const coincideArea = chunk.tags.some(tag => 
                     area.toLowerCase().includes(tag.toLowerCase()) || 
                     tag.toLowerCase().includes(area.toLowerCase())
                 );
-                if (areaMatch) score += 0.2;
+                if (coincideArea) puntuacion += 0.2;
             }
             
-            // Bonus por palabras clave
-            const keywords = this.extractKeywords(queryLower);
-            const keywordMatches = keywords.filter(keyword =>
-                chunk.texto_normativo.toLowerCase().includes(keyword) ||
-                (chunk.tags && chunk.tags.some(tag => tag.toLowerCase().includes(keyword)))
+            // Bonus por palabras clave en texto normativo
+            const palabrasClave = this.extraerPalabrasClave(consultaLower);
+            const coincidencias = palabrasClave.filter(palabra =>
+                chunk.texto_normativo.toLowerCase().includes(palabra) ||
+                (chunk.tags && chunk.tags.some(tag => tag.toLowerCase().includes(palabra)))
             );
             
-            score += keywordMatches.length * 0.1;
-            scoredChunks.push({ ...chunk, search_score: score });
+            puntuacion += coincidencias.length * 0.1;
+            chunksPuntuados.push({ ...chunk, puntuacion_busqueda: puntuacion });
         }
         
-        return scoredChunks
-            .sort((a, b) => b.search_score - a.search_score)
-            .slice(0, limit);
+        // Ordenar por puntuación y limitar
+        const mejoresChunks = chunksPuntuados
+            .sort((a, b) => b.puntuacion_busqueda - a.puntuacion_busqueda)
+            .slice(0, limite);
+        
+        console.log(`✅ ${mejoresChunks.length} chunks recuperados (mejor puntuación: ${mejoresChunks[0]?.puntuacion_busqueda?.toFixed(3)})`);
+        return mejoresChunks;
     }
     
-    extractKeywords(query) {
-        const keywords = [
+    extraerPalabrasClave(consulta) {
+        const palabrasClave = [
             // Construcción
-            "permiso", "construcción", "construir", "barda", "muro", "casa", "edificio", "obra",
-            "remodelación", "ampliación", "demolición", "altura", "metros", "terreno", "lote",
-            "fachada", "estructura", "cimientos", "columna", "viga", "loseta",
+            "permiso", "construcción", "construir", "barda", "muro", "edificio", "obra",
+            "ampliación", "demolición", "altura", "metros",
             
             // Comercio
-            "licencia", "comercio", "negocio", "giro", "establecimiento", "local", "tienda",
-            "restaurante", "oficina", "servicio", "actividad", "comercial", "venta", "compra",
-            "producto", "mercancía", "inventario", "empleado", "cliente",
+            "licencia", "comercio", "negocio", "giro", "establecimiento", "actividad económica",
             
             // Ambiental
-            "residuos", "basura", "contaminación", "medio ambiente", "ecología", "desechos",
-            "reciclaje", "contaminar", "tiradero", "vertedero", "emisiones", "olores",
-            "sustancias", "químicos", "tóxicos", "peligrosos",
-            
-            // General/trámites
-            "trámite", "procedimiento", "requisito", "documento", "formato", "oficio",
-            "solicitud", "autorización", "aprobación", "verificación", "revisión",
-            "dictamen", "resolución", "oficial", "certificado", "constancia",
-            
-            // Inspección
-            "inspección", "vigilancia", "sanción", "multa", "infracción", "violación",
-            "incumplimiento", "verificación", "supervisión", "control", "auditoría",
-            "monitoreo", "seguimiento", "evaluación",
-            
-            // Urbanización
-            "urbanización", "uso de suelo", "zona", "sector", "colonia", "fraccionamiento",
-            "predio", "propiedad", "inmueble", "territorio", "espacio", "área",
+            "residuos", "basura", "contaminación", "medio ambiente", "desechos",
             
             // Varios
             "anuncio", "publicidad", "cartel", "tianguis", "mercado", "ambulante",
-            "ruido", "molestia", "vecino", "animal", "mascota", "perro", "gato",
-            "agua", "drenaje", "electricidad", "gas", "telefonía", "internet",
-            "seguridad", "protección", "emergencia", "accidente", "riesgo"
+            "ruido", "molestia", "animal", "mascota", "uso de suelo", "vía pública"
         ];
         
-        return keywords.filter(keyword => query.includes(keyword));
+        return palabrasClave.filter(palabra => consulta.includes(palabra));
     }
     
-    async initialize() {
+    async inicializar() {
         this.initialized = true;
+        console.log('✅ Sistema RAG exacto inicializado');
         return true;
     }
 }
 
 // ============================================
-// 📊  SISTEMA DE MÉTRICAS
+// 📊  SISTEMA DE AUDITORÍA
 // ============================================
 
-class HybridMetricsSystem {
+class SistemaAuditoria {
     constructor() {
-        this.metrics = {
-            totalQueries: 0,
-            successfulQueries: 0,
-            failedQueries: 0,
-            avgResponseTime: 0,
-            queriesByArea: {},
-            qualityDistribution: {},
-            startTime: Date.now()
+        this.metricas = {
+            totalConsultas: 0,
+            consultasExitosas: 0,
+            consultasFallidas: 0,
+            tiempoPromedioRespuesta: 0,
+            consultasPorArea: {},
+            distribucionCalidad: {},
+            horaInicio: Date.now()
         };
     }
     
-    logQuery(auditData, responseData) {
-        this.metrics.totalQueries++;
+    registrarConsulta(datosAuditoria, datosRespuesta) {
+        this.metricas.totalConsultas++;
         
-        if (responseData.success) {
-            this.metrics.successfulQueries++;
+        if (datosRespuesta.success) {
+            this.metricas.consultasExitosas++;
         } else {
-            this.metrics.failedQueries++;
+            this.metricas.consultasFallidas++;
         }
         
-        const area = auditData.area_identificada || 'GENERAL';
-        this.metrics.queriesByArea[area] = (this.metrics.queriesByArea[area] || 0) + 1;
+        const area = datosAuditoria.area_identificada || 'GENERAL';
+        this.metricas.consultasPorArea[area] = (this.metricas.consultasPorArea[area] || 0) + 1;
         
-        const quality = auditData.calificacion_calidad || 'UNKNOWN';
-        this.metrics.qualityDistribution[quality] = (this.metrics.qualityDistribution[quality] || 0) + 1;
+        const calidad = datosAuditoria.calificacion_calidad || 'DESCONOCIDA';
+        this.metricas.distribucionCalidad[calidad] = (this.metricas.distribucionCalidad[calidad] || 0) + 1;
         
-        const responseTime = auditData.tiempo_respuesta_segundos || 0;
-        const currentTotal = this.metrics.avgResponseTime * (this.metrics.totalQueries - 1);
-        this.metrics.avgResponseTime = (currentTotal + responseTime) / this.metrics.totalQueries;
+        const tiempoRespuesta = datosAuditoria.tiempo_respuesta_segundos || 0;
+        const totalActual = this.metricas.tiempoPromedioRespuesta * (this.metricas.totalConsultas - 1);
+        this.metricas.tiempoPromedioRespuesta = (totalActual + tiempoRespuesta) / this.metricas.totalConsultas;
     }
     
-    getDashboardData() {
-        const uptime = (Date.now() - this.metrics.startTime) / 1000;
+    obtenerDatosDashboard() {
+        const tiempoActivo = (Date.now() - this.metricas.horaInicio) / 1000;
         
         return {
-            liveMetrics: this.metrics,
-            systemStatus: {
-                status: 'healthy',
-                uptime: `${Math.floor(uptime / 60)}m ${Math.floor(uptime % 60)}s`,
-                version: 'v6.0',
+            metricasEnVivo: this.metricas,
+            estadoSistema: {
+                estado: 'saludable',
+                tiempo_activo: `${Math.floor(tiempoActivo / 60)}m ${Math.floor(tiempoActivo % 60)}s`,
+                version: 'v6.2-exacta',
                 timestamp: new Date().toISOString()
             }
         };
     }
     
-    getHealthStatus() {
+    obtenerEstadoSalud() {
         return {
-            status: 'operational',
-            version: 'v6.0',
-            uptime: process.uptime(),
-            metrics: {
-                totalQueries: this.metrics.totalQueries,
-                avgResponseTime: this.metrics.avgResponseTime.toFixed(3) + 's',
-                successRate: this.metrics.totalQueries > 0 ? 
-                    ((this.metrics.successfulQueries / this.metrics.totalQueries) * 100).toFixed(2) + '%' : '0%'
+            estado: 'operacional',
+            version: 'v6.2-exacta',
+            tiempo_activo: process.uptime(),
+            metricas: {
+                totalConsultas: this.metricas.totalConsultas,
+                tiempoPromedioRespuesta: this.metricas.tiempoPromedioRespuesta.toFixed(3) + 's',
+                tasaExito: this.metricas.totalConsultas > 0 ? 
+                    ((this.metricas.consultasExitosas / this.metricas.totalConsultas) * 100).toFixed(2) + '%' : '0%'
             }
         };
     }
 }
 
 // ============================================
-// 🔧  FUNCIONES AUXILIARES COMPLETAS
+// 🔧  FUNCIONES AUXILIARES - ARQUITECTURA EXACTA
 // ============================================
 
-async function routerAreas(consulta) {
+async function routerAreasExacto(consulta) {
     const consultaLower = consulta.toLowerCase();
     
-    // Router mejorado con más palabras clave y sinónimos
-    if (consultaLower.includes("construcción") || consultaLower.includes("construir") || consultaLower.includes("barda") || consultaLower.includes("muro") || consultaLower.includes("casa") || consultaLower.includes("edificio") || consultaLower.includes("obra") || consultaLower.includes("permiso construcción")) {
+    // ROUTER DE ÁREAS según arquitectura SISTEMA DE CONSULTA NORMATIVA ZAPOPAN
+    if (consultaLower.includes("construcción") || consultaLower.includes("construir") || 
+        consultaLower.includes("barda") || consultaLower.includes("muro") || 
+        consultaLower.includes("edificio") || consultaLower.includes("obra")) {
         return "CONSTRUCCIÓN";
     }
-    if (consultaLower.includes("medio ambiente") || consultaLower.includes("contaminación") || consultaLower.includes("residuos") || consultaLower.includes("basura") || consultaLower.includes("ecología") || consultaLower.includes("desechos") || consultaLower.includes("reciclaje")) {
+    if (consultaLower.includes("medio ambiente") || consultaLower.includes("contaminación") || 
+        consultaLower.includes("residuos") || consultaLower.includes("basura")) {
         return "AMBIENTAL";
     }
-    if (consultaLower.includes("comercio") || consultaLower.includes("licencia") || consultaLower.includes("negocio") || consultaLower.includes("giro") || consultaLower.includes("establecimiento") || consultaLower.includes("local") || consultaLower.includes("tienda") || consultaLower.includes("permiso comercio")) {
+    if (consultaLower.includes("comercio") || consultaLower.includes("licencia") || 
+        consultaLower.includes("negocio") || consultaLower.includes("giro")) {
         return "COMERCIO";
     }
-    if (consultaLower.includes("anuncio") || consultaLower.includes("publicidad") || consultaLower.includes("cartel") || consultaLower.includes("letrero") || consultaLower.includes("valla") || consultaLower.includes("spectacular")) {
+    if (consultaLower.includes("anuncio") || consultaLower.includes("publicidad") || 
+        consultaLower.includes("cartel") || consultaLower.includes("letrero")) {
         return "ANUNCIOS";
     }
-    if (consultaLower.includes("tianguis") || consultaLower.includes("mercado") || consultaLower.includes("ambulante") || consultaLower.includes("puesto") || consultaLower.includes("vendedor")) {
+    if (consultaLower.includes("tianguis") || consultaLower.includes("mercado") || 
+        consultaLower.includes("ambulante") || consultaLower.includes("puesto")) {
         return "TIANGUIS";
     }
-    
-    // Si no coincide con áreas específicas, pero tiene palabras de consulta general
-    if (consultaLower.includes("permiso") || consultaLower.includes("requisito") || consultaLower.includes("trámite") || consultaLower.includes("procedimiento") || consultaLower.includes("norma") || consultaLower.includes("reglamento") || consultaLower.includes("ley")) {
-        return "GENERAL";
+    if (consultaLower.includes("ruido") || consultaLower.includes("molestia") || 
+        consultaLower.includes("sonido")) {
+        return "RUIDO";
+    }
+    if (consultaLower.includes("animal") || consultaLower.includes("mascota") || 
+        consultaLower.includes("perro") || consultaLower.includes("gato")) {
+        return "ANIMALES";
+    }
+    if (consultaLower.includes("uso de suelo") || consultaLower.includes("urbanización")) {
+        return "USO_SUELO";
+    }
+    if (consultaLower.includes("vía pública") || consultaLower.includes("espacio público")) {
+        return "VIA_PUBLICA";
     }
     
     return "GENERAL";
 }
 
-async function aplicarFiltroRelevancia(consulta) {
+async function aplicarFiltroRelevanciaExacto(consulta) {
     const consultaLower = consulta.toLowerCase();
     
-    // Lista expandida de palabras relevantes (50+ términos)
-    const palabrasRelevantes = [
-        // Construcción
-        "permiso", "construcción", "construir", "barda", "muro", "casa", "edificio", "obra",
-        "remodelación", "ampliación", "demolición", "altura", "metros", "terreno", "lote",
+    // ============================================
+    // FILTRO DE RELEVANCIA NORMATIVA (ANTES DEL RAG)
+    // Según arquitectura exacta del 22 abril 2026
+    // ============================================
+    
+    // 1. VERIFICAR SI ES EN ZAPOPAN (REQUERIDO)
+    const enZapopan = consultaLower.includes("zapopan") || 
+                     consultaLower.includes("municipio") || 
+                     consultaLower.includes("ayuntamiento");
+    
+    if (!enZapopan) {
+        return {
+            relevante: false,
+            motivo: 'El sistema está especializado en el municipio de Zapopan, Jalisco.'
+        };
+    }
+    
+    // 2. IDENTIFICAR SI DESCRIBE POSIBLE FALTA ADMINISTRATIVA O ACTIVIDAD REGULADA
+    const categoriasReguladas = [
+        // Posibles faltas administrativas
+        "permiso", "licencia", "autorización", "aprobación",
+        "construcción", "obra", "edificación", "barda", "muro",
+        "comercio", "negocio", "giro", "establecimiento",
+        "medio ambiente", "contaminación", "residuos", "basura",
+        "ruido", "molestia", "sonido",
+        "animal", "mascota",
+        "anuncio", "publicidad", "cartel",
+        "tianguis", "mercado", "ambulante",
+        "uso de suelo", "urbanización",
+        "vía pública", "espacio público",
         
-        // Comercio
-        "licencia", "comercio", "negocio", "giro", "establecimiento", "local", "tienda",
-        "restaurante", "oficina", "servicio", "actividad", "comercial",
-        
-        // Ambiental
-        "residuos", "basura", "contaminación", "medio ambiente", "ecología", "desechos",
-        "reciclaje", "contaminar", "tiradero", "vertedero",
-        
-        // General
-        "trámite", "procedimiento", "requisito", "documento", "formato", "oficio",
-        "solicitud", "autorización", "aprobación", "verificación",
-        
-        // Inspección y vigilancia
-        "inspección", "vigilancia", "sanción", "multa", "infracción", "violación",
-        "incumplimiento", "verificación", "supervisión", "control",
-        
-        // Urbanización
-        "urbanización", "uso de suelo", "zona", "sector", "colonia", "fraccionamiento",
-        
-        // Varios
-        "anuncio", "publicidad", "cartel", "tianguis", "mercado", "ambulante",
-        "ruido", "molestia", "vecino", "animal", "mascota"
+        // Faltas administrativas específicas
+        "infracción", "violación", "incumplimiento", "sanción", "multa",
+        "clausura", "suspensión", "denuncia", "queja"
     ];
     
-    // Verificar si la consulta contiene al menos UNA palabra relevante
-    const tieneRelevancia = palabrasRelevantes.some(palabra => consultaLower.includes(palabra));
+    const esMateriaRegulada = categoriasReguladas.some(categoria => 
+        consultaLower.includes(categoria)
+    );
     
-    // RELAJAR: No requerir "Zapopan" explícitamente (asumir contexto municipal)
-    // const enZapopan = consultaLower.includes("zapopan") || consultaLower.includes("municipio") || consultaLower.includes("ayuntamiento");
-    const enZapopan = true; // Asumir que todas las consultas son para Zapopan
-    
-    if (!tieneRelevancia) {
+    if (!esMateriaRegulada) {
         return {
             relevante: false,
             motivo: 'La consulta no corresponde a una materia regulada por la normativa disponible en el sistema.'
         };
     }
     
-    // if (!enZapopan) {
-    //     return {
-    //         relevante: false,
-    //         motivo: 'El sistema está especializado en el municipio de Zapopan, Jalisco.'
-    //     };
-    // }
+    // 3. PALABRAS CLAVE NORMATIVAS ESPECÍFICAS
+    const palabrasClaveNormativas = [
+        "comercio", "construcción", "uso de suelo", "anuncios", "residuos",
+        "ruido", "medio ambiente", "animales", "tianguis", "licencias",
+        "vía pública", "urbanización", "actividades económicas"
+    ];
     
+    const tienePalabrasClave = palabrasClaveNormativas.some(palabra => 
+        consultaLower.includes(palabra)
+    );
+    
+    if (!tienePalabrasClave) {
+        return {
+            relevante: false,
+            motivo: 'La consulta no contiene palabras clave normativas relacionadas con las materias reguladas.'
+        };
+    }
+    
+    // 4. SOLAMENTE SI PASA TODOS LOS FILTROS
     return {
         relevante: true,
-        motivo: 'Consulta relevante para análisis normativo.'
+        motivo: 'Consulta relevante para análisis normativo dentro del ámbito de competencia de la Dirección de Inspección y Vigilancia de Zapopan.'
     };
 }
 
@@ -394,31 +448,35 @@ function generarRespuestaSinFundamento() {
     return `**ANÁLISIS DE SITUACIÓN**\n\nNo se encontró fundamento en los documentos normativos disponibles en el sistema para analizar esta situación.\n\n**CLASIFICACIÓN DE ATRIBUCIONES**\n\nNo se puede determinar la competencia sin fundamento normativo.\n\n**SUSTENTO LEGAL**\n\nNo se identificaron normas aplicables.\n\n**DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO**\n\nSin fundamento normativo, no se pueden identificar dependencias competentes.\n\n**FUENTES**\n\nNo se utilizaron fuentes.`;
 }
 
-async function generarRespuestaConstitucional(consulta, chunks, area) {
-    // Paso 1: ANÁLISIS DE SITUACIÓN
+async function generarRespuestaConstitucionalExacta(consulta, chunks, area) {
+    // ============================================
+    // PROTOCOLO DE 5 PASOS - ARQUITECTURA EXACTA
+    // ============================================
+    
+    // 1. ANÁLISIS DE SITUACIÓN
     const documentos = [...new Set(chunks.map(c => c.document_title))];
     const analisis = `La consulta "${consulta}" corresponde al área de ${area}. ` +
         (documentos.length > 0 ? `Se identificaron ${documentos.length} documentos normativos relevantes.` : '');
     
-    // Paso 2: CLASIFICACIÓN DE ATRIBUCIONES
+    // 2. CLASIFICACIÓN DE ATRIBUCIONES
     const tieneInspeccion = chunks.some(c => c.texto_normativo.toLowerCase().includes("inspección"));
     const atribuciones = tieneInspeccion ?
         `Esta situación corresponde a **facultad exclusiva de la Dirección de Inspección y Vigilancia de Zapopan**.` :
         `**Facultad de otra dependencia de gobierno.**`;
     
-    // Paso 3: SUSTENTO LEGAL
+    // 3. SUSTENTO LEGAL (Convención de citas A)
     let sustento = "**Fundamento normativo:**\n\n";
     chunks.slice(0, 3).forEach((chunk, i) => {
         sustento += `${i+1}. ${chunk.citation_short}: ${chunk.texto_normativo}\n`;
     });
     
-    // Paso 4: DEPENDENCIAS
+    // 4. DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO
     const dependencias = `**Dirección de Inspección y Vigilancia Zapopan:**\n` +
         `• Teléfono: 3338182200\n` +
         `• Extensiones: 3312, 3313, 3315\n` +
         `• Horario: Lunes a Viernes 08:00 - 15:00`;
     
-    // Paso 5: FUENTES
+    // 5. FUENTES (Convención de citas A)
     const fuentes = chunks.map(c => c.citation_short).join('\n');
     
     return `**1. ANÁLISIS DE SITUACIÓN**\n\n${analisis}\n\n` +
@@ -428,22 +486,28 @@ async function generarRespuestaConstitucional(consulta, chunks, area) {
            `**5. FUENTES**\n\n${fuentes}`;
 }
 
-function clasificarConsulta(consulta) {
+function clasificarConsultaExacta(consulta) {
     const consultaLower = consulta.toLowerCase();
     if (consultaLower.includes("construcción")) return "CONSULTA_CONSTRUCCION";
     if (consultaLower.includes("medio ambiente")) return "CONSULTA_AMBIENTAL";
     if (consultaLower.includes("comercio")) return "CONSULTA_COMERCIO";
+    if (consultaLower.includes("anuncio")) return "CONSULTA_ANUNCIOS";
+    if (consultaLower.includes("tianguis")) return "CONSULTA_TIANGUIS";
+    if (consultaLower.includes("ruido")) return "CONSULTA_RUIDO";
+    if (consultaLower.includes("animal")) return "CONSULTA_ANIMALES";
+    if (consultaLower.includes("uso de suelo")) return "CONSULTA_USO_SUELO";
+    if (consultaLower.includes("vía pública")) return "CONSULTA_VIA_PUBLICA";
     return "CONSULTA_GENERAL";
 }
 
-function calcularCalificacion(numChunks, respuesta, area, chunks) {
+function calcularCalificacionExacta(numChunks, respuesta, area, chunks) {
     if (numChunks === 0) return "INSUFICIENTE";
     if (numChunks >= 3 && area !== "GENERAL") return "EXCELENTE";
     if (numChunks >= 2) return "BUENO";
     return "REGULAR";
 }
 
-function calcularPorcentajeCompletitud(chunks, area) {
+function calcularPorcentajeCompletitudExacta(chunks, area) {
     if (chunks.length === 0) return 0;
     let completitud = 0;
     if (chunks.length >= 3) completitud += 40;
@@ -453,15 +517,15 @@ function calcularPorcentajeCompletitud(chunks, area) {
 }
 
 // ============================================
-// 🚀  SISTEMA PRINCIPAL
+// 🚀  SISTEMA PRINCIPAL - ARQUITECTURA EXACTA
 // ============================================
 
 // Inicializar sistemas
-const ragSystem = new HybridRAGSystem();
-const metricsSystem = new HybridMetricsSystem();
+const sistemaRAG = new SistemaRAGExacto();
+const sistemaAuditoria = new SistemaAuditoria();
 
 // Inicializar
-ragSystem.initialize();
+sistemaRAG.inicializar();
 
 module.exports = async (req, res) => {
     // Configurar CORS
@@ -475,24 +539,25 @@ module.exports = async (req, res) => {
         return;
     }
     
-    // Endpoint: Salud
+    // Endpoint: Salud del sistema
     if (req.method === 'GET' && req.url === '/api/health') {
-        const health = metricsSystem.getHealthStatus();
+        const salud = sistemaAuditoria.obtenerEstadoSalud();
         res.status(200).json({
             success: true,
-            ...health,
-            system: 'Chatbot Zapopan v6.0 - Excelencia Operativa'
+            ...salud,
+            system: 'Chatbot Zapopan v6.2 - Arquitectura Exacta',
+            arquitectura: 'SISTEMA DE CONSULTA NORMATIVA ZAPOPAN'
         });
         return;
     }
     
-    // Endpoint: Métricas
+    // Endpoint: Métricas del sistema
     if (req.method === 'GET' && req.url === '/api/metrics') {
-        const dashboard = metricsSystem.getDashboardData();
+        const dashboard = sistemaAuditoria.obtenerDatosDashboard();
         res.status(200).json({
             success: true,
             timestamp: new Date().toISOString(),
-            system: 'Chatbot Zapopan v6.0',
+            system: 'Chatbot Zapopan v6.2 - Arquitectura Exacta',
             data: dashboard
         });
         return;
@@ -500,7 +565,7 @@ module.exports = async (req, res) => {
     
     // Endpoint principal: /api/chat
     if (req.method === 'POST' && req.url === '/api/chat') {
-        const startTime = Date.now();
+        const horaInicio = Date.now();
         
         try {
             let body = '';
@@ -513,18 +578,25 @@ module.exports = async (req, res) => {
                     const data = JSON.parse(body);
                     const consulta = data.message || '';
                     
-                    // 1. Router de áreas
-                    const areaIdentificada = await routerAreas(consulta);
+                    // ============================================
+                    // ARQUITECTURA DE 4 APARTADOS EXACTA
+                    // ============================================
                     
-                    // 2. Filtro de relevancia
-                    const relevancia = await aplicarFiltroRelevancia(consulta);
+                    // 1. ROUTER DE ÁREAS
+                    const areaIdentificada = await routerAreasExacto(consulta);
+                    
+                    // 2. FILTRO DE RELEVANCIA NORMATIVA (ANTES DEL RAG)
+                    const relevancia = await aplicarFiltroRelevanciaExacto(consulta);
                     
                     if (!relevancia.relevante) {
                         const respuesta = generarRespuestaNoRelevante(relevancia.motivo);
+                        
                         const auditoria = {
                             timestamp: new Date().toISOString(),
+                            consulta_original: consulta.substring(0, 200),
                             area_identificada: "NO_APLICA",
-                            tiempo_respuesta_segundos: (Date.now() - startTime) / 1000,
+                            tipo_consulta: "FILTRADA",
+                            tiempo_respuesta_segundos: (Date.now() - horaInicio) / 1000,
                             calificacion_calidad: "FILTRO_APLICADO"
                         };
                         
@@ -532,24 +604,30 @@ module.exports = async (req, res) => {
                             success: true,
                             response: respuesta,
                             query: consulta,
-                            system: "Chatbot Zapopan v6.0",
+                            area_identified: "NO_APLICA",
+                            documents_found: 0,
+                            filtered: true,
+                            system: "Chatbot Zapopan v6.2 - Arquitectura Exacta",
                             audit: auditoria
                         };
                         
-                        metricsSystem.logQuery(auditoria, responseData);
+                        sistemaAuditoria.registrarConsulta(auditoria, responseData);
                         res.status(200).json(responseData);
                         return;
                     }
                     
-                    // 3. Búsqueda RAG
-                    const chunksRecuperados = await ragSystem.semanticSearch(consulta, areaIdentificada, 5);
+                    // 3. SISTEMA RAG (Núcleo de Documentos)
+                    const chunksRecuperados = await sistemaRAG.busquedaSemantica(consulta, areaIdentificada, 5);
                     
                     if (chunksRecuperados.length === 0) {
                         const respuesta = generarRespuestaSinFundamento();
+                        
                         const auditoria = {
                             timestamp: new Date().toISOString(),
+                            consulta_original: consulta.substring(0, 200),
                             area_identificada: areaIdentificada,
-                            tiempo_respuesta_segundos: (Date.now() - startTime) / 1000,
+                            tipo_consulta: "SIN_CHUNKS",
+                            tiempo_respuesta_segundos: (Date.now() - horaInicio) / 1000,
                             calificacion_calidad: "INSUFICIENTE"
                         };
                         
@@ -557,26 +635,39 @@ module.exports = async (req, res) => {
                             success: true,
                             response: respuesta,
                             query: consulta,
-                            system: "Chatbot Zapopan v6.0",
+                            area_identified: areaIdentificada,
+                            documents_found: 0,
+                            filtered: false,
+                            system: "Chatbot Zapopan v6.2 - Arquitectura Exacta",
                             audit: auditoria
                         };
                         
-                        metricsSystem.logQuery(auditoria, responseData);
+                        sistemaAuditoria.registrarConsulta(auditoria, responseData);
                         res.status(200).json(responseData);
                         return;
                     }
                     
-                    // 4. Generar respuesta
-                    const respuesta = await generarRespuestaConstitucional(consulta, chunksRecuperados, areaIdentificada);
+                    // 4. PROTOCOLOS ESPECIALIZADOS (Generar respuesta constitucional)
+                    const respuesta = await generarRespuestaConstitucionalExacta(
+                        consulta,
+                        chunksRecuperados,
+                        areaIdentificada
+                    );
                     
-                    // 5. Auditoría
+                    // ============================================
+                    // SISTEMA DE AUDITORÍA
+                    // ============================================
+                    
                     const auditoria = {
                         timestamp: new Date().toISOString(),
+                        consulta_original: consulta.substring(0, 200),
                         area_identificada: areaIdentificada,
-                        tipo_consulta: clasificarConsulta(consulta),
-                        tiempo_respuesta_segundos: (Date.now() - startTime) / 1000,
-                        calificacion_calidad: calcularCalificacion(chunksRecuperados.length, respuesta, areaIdentificada, chunksRecuperados),
-                        porcentaje_completitud: calcularPorcentajeCompletitud(chunksRecuperados, areaIdentificada)
+                        tipo_consulta: clasificarConsultaExacta(consulta),
+                        documentos_consultados: [...new Set(chunksRecuperados.map(c => c.document_title))],
+                        ids_juridicos_utilizados: chunksRecuperados.map(c => c.id_juridico),
+                        tiempo_respuesta_segundos: (Date.now() - horaInicio) / 1000,
+                        calificacion_calidad: calcularCalificacionExacta(chunksRecuperados.length, respuesta, areaIdentificada, chunksRecuperados),
+                        porcentaje_completitud: calcularPorcentajeCompletitudExacta(chunksRecuperados, areaIdentificada)
                     };
                     
                     const responseData = {
@@ -585,26 +676,37 @@ module.exports = async (req, res) => {
                         query: consulta,
                         area_identified: areaIdentificada,
                         documents_found: chunksRecuperados.length,
-                        system: "Chatbot Zapopan v6.0 - Excelencia Operativa",
+                        filtered: false,
+                        system: "Chatbot Zapopan v6.2 - Arquitectura Exacta",
                         audit: auditoria
                     };
                     
-                    metricsSystem.logQuery(auditoria, responseData);
+                    // Registrar en sistema de auditoría
+                    sistemaAuditoria.registrarConsulta(auditoria, responseData);
+                    
+                    // ============================================
+                    // RESPUESTA FINAL
+                    // ============================================
+                    
                     res.status(200).json(responseData);
                     
                 } catch (parseError) {
+                    console.error('Error parseando JSON:', parseError);
                     res.status(400).json({
                         success: false,
-                        error: 'Error parseando JSON'
+                        error: 'Error parseando JSON',
+                        message: parseError.message
                     });
                 }
             });
             
         } catch (error) {
+            console.error('Error en /api/chat:', error);
             res.status(500).json({
                 success: false,
                 error: 'Error interno del servidor',
-                system: 'Chatbot Zapopan v6.0'
+                system: 'Chatbot Zapopan v6.2 - Arquitectura Exacta',
+                message: error.message
             });
         }
         return;
@@ -613,6 +715,8 @@ module.exports = async (req, res) => {
     // Ruta no encontrada
     res.status(404).json({
         success: false,
-        error: 'Ruta no encontrada'
+        error: 'Ruta no encontrada',
+        requested_url: req.url,
+        available_endpoints: ['/api/chat', '/api/health', '/api/metrics']
     });
 };
