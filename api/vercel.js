@@ -43,15 +43,18 @@ module.exports = async (req, res) => {
                 // 3. PROTOCOLOS ESPECIALIZADOS
                 const protocoloAplicado = await aplicarProtocoloEspecializado(consulta, areaIdentificada);
                 
-                // 4. SISTEMA DE AUDITORÍA
+                // 4. SISTEMA DE AUDITORÍA AVANZADO
                 const auditoria = {
                     timestamp: new Date().toISOString(),
-                    area_identificada: areaIdentificada,
+                    consulta_original: consulta.substring(0, 200), // Primeros 200 caracteres
+                    area_identificada: "",
                     tipo_consulta: clasificarConsulta(consulta),
                     documentos_consultados: [],
                     ids_juridicos_utilizados: [],
                     tiempo_respuesta_segundos: 0,
-                    calificacion_sugerida: ""
+                    calificacion_calidad: "",
+                    porcentaje_completitud: 0,
+                    metricas_detalladas: null
                 };
                 
                 // ============================================
@@ -117,13 +120,19 @@ module.exports = async (req, res) => {
                 );
                 
                 // ============================================
-                // 📊 SISTEMA DE AUDITORÍA COMPLETO
+                // 📊 SISTEMA DE AUDITORÍA AVANZADO CON MÉTRICAS
                 // ============================================
                 
+                auditoria.area_identificada = areaIdentificada;
                 auditoria.documentos_consultados = extraerDocumentosConsultados(chunksRecuperados);
                 auditoria.ids_juridicos_utilizados = extraerIdsJuridicos(chunksRecuperados);
                 auditoria.tiempo_respuesta_segundos = (Date.now() - startTime) / 1000;
-                auditoria.calificacion_sugerida = calcularCalificacion(chunksRecuperados.length, respuesta);
+                
+                // Generar métricas detalladas
+                const metricas = generarReporteMetricas(startTime, chunksRecuperados, areaIdentificada, respuesta);
+                auditoria.calificacion_calidad = metricas.calificacion_calidad;
+                auditoria.porcentaje_completitud = metricas.porcentaje_completitud;
+                auditoria.metricas_detalladas = metricas;
                 
                 // ============================================
                 // 🎯 RESPUESTA FINAL
@@ -210,33 +219,195 @@ async function inicializarNucleoDocumentos() {
 }
 
 /**
- * 2. ROUTER DE ÁREAS
- * Identifica el área normativa de la consulta
+ * 2. ROUTER DE ÁREAS AVANZADO
+ * Análisis semántico profundo con ponderación y contexto
  */
 async function routerAreas(consulta) {
-    const areas = {
-        "CONSTRUCCIÓN": ["construcción", "obra", "edificación", "permiso de construcción", "cimientos", "estructura"],
-        "AMBIENTAL": ["medio ambiente", "contaminación", "residuos", "árbol", "fauna", "flora", "ruido"],
-        "COMERCIO": ["comercio", "giro", "negocio", "establecimiento", "permiso comercial", "licencia"],
-        "ANUNCIOS": ["anuncio", "publicidad", "cartel", "letrero", "valla", "spectacular"],
-        "TIANGUIS": ["tianguis", "mercado sobre ruedas", "comercio ambulante", "puesto"],
-        "ANIMALES": ["animal", "mascota", "perro", "gato", "protección animal", "sanidad"],
-        "URBANIZACIÓN": ["urbanización", "uso de suelo", "zona", "lote", "parcelación"],
-        "MOVILIDAD": ["tránsito", "movilidad", "estacionamiento", "vía pública", "peatón"],
-        "RIESGOS": ["riesgo", "emergencia", "prevención", "gestión integral", "desastre"]
-    };
-    
     const consultaLower = consulta.toLowerCase();
     
-    for (const [area, palabras] of Object.entries(areas)) {
-        for (const palabra of palabras) {
-            if (consultaLower.includes(palabra.toLowerCase())) {
-                return area;
+    // Sistema de ponderación por área
+    const areasConPonderacion = {
+        "CONSTRUCCIÓN": {
+            palabras: [
+                {texto: "construcción", peso: 10},
+                {texto: "construir", peso: 9},
+                {texto: "obra", peso: 8},
+                {texto: "edificación", peso: 8},
+                {texto: "barda", peso: 7},
+                {texto: "muro", peso: 7},
+                {texto: "cimientos", peso: 6},
+                {texto: "estructura", peso: 6},
+                {texto: "permiso de construcción", peso: 10},
+                {texto: "licencia de obra", peso: 9},
+                {texto: "planos", peso: 5},
+                {texto: "arquitecto", peso: 4},
+                {texto: "ingeniero", peso: 4}
+            ],
+            contexto: ["casa", "terreno", "lote", "propiedad", "vivienda", "residencial"]
+        },
+        "AMBIENTAL": {
+            palabras: [
+                {texto: "medio ambiente", peso: 10},
+                {texto: "contaminación", peso: 9},
+                {texto: "residuos", peso: 8},
+                {texto: "basura", peso: 8},
+                {texto: "desechos", peso: 7},
+                {texto: "ruido", peso: 7},
+                {texto: "sonido", peso: 6},
+                {texto: "volumen", peso: 6},
+                {texto: "árbol", peso: 5},
+                {texto: "fauna", peso: 5},
+                {texto: "flora", peso: 5},
+                {texto: "ecología", peso: 8},
+                {texto: "contaminante", peso: 7}
+            ],
+            contexto: ["vecino", "molestia", "queja", "denuncia", "salud", "calidad de vida"]
+        },
+        "COMERCIO": {
+            palabras: [
+                {texto: "comercio", peso: 10},
+                {texto: "giro", peso: 9},
+                {texto: "negocio", peso: 8},
+                {texto: "establecimiento", peso: 8},
+                {texto: "tienda", peso: 7},
+                {texto: "abarrotes", peso: 6},
+                {texto: "permiso comercial", peso: 10},
+                {texto: "licencia", peso: 9},
+                {texto: "trámite", peso: 6},
+                {texto: "autorización", peso: 7},
+                {texto: "actividad económica", peso: 8}
+            ],
+            contexto: ["abrir", "instalar", "operar", "funcionar", "local", "comercial"]
+        },
+        "ANUNCIOS": {
+            palabras: [
+                {texto: "anuncio", peso: 10},
+                {texto: "publicidad", peso: 9},
+                {texto: "cartel", peso: 8},
+                {texto: "letrero", peso: 8},
+                {texto: "valla", peso: 7},
+                {texto: "spectacular", peso: 7},
+                {texto: "rotulación", peso: 6},
+                {texto: "señalización", peso: 6}
+            ],
+            contexto: ["instalar", "colocar", "fachada", "exterior", "visible", "promoción"]
+        },
+        "TIANGUIS": {
+            palabras: [
+                {texto: "tianguis", peso: 10},
+                {texto: "mercado sobre ruedas", peso: 9},
+                {texto: "comercio ambulante", peso: 8},
+                {texto: "puesto", peso: 7},
+                {texto: "ambulante", peso: 7},
+                {texto: "feria", peso: 6}
+            ],
+            contexto: ["calle", "plaza", "espacio público", "fin de semana", "productos"]
+        },
+        "ANIMALES": {
+            palabras: [
+                {texto: "animal", peso: 10},
+                {texto: "mascota", peso: 9},
+                {texto: "perro", peso: 8},
+                {texto: "gato", peso: 8},
+                {texto: "protección animal", peso: 7},
+                {texto: "sanidad", peso: 6},
+                {texto: "veterinario", peso: 5}
+            ],
+            contexto: ["cuidado", "control", "molestia", "ruido", "salud", "bienestar"]
+        },
+        "URBANIZACIÓN": {
+            palabras: [
+                {texto: "urbanización", peso: 10},
+                {texto: "uso de suelo", peso: 9},
+                {texto: "zona", peso: 8},
+                {texto: "lote", peso: 7},
+                {texto: "parcelación", peso: 7},
+                {texto: "terreno", peso: 6},
+                {texto: "predio", peso: 6}
+            ],
+            contexto: ["división", "fraccionamiento", "desarrollo", "urbano", "habitacional"]
+        },
+        "MOVILIDAD": {
+            palabras: [
+                {texto: "movilidad", peso: 10},
+                {texto: "tránsito", peso: 9},
+                {texto: "estacionamiento", peso: 8},
+                {texto: "vía pública", peso: 8},
+                {texto: "peatón", peso: 7},
+                {texto: "ciclista", peso: 6},
+                {texto: "transporte", peso: 7}
+            ],
+            contexto: ["calle", "avenida", "circulación", "vehículo", "acceso", "estacionar"]
+        },
+        "RIESGOS": {
+            palabras: [
+                {texto: "riesgo", peso: 10},
+                {texto: "emergencia", peso: 9},
+                {texto: "prevención", peso: 8},
+                {texto: "gestión integral", peso: 7},
+                {texto: "desastre", peso: 7},
+                {texto: "incendio", peso: 6},
+                {texto: "inundación", peso: 6}
+            ],
+            contexto: ["seguridad", "protección", "civil", "bomberos", "rescate", "evacuación"]
+        }
+    };
+    
+    // Calcular puntuación por área
+    const puntuaciones = {};
+    
+    for (const [area, config] of Object.entries(areasConPonderacion)) {
+        let puntuacion = 0;
+        
+        // Ponderación por palabras clave
+        for (const palabraConfig of config.palabras) {
+            if (consultaLower.includes(palabraConfig.texto.toLowerCase())) {
+                puntuacion += palabraConfig.peso;
             }
+        }
+        
+        // Bonus por contexto (presencia de palabras de contexto)
+        let contextoCount = 0;
+        for (const contexto of config.contexto) {
+            if (consultaLower.includes(contexto.toLowerCase())) {
+                contextoCount++;
+            }
+        }
+        if (contextoCount > 0) {
+            puntuacion += contextoCount * 2; // Bonus de 2 puntos por palabra de contexto
+        }
+        
+        // Bonus por frases completas
+        const frasesCompletas = config.palabras
+            .filter(p => p.texto.includes(' '))
+            .map(p => p.texto);
+        
+        for (const frase of frasesCompletas) {
+            if (consultaLower.includes(frase.toLowerCase())) {
+                puntuacion += 5; // Bonus extra por frases completas
+            }
+        }
+        
+        puntuaciones[area] = puntuacion;
+    }
+    
+    // Encontrar área con mayor puntuación
+    let areaMaxima = "GENERAL";
+    let puntuacionMaxima = 0;
+    
+    for (const [area, puntuacion] of Object.entries(puntuaciones)) {
+        if (puntuacion > puntuacionMaxima) {
+            puntuacionMaxima = puntuacion;
+            areaMaxima = area;
         }
     }
     
-    return "GENERAL";
+    // Umbral mínimo para considerar área específica
+    if (puntuacionMaxima < 5) {
+        return "GENERAL";
+    }
+    
+    return areaMaxima;
 }
 
 /**
@@ -373,37 +544,64 @@ async function recuperarChunksRAG(consulta, area) {
     const chunksDataset = {
         "CONSTRUCCIÓN": [
             {
-                texto_normativo: "Toda construcción, modificación, ampliación o demolición requiere permiso municipal previo expedido por la Dirección de Inspección y Vigilancia.",
+                texto_normativo: "Toda construcción, modificación, ampliación, demolición o reconstrucción de inmuebles requiere permiso municipal previo expedido por la Dirección de Inspección y Vigilancia.",
                 document_title: "Reglamento de Construcción para el Municipio de Zapopan",
                 document_type: "Reglamento Municipal",
                 jurisdiction_level: "Municipal",
                 article: "34",
-                numeral: "I",
-                citation_short: "Reglamento de Construcción, Art. 34",
+                fraccion: "I",
+                citation_short: "Reglamento de Construcción, Art. 34, Fracc. I",
                 citation_full: "Reglamento de Construcción para el Municipio de Zapopan, Artículo 34, Fracción I",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_34|frac_I|c001"
+                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_34|frac_I|c001",
+                tags: ["permiso", "construcción", "obligatorio", "previo"]
             },
             {
-                texto_normativo: "Las bardas perimetrales que excedan 1.80 metros de altura requieren permiso de construcción y deben cumplir con las normas de seguridad estructural.",
+                texto_normativo: "Las bardas, muros o cercas perimetrales que excedan 1.80 metros de altura requieren permiso de construcción y deben cumplir con las normas de seguridad estructural establecidas en este reglamento.",
                 document_title: "Reglamento de Construcción para el Municipio de Zapopan",
                 document_type: "Reglamento Municipal",
                 jurisdiction_level: "Municipal",
                 article: "87",
-                numeral: "III",
-                citation_short: "Reglamento de Construcción, Art. 87",
+                fraccion: "III",
+                citation_short: "Reglamento de Construcción, Art. 87, Fracc. III",
                 citation_full: "Reglamento de Construcción para el Municipio de Zapopan, Artículo 87, Fracción III",
-                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_87|frac_III|c001"
+                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_87|frac_III|c001",
+                tags: ["barda", "muro", "cerca", "altura", "1.80m", "permiso"]
             },
             {
-                texto_normativo: "La Dirección de Inspección y Vigilancia es la autoridad competente para verificar, inspeccionar y, en su caso, sancionar el incumplimiento de las normas de construcción.",
+                texto_normativo: "Para la construcción de bardas menores a 1.80 metros se requiere presentar aviso previo a la Dirección de Inspección y Vigilancia, adjuntando croquis de localización y características técnicas.",
+                document_title: "Reglamento de Construcción para el Municipio de Zapopan",
+                document_type: "Reglamento Municipal",
+                jurisdiction_level: "Municipal",
+                article: "87",
+                fraccion: "IV",
+                citation_short: "Reglamento de Construcción, Art. 87, Fracc. IV",
+                citation_full: "Reglamento de Construcción para el Municipio de Zapopan, Artículo 87, Fracción IV",
+                id_juridico: "mx|jal|jal|mun|zapopan|reglamento_construccion|v2023|art_87|frac_IV|c001",
+                tags: ["barda", "aviso", "menor 1.80m", "croquis", "técnico"]
+            },
+            {
+                texto_normativo: "La Dirección de Inspección y Vigilancia es la autoridad competente para verificar, inspeccionar y, en su caso, sancionar el incumplimiento de las normas de construcción, pudiendo ordenar la suspensión de obras y la demolición de lo construido sin permiso.",
                 document_title: "Manual de Organización de la Dirección de Inspección y Vigilancia",
                 document_type: "Manual Organizacional",
                 jurisdiction_level: "Municipal",
                 article: "5",
                 numeral: "2",
-                citation_short: "Manual Inspección, Art. 5",
+                citation_short: "Manual Inspección, Art. 5, Num. 2",
                 citation_full: "Manual de Organización de la Dirección de Inspección y Vigilancia, Artículo 5, Numeral 2",
-                id_juridico: "mx|jal|jal|mun|zapopan|manual_inspeccion|v2023|art_5|num_2|c001"
+                id_juridico: "mx|jal|jal|mun|zapopan|manual_inspeccion|v2023|art_5|num_2|c001",
+                tags: ["competencia", "inspección", "sanción", "suspensión", "demolición"]
+            },
+            {
+                texto_normativo: "El Código Urbano para el Estado de Jalisco establece que los municipios tienen la facultad de regular la construcción, conservación y mejoramiento de los inmuebles en su territorio, debiendo expedir los reglamentos correspondientes.",
+                document_title: "Código Urbano para el Estado de Jalisco",
+                document_type: "Código Estatal",
+                jurisdiction_level: "Estatal",
+                article: "45",
+                fraccion: "II",
+                citation_short: "Código Urbano Jalisco, Art. 45, Fracc. II",
+                citation_full: "Código Urbano para el Estado de Jalisco, Artículo 45, Fracción II",
+                id_juridico: "mx|jal|est|codigo_urbano|v2023|art_45|frac_II|c001",
+                tags: ["facultad municipal", "regulación", "construcción", "estatal"]
             }
         ],
         "AMBIENTAL": [
@@ -626,39 +824,113 @@ function clasificarAtribuciones(chunks, area) {
 }
 
 /**
- * Paso 3: SUSTENTO LEGAL
+ * Paso 3: SUSTENTO LEGAL MEJORADO
+ * Citas exactas con jerarquía y relevancia
  */
 function generarSustentoLegal(chunks) {
     if (chunks.length === 0) {
         return "No se encontró fundamento legal específico en los documentos disponibles del sistema.";
     }
     
-    // Separar fundamentos de Inspección vs otras
-    const fundamentosInspeccion = chunks.filter(c => 
-        c.texto_normativo.toLowerCase().includes("inspección") ||
-        c.document_title.includes("Inspección")
-    );
-    
-    const fundamentosOtros = chunks.filter(c => !fundamentosInspeccion.includes(c));
+    // Clasificar chunks por jerarquía y relevancia
+    const chunksClasificados = clasificarChunksPorJerarquia(chunks);
     
     let sustento = "";
+    
+    // 1. FUNDAMENTOS DE INSPECCIÓN Y VIGILANCIA (prioridad máxima)
+    const fundamentosInspeccion = chunksClasificados.filter(c => 
+        c.texto_normativo.toLowerCase().includes("inspección") ||
+        c.document_title.includes("Inspección") ||
+        (c.tags && c.tags.includes("competencia"))
+    );
     
     if (fundamentosInspeccion.length > 0) {
         sustento += "**Fundamento de Inspección y Vigilancia:**\n\n";
         fundamentosInspeccion.forEach((chunk, i) => {
-            sustento += `${i+1}. ${chunk.citation_short}: ${chunk.texto_normativo}\n`;
+            const citaCompleta = chunk.fraccion ? 
+                `${chunk.citation_short}, Fracc. ${chunk.fraccion}` : 
+                chunk.citation_short;
+            
+            sustento += `${i+1}. ${citaCompleta}: ${chunk.texto_normativo}\n`;
         });
         sustento += "\n";
     }
     
-    if (fundamentosOtros.length > 0) {
-        sustento += "**Fundamento de otras direcciones/dependencias:**\n\n";
-        fundamentosOtros.forEach((chunk, i) => {
+    // 2. FUNDAMENTOS ESPECÍFICOS POR ÁREA (jerarquía alta)
+    const fundamentosEspecificos = chunksClasificados.filter(c => 
+        !fundamentosInspeccion.includes(c) &&
+        c.jurisdiction_level !== "Estatal" &&
+        c.jurisdiction_level !== "Federal"
+    );
+    
+    if (fundamentosEspecificos.length > 0) {
+        sustento += "**Fundamento normativo municipal específico:**\n\n";
+        fundamentosEspecificos.forEach((chunk, i) => {
+            const citaCompleta = chunk.fraccion ? 
+                `${chunk.citation_short}, Fracc. ${chunk.fraccion}` : 
+                (chunk.numeral ? `${chunk.citation_short}, Num. ${chunk.numeral}` : chunk.citation_short);
+            
+            sustento += `${i+1}. ${citaCompleta}: ${chunk.texto_normativo}\n`;
+        });
+        sustento += "\n";
+    }
+    
+    // 3. FUNDAMENTOS ESTATALES/FEDERALES (jerarquía base)
+    const fundamentosSuperiores = chunksClasificados.filter(c => 
+        c.jurisdiction_level === "Estatal" || 
+        c.jurisdiction_level === "Federal"
+    );
+    
+    if (fundamentosSuperiores.length > 0) {
+        sustento += "**Fundamento estatal/federal (marco general):**\n\n";
+        fundamentosSuperiores.forEach((chunk, i) => {
+            const citaCompleta = chunk.fraccion ? 
+                `${chunk.citation_short}, Fracc. ${chunk.fraccion}` : 
+                (chunk.numeral ? `${chunk.citation_short}, Num. ${chunk.numeral}` : chunk.citation_short);
+            
+            sustento += `${i+1}. ${citaCompleta}: ${chunk.texto_normativo}\n`;
+        });
+    }
+    
+    // 4. Si no hay fundamentos específicos pero hay chunks generales
+    if (sustento === "" && chunks.length > 0) {
+        sustento += "**Fundamento general:**\n\n";
+        chunks.slice(0, 3).forEach((chunk, i) => {
             sustento += `${i+1}. ${chunk.citation_short}: ${chunk.texto_normativo}\n`;
         });
     }
     
-    return sustento || "No se identificaron fundamentos legales específicos.";
+    return sustento || "No se identificaron fundamentos legales específicos para esta consulta.";
+}
+
+/**
+ * Clasifica chunks por jerarquía normativa
+ */
+function clasificarChunksPorJerarquia(chunks) {
+    return chunks.sort((a, b) => {
+        // Prioridad 1: Chunks con tags específicos
+        const aTags = a.tags || [];
+        const bTags = b.tags || [];
+        
+        if (aTags.length > 0 && bTags.length === 0) return -1;
+        if (bTags.length > 0 && aTags.length === 0) return 1;
+        
+        // Prioridad 2: Chunks de Inspección
+        const aEsInspeccion = a.texto_normativo.toLowerCase().includes("inspección") || 
+                             a.document_title.includes("Inspección");
+        const bEsInspeccion = b.texto_normativo.toLowerCase().includes("inspección") || 
+                             b.document_title.includes("Inspección");
+        
+        if (aEsInspeccion && !bEsInspeccion) return -1;
+        if (!aEsInspeccion && bEsInspeccion) return 1;
+        
+        // Prioridad 3: Jerarquía jurisdiccional (Municipal > Estatal > Federal para aplicabilidad)
+        const jerarquia = { "Municipal": 1, "Estatal": 2, "Federal": 3 };
+        const aJerarquia = jerarquia[a.jurisdiction_level] || 4;
+        const bJerarquia = jerarquia[b.jurisdiction_level] || 4;
+        
+        return aJerarquia - bJerarquia;
+    });
 }
 
 /**
@@ -778,11 +1050,92 @@ function extraerIdsJuridicos(chunks) {
     return chunks.map(c => c.id_juridico);
 }
 
-function calcularCalificacion(numChunks, respuesta) {
-    if (numChunks === 0) return "SIN_FUNDAMENTO";
-    if (respuesta.includes("No se encontró")) return "LIMITADO";
-    if (respuesta.includes("facultad exclusiva")) return "COMPLETO";
-    return "PARCIAL";
+function calcularCalificacion(numChunks, respuesta, areaIdentificada, chunks) {
+    // Sistema de métricas avanzado
+    let puntuacion = 0;
+    let maxPuntuacion = 10;
+    
+    // 1. Métrica: Cantidad de chunks (0-3 puntos)
+    if (numChunks >= 5) puntuacion += 3;
+    else if (numChunks >= 3) puntuacion += 2;
+    else if (numChunks >= 1) puntuacion += 1;
+    
+    // 2. Métrica: Especificidad del área (0-2 puntos)
+    if (areaIdentificada !== "GENERAL") puntuacion += 2;
+    
+    // 3. Métrica: Presencia de fundamentos de Inspección (0-2 puntos)
+    const tieneInspeccion = chunks.some(c => 
+        c.texto_normativo.toLowerCase().includes("inspección") ||
+        c.document_title.includes("Inspección")
+    );
+    if (tieneInspeccion) puntuacion += 2;
+    
+    // 4. Métrica: Complejidad de la respuesta (0-3 puntos)
+    const lineasRespuesta = respuesta.split('\n').length;
+    if (lineasRespuesta > 30) puntuacion += 3;
+    else if (lineasRespuesta > 20) puntuacion += 2;
+    else if (lineasRespuesta > 10) puntuacion += 1;
+    
+    // Calcular porcentaje
+    const porcentaje = (puntuacion / maxPuntuacion) * 100;
+    
+    // Asignar calificación
+    if (porcentaje >= 80) return "EXCELENTE";
+    if (porcentaje >= 60) return "BUENO";
+    if (porcentaje >= 40) return "REGULAR";
+    if (porcentaje >= 20) return "LIMITADO";
+    return "INSUFICIENTE";
+}
+
+/**
+ * Genera reporte de métricas para auditoría
+ */
+function generarReporteMetricas(startTime, chunks, areaIdentificada, respuesta) {
+    const tiempoRespuesta = (Date.now() - startTime) / 1000;
+    const numChunks = chunks.length;
+    const calificacion = calcularCalificacion(numChunks, respuesta, areaIdentificada, chunks);
+    
+    return {
+        timestamp: new Date().toISOString(),
+        tiempo_respuesta_segundos: tiempoRespuesta.toFixed(3),
+        chunks_recuperados: numChunks,
+        area_identificada: areaIdentificada,
+        calificacion_calidad: calificacion,
+        porcentaje_completitud: calcularPorcentajeCompletitud(chunks, areaIdentificada),
+        tiene_fundamento_inspeccion: chunks.some(c => 
+            c.texto_normativo.toLowerCase().includes("inspección") ||
+            c.document_title.includes("Inspección")
+        ),
+        niveles_jurisdiccionales: [...new Set(chunks.map(c => c.jurisdiction_level))]
+    };
+}
+
+function calcularPorcentajeCompletitud(chunks, area) {
+    if (chunks.length === 0) return 0;
+    
+    let completitud = 0;
+    
+    // Chunks específicos del área
+    const chunksArea = chunks.filter(c => 
+        c.tags && c.tags.some(tag => tag.toLowerCase().includes(area.toLowerCase()))
+    );
+    if (chunksArea.length > 0) completitud += 40;
+    
+    // Chunks de Inspección
+    const chunksInspeccion = chunks.filter(c => 
+        c.texto_normativo.toLowerCase().includes("inspección") ||
+        c.document_title.includes("Inspección")
+    );
+    if (chunksInspeccion.length > 0) completitud += 30;
+    
+    // Chunks con citas completas
+    const chunksCitasCompletas = chunks.filter(c => 
+        c.citation_full && c.citation_full.includes("Artículo") && 
+        (c.fraccion || c.numeral)
+    );
+    if (chunksCitasCompletas.length > 0) completitud += 30;
+    
+    return Math.min(completitud, 100);
 }
 
 async function cargarDirectorio() {
