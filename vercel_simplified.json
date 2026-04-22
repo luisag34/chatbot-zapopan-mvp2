@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/vercel.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/health",
+      "dest": "/api/vercel.js"
+    },
+    {
+      "src": "/api/health",
+      "dest": "/api/vercel.js"
+    },
+    {
+      "src": "/api/chat",
+      "dest": "/api/vercel.js",
+      "methods": ["POST", "OPTIONS"]
+    },
+    {
+      "src": "/chat",
+      "dest": "/api/vercel.js",
+      "methods": ["POST", "OPTIONS"]
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/vercel.js"
+    }
+  ]
+}
