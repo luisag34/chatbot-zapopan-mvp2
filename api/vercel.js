@@ -373,17 +373,18 @@ async function aplicarFiltroRelevanciaExacto(consulta) {
     // Según arquitectura exacta del 22 abril 2026
     // ============================================
     
-    // 1. VERIFICAR SI ES EN ZAPOPAN (REQUERIDO)
+    // 1. VERIFICAR SI ES EN ZAPOPAN (ASUMIR CONTEXTO MUNICIPAL)
+    // RELAJADO: No requerir "Zapopan" explícito, asumir contexto municipal
+    // Si menciona "municipal" o "municipio", asumir Zapopan
     const enZapopan = consultaLower.includes("zapopan") || 
-                     consultaLower.includes("municipio") || 
-                     consultaLower.includes("ayuntamiento");
+                     consultaLower.includes("municipal") || 
+                     consultaLower.includes("municipio") ||
+                     consultaLower.includes("ayuntamiento") ||
+                     true; // ASUMIR SIEMPRE CONTEXTO ZAPOPAN
     
-    if (!enZapopan) {
-        return {
-            relevante: false,
-            motivo: 'El sistema está especializado en el municipio de Zapopan, Jalisco.'
-        };
-    }
+    // NOTA: Filtro relajado por solicitud del soberano
+    // Consultas sin "Zapopan" explícito ahora pasan el filtro 
+
     
     // 2. IDENTIFICAR SI DESCRIBE POSIBLE FALTA ADMINISTRATIVA O ACTIVIDAD REGULADA
     const categoriasReguladas = [
@@ -440,7 +441,7 @@ async function aplicarFiltroRelevanciaExacto(consulta) {
     if (!tienePalabrasClave) {
         return {
             relevante: false,
-            motivo: 'La consulta no contiene palabras clave normativas relacionadas con las materias reguladas.'
+            motivo: 'La consulta no corresponde a una materia regulada por la normativa municipal de Zapopan.'
         };
     }
     
@@ -452,7 +453,7 @@ async function aplicarFiltroRelevanciaExacto(consulta) {
 }
 
 function generarRespuestaNoRelevante(motivo) {
-    return `**ANÁLISIS DE SITUACIÓN**\n\nEl sistema ha aplicado el filtro de relevancia normativa.\n\n**CLASIFICACIÓN DE ATRIBUCIONES**\n\nNo aplica.\n\n**SUSTENTO LEGAL**\n\nNo aplica.\n\n**DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO**\n\nNo aplica.\n\n**FUENTES**\n\nNo se consultaron fuentes.\n\n---\n**Motivo:** ${motivo}`;
+    return `**ANÁLISIS DE SITUACIÓN**\n\nEl sistema ha aplicado el filtro de relevancia normativa.\n\n**CLASIFICACIÓN DE ATRIBUCIONES**\n\nNo aplica.\n\n**SUSTENTO LEGAL**\n\nNo aplica.\n\n**DEPENDENCIAS CON ATRIBUCIONES Y CONTACTO**\n\nNo aplica.\n\n**FUENTES**\n\nNo se consultaron fuentes.\n\n---\n**Nota:** ${motivo}`;
 }
 
 function generarRespuestaSinFundamento() {
