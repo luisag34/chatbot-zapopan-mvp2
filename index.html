@@ -3,202 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Inspección y Vigilancia Zapopan</title>
+    <title>Chatbot Zapopan v6.0 - Excelencia Operativa</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        .header {
-            background-color: #003366;
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            text-align: center;
         }
         .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .status {
-            background-color: #e8f5e9;
-            border-left: 5px solid #4caf50;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        .endpoints {
-            background-color: #e3f2fd;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        code {
-            background-color: #f1f1f1;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-        }
-        .button {
-            background-color: #003366;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .button:hover {
-            background-color: #002244;
-        }
-        .login-form {
-            max-width: 400px;
-            margin: 30px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #f9f9f9;
-        }
-        input {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .version {
+            color: #666;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .status-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .status-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .status-card.operational { border-left: 5px solid #28a745; }
+        .status-card.warning { border-left: 5px solid #ffc107; }
+        .status-card.error { border-left: 5px solid #dc3545; }
+        .status-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .status-card .status {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .status-card.operational .status { color: #28a745; }
+        .status-card.warning .status { color: #ffc107; }
+        .status-card.error .status { color: #dc3545; }
+        .endpoints {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .endpoints h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .endpoint {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e9ecef;
+        }
+        .endpoint .url {
+            font-family: 'Courier New', monospace;
+            color: #495057;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+        .endpoint .method {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
             border-radius: 5px;
-            box-sizing: border-box;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🏛️ Chatbot Inspección y Vigilancia Zapopan</h1>
-        <p>Sistema de consulta sobre facultades de la Dirección de Inspección y Vigilancia</p>
-        <p><strong>Acceso restringido a personal autorizado</strong></p>
-    </div>
-
     <div class="container">
-        <div class="status">
-            <h2>✅ Sistema Operativo</h2>
-            <p>Deployment exitoso en Vercel - MVP Funcional</p>
-            <p><strong>URL:</strong> <code>https://chatbot-inspeccion-zapopan.vercel.app</code></p>
-            <p><strong>Fecha:</strong> 7 de Abril 2026</p>
-            <p><strong>Estado:</strong> <span style="color: #4caf50;">●</span> En línea</p>
+        <div class="header">
+            <h1>Chatbot Zapopan</h1>
+            <div class="version">v6.0 - Excelencia Operativa</div>
+            <p style="color: #666; margin-top: 10px;">Sistema de consulta normativa para el municipio de Zapopan</p>
         </div>
-
-        <h2>🔐 Acceso al Sistema</h2>
-        <div class="login-form">
-            <h3>Iniciar Sesión</h3>
-            <form id="loginForm">
-                <input type="text" id="username" placeholder="Usuario" required>
-                <input type="password" id="password" placeholder="Contraseña" required>
-                <button type="submit" class="button">Ingresar</button>
-            </form>
-            <p><small>⚠️ <strong>CREDENCIALES ROTADAS:</strong> Contactar al administrador para nuevas credenciales</small></p>
+        
+        <div class="status-grid">
+            <div class="status-card operational">
+                <h3>🏥 Health Check</h3>
+                <div class="status" id="health-status">Checking...</div>
+                <p>Estado del sistema</p>
+            </div>
+            <div class="status-card operational">
+                <h3>📊 Métricas</h3>
+                <div class="status" id="metrics-status">Checking...</div>
+                <p>Monitoreo en tiempo real</p>
+            </div>
+            <div class="status-card operational">
+                <h3>🤖 API Chat</h3>
+                <div class="status" id="chat-status">Checking...</div>
+                <p>Endpoint principal</p>
+            </div>
+            <div class="status-card operational">
+                <h3>🚀 Sistema</h3>
+                <div class="status" id="system-status">v6.0</div>
+                <p>Excelencia Operativa</p>
+            </div>
         </div>
-
+        
         <div class="endpoints">
-            <h2>🔧 Endpoints API Disponibles</h2>
-            <ul>
-                <li><strong>GET</strong> <code>/health</code> - Verificación del sistema</li>
-                <li><strong>POST</strong> <code>/api/login</code> - Autenticación de usuarios</li>
-                <li><strong>GET</strong> <code>/</code> - Esta página de inicio</li>
-            </ul>
-            
-            <h3>Probar endpoints:</h3>
-            <a href="/health" class="button" target="_blank">Probar /health</a>
-            <button class="button" onclick="testLogin()">Probar /api/login</button>
+            <h3>🔗 Endpoints Disponibles</h3>
+            <div class="endpoint">
+                <div class="url">/api/chat</div>
+                <div class="method">POST</div>
+            </div>
+            <div class="endpoint">
+                <div class="url">/api/health</div>
+                <div class="method">GET</div>
+            </div>
+            <div class="endpoint">
+                <div class="url">/api/metrics</div>
+                <div class="method">GET</div>
+            </div>
         </div>
-
-        <h2>📋 Información del Proyecto</h2>
-        <p>Este es el <strong>MVP (Minimum Viable Product)</strong> del Chatbot para:</p>
-        <ul>
-            <li>Consultas sobre facultades de la Dirección de Inspección y Vigilancia</li>
-            <li>Acceso a documentos estatales y NOM federales</li>
-            <li>Consulta de reglamentos municipales</li>
-            <li>Información sobre códigos y normativa aplicable</li>
-        </ul>
-
-        <h2>🏰 Créditos</h2>
-        <p><strong>Desarrollado por:</strong> Dr. Victor von Doom🛡️</p>
-        <p><strong>Para:</strong> Ayuntamiento de Zapopan</p>
-        <p><strong>Fecha de deployment:</strong> 7 de Abril 2026</p>
-        <p><strong>Plataforma:</strong> Vercel</p>
-        <p><strong>Repositorio:</strong> <a href="https://github.com/luisag34/chatbot-inspeccion-zapopan" target="_blank">GitHub</a></p>
+        
+        <div class="footer">
+            <p>© 2026 Ayuntamiento de Zapopan | Dirección de Inspección y Vigilancia</p>
+            <p>Desarrollado con <a href="https://openclaw.ai" target="_blank">OpenClaw</a> | 
+               <a href="https://github.com/luisag34/chatbot-zapopan-mvp2" target="_blank">GitHub</a> | 
+               <a href="https://vercel.com" target="_blank">Vercel</a></p>
+        </div>
     </div>
-
+    
     <script>
-        // Manejar login form
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
+        async function checkStatus() {
             try {
-                const response = await fetch('/api/login', {
+                // Check Health
+                const healthRes = await fetch('/api/health');
+                if (healthRes.ok) {
+                    const healthData = await healthRes.json();
+                    document.getElementById('health-status').textContent = healthData.status;
+                    document.getElementById('health-status').style.color = '#28a745';
+                } else {
+                    document.getElementById('health-status').textContent = 'ERROR';
+                    document.getElementById('health-status').style.color = '#dc3545';
+                }
+                
+                // Check Metrics
+                const metricsRes = await fetch('/api/metrics');
+                if (metricsRes.ok) {
+                    const metricsData = await metricsRes.json();
+                    document.getElementById('metrics-status').textContent = metricsData.data.systemStatus.status;
+                    document.getElementById('metrics-status').style.color = '#28a745';
+                } else {
+                    document.getElementById('metrics-status').textContent = 'ERROR';
+                    document.getElementById('metrics-status').style.color = '#dc3545';
+                }
+                
+                // Check Chat API
+                const chatRes = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username, password })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: 'test' })
                 });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert(`✅ Login exitoso\nBienvenido: ${data.user.name}\nToken: ${data.token.substring(0, 20)}...`);
+                if (chatRes.ok) {
+                    document.getElementById('chat-status').textContent = 'OPERATIONAL';
+                    document.getElementById('chat-status').style.color = '#28a745';
                 } else {
-                    alert(`❌ Error: ${data.error}`);
+                    document.getElementById('chat-status').textContent = 'ERROR';
+                    document.getElementById('chat-status').style.color = '#dc3545';
                 }
+                
             } catch (error) {
-                alert(`❌ Error de conexión: ${error.message}`);
+                console.error('Error checking status:', error);
+                document.getElementById('health-status').textContent = 'ERROR';
+                document.getElementById('metrics-status').textContent = 'ERROR';
+                document.getElementById('chat-status').textContent = 'ERROR';
             }
-        });
-
-        // Función para probar login
-        function testLogin() {
-            fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: 'administrador_supremo',
-                    password: ''  // CONTRASEÑA ROTADA
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(`✅ Login de prueba exitoso\nUsuario: ${data.user.username}\nRol: ${data.user.role}`);
-                } else {
-                    alert(`❌ Login falló: ${data.error}`);
-                }
-            })
-            .catch(error => {
-                alert(`❌ Error: ${error.message}`);
-            });
         }
-
-        // Verificar estado del sistema al cargar
-        fetch('/health')
-            .then(response => response.json())
-            .then(data => {
-                console.log('✅ Sistema saludable:', data);
-            })
-            .catch(error => {
-                console.warn('⚠️ Error verificando salud:', error);
-            });
+        
+        // Check status on load and every 30 seconds
+        checkStatus();
+        setInterval(checkStatus, 30000);
     </script>
 </body>
 </html>
