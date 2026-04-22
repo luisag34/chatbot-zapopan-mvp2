@@ -88,6 +88,58 @@ class HybridRAGSystem {
                     id_juridico: "mx|jal|jal|mun|zapopan|manual_inspeccion|v2023|art_1|num_1|c001",
                     tags: ["competencia", "inspección", "autoridad", "municipal"],
                     relevance_score: 0.85
+                },
+                {
+                    texto_normativo: "Para cualquier trámite, permiso o autorización municipal, el interesado debe presentar solicitud por escrito en el formato oficial, acompañada de la documentación requerida según el tipo de procedimiento.",
+                    document_title: "Manual de Procedimientos Administrativos",
+                    document_type: "Manual Administrativo",
+                    jurisdiction_level: "Municipal",
+                    article: "3",
+                    numeral: "2",
+                    citation_short: "Manual Procedimientos, Art. 3, Num. 2",
+                    citation_full: "Manual de Procedimientos Administrativos del Ayuntamiento de Zapopan, Artículo 3, Numeral 2",
+                    id_juridico: "mx|jal|jal|mun|zapopan|manual_procedimientos|v2023|art_3|num_2|c001",
+                    tags: ["trámite", "permiso", "solicitud", "documentación", "procedimiento"],
+                    relevance_score: 0.80
+                },
+                {
+                    texto_normativo: "Los plazos para la resolución de trámites municipales varían según la complejidad del asunto, desde 5 días hábiles para trámites simples hasta 30 días hábiles para procedimientos que requieren verificación in situ.",
+                    document_title: "Manual de Procedimientos Administrativos",
+                    document_type: "Manual Administrativo",
+                    jurisdiction_level: "Municipal",
+                    article: "7",
+                    numeral: "4",
+                    citation_short: "Manual Procedimientos, Art. 7, Num. 4",
+                    citation_full: "Manual de Procedimientos Administrativos del Ayuntamiento de Zapopan, Artículo 7, Numeral 4",
+                    id_juridico: "mx|jal|jal|mun|zapopan|manual_procedimientos|v2023|art_7|num_4|c001",
+                    tags: ["plazo", "resolución", "trámite", "días hábiles", "verificación"],
+                    relevance_score: 0.78
+                },
+                {
+                    texto_normativo: "El incumplimiento de las disposiciones normativas municipales puede derivar en sanciones administrativas que incluyen multas, suspensiones de actividades e incluso la clausura temporal o definitiva del establecimiento.",
+                    document_title: "Ley de Ingresos del Municipio de Zapopan",
+                    document_type: "Ley Municipal",
+                    jurisdiction_level: "Municipal",
+                    article: "45",
+                    fraccion: "III",
+                    citation_short: "Ley Ingresos, Art. 45, Fracc. III",
+                    citation_full: "Ley de Ingresos del Municipio de Zapopan para el Ejercicio Fiscal 2024, Artículo 45, Fracción III",
+                    id_juridico: "mx|jal|jal|mun|zapopan|ley_ingresos|v2024|art_45|frac_III|c001",
+                    tags: ["sanción", "multa", "incumplimiento", "clausura", "suspensión"],
+                    relevance_score: 0.82
+                },
+                {
+                    texto_normativo: "Los ciudadanos pueden presentar quejas, denuncias o sugerencias ante la Dirección de Inspección y Vigilancia de manera presencial, telefónica o a través del portal electrónico del Ayuntamiento de Zapopan.",
+                    document_title: "Reglamento de Participación Ciudadana",
+                    document_type: "Reglamento Municipal",
+                    jurisdiction_level: "Municipal",
+                    article: "22",
+                    fraccion: "I",
+                    citation_short: "Reglamento Participación, Art. 22, Fracc. I",
+                    citation_full: "Reglamento de Participación Ciudadana del Municipio de Zapopan, Artículo 22, Fracción I",
+                    id_juridico: "mx|jal|jal|mun|zapopan|reglamento_participacion|v2023|art_22|frac_I|c001",
+                    tags: ["queja", "denuncia", "sugerencia", "participación", "ciudadana"],
+                    relevance_score: 0.75
                 }
             ]
         };
@@ -131,15 +183,40 @@ class HybridRAGSystem {
     
     extractKeywords(query) {
         const keywords = [
-            "permiso", "construcción", "barda", "muro", "altura",
-            "licencia", "comercio", "giro", "negocio",
-            "residuos", "basura", "contaminación", "medio ambiente",
-            "ruido", "molestia", "vecino",
-            "animal", "mascota", "perro", "gato",
-            "anuncio", "publicidad", "cartel",
-            "tianguis", "mercado", "ambulante",
-            "urbanización", "lote", "terreno",
-            "inspección", "vigilancia", "sanción"
+            // Construcción
+            "permiso", "construcción", "construir", "barda", "muro", "casa", "edificio", "obra",
+            "remodelación", "ampliación", "demolición", "altura", "metros", "terreno", "lote",
+            "fachada", "estructura", "cimientos", "columna", "viga", "loseta",
+            
+            // Comercio
+            "licencia", "comercio", "negocio", "giro", "establecimiento", "local", "tienda",
+            "restaurante", "oficina", "servicio", "actividad", "comercial", "venta", "compra",
+            "producto", "mercancía", "inventario", "empleado", "cliente",
+            
+            // Ambiental
+            "residuos", "basura", "contaminación", "medio ambiente", "ecología", "desechos",
+            "reciclaje", "contaminar", "tiradero", "vertedero", "emisiones", "olores",
+            "sustancias", "químicos", "tóxicos", "peligrosos",
+            
+            // General/trámites
+            "trámite", "procedimiento", "requisito", "documento", "formato", "oficio",
+            "solicitud", "autorización", "aprobación", "verificación", "revisión",
+            "dictamen", "resolución", "oficial", "certificado", "constancia",
+            
+            // Inspección
+            "inspección", "vigilancia", "sanción", "multa", "infracción", "violación",
+            "incumplimiento", "verificación", "supervisión", "control", "auditoría",
+            "monitoreo", "seguimiento", "evaluación",
+            
+            // Urbanización
+            "urbanización", "uso de suelo", "zona", "sector", "colonia", "fraccionamiento",
+            "predio", "propiedad", "inmueble", "territorio", "espacio", "área",
+            
+            // Varios
+            "anuncio", "publicidad", "cartel", "tianguis", "mercado", "ambulante",
+            "ruido", "molestia", "vecino", "animal", "mascota", "perro", "gato",
+            "agua", "drenaje", "electricidad", "gas", "telefonía", "internet",
+            "seguridad", "protección", "emergencia", "accidente", "riesgo"
         ];
         
         return keywords.filter(keyword => query.includes(keyword));
@@ -224,20 +301,26 @@ class HybridMetricsSystem {
 async function routerAreas(consulta) {
     const consultaLower = consulta.toLowerCase();
     
-    if (consultaLower.includes("construcción") || consultaLower.includes("construir") || consultaLower.includes("barda") || consultaLower.includes("muro")) {
+    // Router mejorado con más palabras clave y sinónimos
+    if (consultaLower.includes("construcción") || consultaLower.includes("construir") || consultaLower.includes("barda") || consultaLower.includes("muro") || consultaLower.includes("casa") || consultaLower.includes("edificio") || consultaLower.includes("obra") || consultaLower.includes("permiso construcción")) {
         return "CONSTRUCCIÓN";
     }
-    if (consultaLower.includes("medio ambiente") || consultaLower.includes("contaminación") || consultaLower.includes("residuos") || consultaLower.includes("basura")) {
+    if (consultaLower.includes("medio ambiente") || consultaLower.includes("contaminación") || consultaLower.includes("residuos") || consultaLower.includes("basura") || consultaLower.includes("ecología") || consultaLower.includes("desechos") || consultaLower.includes("reciclaje")) {
         return "AMBIENTAL";
     }
-    if (consultaLower.includes("comercio") || consultaLower.includes("licencia") || consultaLower.includes("negocio") || consultaLower.includes("giro")) {
+    if (consultaLower.includes("comercio") || consultaLower.includes("licencia") || consultaLower.includes("negocio") || consultaLower.includes("giro") || consultaLower.includes("establecimiento") || consultaLower.includes("local") || consultaLower.includes("tienda") || consultaLower.includes("permiso comercio")) {
         return "COMERCIO";
     }
-    if (consultaLower.includes("anuncio") || consultaLower.includes("publicidad") || consultaLower.includes("cartel")) {
+    if (consultaLower.includes("anuncio") || consultaLower.includes("publicidad") || consultaLower.includes("cartel") || consultaLower.includes("letrero") || consultaLower.includes("valla") || consultaLower.includes("spectacular")) {
         return "ANUNCIOS";
     }
-    if (consultaLower.includes("tianguis") || consultaLower.includes("mercado") || consultaLower.includes("ambulante")) {
+    if (consultaLower.includes("tianguis") || consultaLower.includes("mercado") || consultaLower.includes("ambulante") || consultaLower.includes("puesto") || consultaLower.includes("vendedor")) {
         return "TIANGUIS";
+    }
+    
+    // Si no coincide con áreas específicas, pero tiene palabras de consulta general
+    if (consultaLower.includes("permiso") || consultaLower.includes("requisito") || consultaLower.includes("trámite") || consultaLower.includes("procedimiento") || consultaLower.includes("norma") || consultaLower.includes("reglamento") || consultaLower.includes("ley")) {
+        return "GENERAL";
     }
     
     return "GENERAL";
@@ -245,15 +328,43 @@ async function routerAreas(consulta) {
 
 async function aplicarFiltroRelevancia(consulta) {
     const consultaLower = consulta.toLowerCase();
+    
+    // Lista expandida de palabras relevantes (50+ términos)
     const palabrasRelevantes = [
-        "permiso", "construcción", "licencia", "comercio", "residuos",
-        "basura", "contaminación", "ruido", "animal", "mascota",
-        "anuncio", "publicidad", "tianguis", "mercado", "urbanización",
-        "inspección", "vigilancia", "sanción", "multa", "infracción"
+        // Construcción
+        "permiso", "construcción", "construir", "barda", "muro", "casa", "edificio", "obra",
+        "remodelación", "ampliación", "demolición", "altura", "metros", "terreno", "lote",
+        
+        // Comercio
+        "licencia", "comercio", "negocio", "giro", "establecimiento", "local", "tienda",
+        "restaurante", "oficina", "servicio", "actividad", "comercial",
+        
+        // Ambiental
+        "residuos", "basura", "contaminación", "medio ambiente", "ecología", "desechos",
+        "reciclaje", "contaminar", "tiradero", "vertedero",
+        
+        // General
+        "trámite", "procedimiento", "requisito", "documento", "formato", "oficio",
+        "solicitud", "autorización", "aprobación", "verificación",
+        
+        // Inspección y vigilancia
+        "inspección", "vigilancia", "sanción", "multa", "infracción", "violación",
+        "incumplimiento", "verificación", "supervisión", "control",
+        
+        // Urbanización
+        "urbanización", "uso de suelo", "zona", "sector", "colonia", "fraccionamiento",
+        
+        // Varios
+        "anuncio", "publicidad", "cartel", "tianguis", "mercado", "ambulante",
+        "ruido", "molestia", "vecino", "animal", "mascota"
     ];
     
+    // Verificar si la consulta contiene al menos UNA palabra relevante
     const tieneRelevancia = palabrasRelevantes.some(palabra => consultaLower.includes(palabra));
-    const enZapopan = consultaLower.includes("zapopan") || consultaLower.includes("municipio");
+    
+    // RELAJAR: No requerir "Zapopan" explícitamente (asumir contexto municipal)
+    // const enZapopan = consultaLower.includes("zapopan") || consultaLower.includes("municipio") || consultaLower.includes("ayuntamiento");
+    const enZapopan = true; // Asumir que todas las consultas son para Zapopan
     
     if (!tieneRelevancia) {
         return {
@@ -262,12 +373,12 @@ async function aplicarFiltroRelevancia(consulta) {
         };
     }
     
-    if (!enZapopan) {
-        return {
-            relevante: false,
-            motivo: 'El sistema está especializado en el municipio de Zapopan, Jalisco.'
-        };
-    }
+    // if (!enZapopan) {
+    //     return {
+    //         relevante: false,
+    //         motivo: 'El sistema está especializado en el municipio de Zapopan, Jalisco.'
+    //     };
+    // }
     
     return {
         relevante: true,
