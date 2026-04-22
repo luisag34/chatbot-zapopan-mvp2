@@ -488,8 +488,8 @@ async function generarRespuestaConstitucionalExacta(consulta, chunks, area) {
         `• Extensiones: 3312, 3313, 3315\n` +
         `• Horario: Lunes a Viernes 08:00 - 15:00`;
     
-    // 5. FUENTES (Convención de citas A)
-    const fuentes = chunks.map(c => c.citation_short).join('\n');
+    // 5. FUENTES (NOMBRE COMPLETO DEL DOCUMENTO)
+    const fuentes = chunks.map(c => `• ${c.document_title}`).join('\n');
     
     return `**1. ANÁLISIS DE SITUACIÓN**\n\n${analisis}\n\n` +
            `**2. CLASIFICACIÓN DE ATRIBUCIONES**\n\n${atribuciones}\n\n` +
