@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Zapopan v6.0 - Excelencia Operativa</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .version {
+            color: #666;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .status-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .status-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .status-card.operational { border-left: 5px solid #28a745; }
+        .status-card.warning { border-left: 5px solid #ffc107; }
+        .status-card.error { border-left: 5px solid #dc3545; }
+        .status-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .status-card .status {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .status-card.operational .status { color: #28a745; }
+        .status-card.warning .status { color: #ffc107; }
+        .status-card.error .status { color: #dc3545; }
+        .endpoints {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .endpoints h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .endpoint {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e9ecef;
+        }
+        .endpoint .url {
+            font-family: 'Courier New', monospace;
+            color: #495057;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+        .endpoint .method {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Chatbot Zapopan</h1>
+            <div class="version">v6.0 - Excelencia Operativa</div>
+            <p style="color: #666; margin-top: 10px;">Sistema de consulta normativa para el municipio de Zapopan</p>
+        </div>
+        
+        <div class="status-grid">
+            <div class="status-card operational">
+                <h3>🏥 Health Check</h3>
+                <div class="status" id="health-status">Checking...</div>
+                <p>Estado del sistema</p>
+            </div>
+            <div class="status-card operational">
+                <h3>📊 Métricas</h3>
+                <div class="status" id="metrics-status">Checking...</div>
+                <p>Monitoreo en tiempo real</p>
+            </div>
+            <div class="status-card operational">
+                <h3>🤖 API Chat</h3>
+                <div class="status" id="chat-status">Checking...</div>
+                <p>Endpoint principal</p>
+            </div>
+            <div class="status-card operational">
+                <h3>🚀 Sistema</h3>
+                <div class="status" id="system-status">v6.0</div>
+                <p>Excelencia Operativa</p>
+            </div>
+        </div>
+        
+        <div class="endpoints">
+            <h3>🔗 Endpoints Disponibles</h3>
+            <div class="endpoint">
+                <div class="url">/api/chat</div>
+                <div class="method">POST</div>
+            </div>
+            <div class="endpoint">
+                <div class="url">/api/health</div>
+                <div class="method">GET</div>
+            </div>
+            <div class="endpoint">
+                <div class="url">/api/metrics</div>
+                <div class="method">GET</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 Ayuntamiento de Zapopan | Dirección de Inspección y Vigilancia</p>
+            <p>Desarrollado con <a href="https://openclaw.ai" target="_blank">OpenClaw</a> | 
+               <a href="https://github.com/luisag34/chatbot-zapopan-mvp2" target="_blank">GitHub</a> | 
+               <a href="https://vercel.com" target="_blank">Vercel</a></p>
+        </div>
+    </div>
+    
+    <script>
+        async function checkStatus() {
+            try {
+                // Check Health
+                const healthRes = await fetch('/api/health');
+                if (healthRes.ok) {
+                    const healthData = await healthRes.json();
+                    document.getElementById('health-status').textContent = healthData.status;
+                    document.getElementById('health-status').style.color = '#28a745';
+                } else {
+                    document.getElementById('health-status').textContent = 'ERROR';
+                    document.getElementById('health-status').style.color = '#dc3545';
+                }
+                
+                // Check Metrics
+                const metricsRes = await fetch('/api/metrics');
+                if (metricsRes.ok) {
+                    const metricsData = await metricsRes.json();
+                    document.getElementById('metrics-status').textContent = metricsData.data.systemStatus.status;
+                    document.getElementById('metrics-status').style.color = '#28a745';
+                } else {
+                    document.getElementById('metrics-status').textContent = 'ERROR';
+                    document.getElementById('metrics-status').style.color = '#dc3545';
+                }
+                
+                // Check Chat API
+                const chatRes = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: 'test' })
+                });
+                if (chatRes.ok) {
+                    document.getElementById('chat-status').textContent = 'OPERATIONAL';
+                    document.getElementById('chat-status').style.color = '#28a745';
+                } else {
+                    document.getElementById('chat-status').textContent = 'ERROR';
+                    document.getElementById('chat-status').style.color = '#dc3545';
+                }
+                
+            } catch (error) {
+                console.error('Error checking status:', error);
+                document.getElementById('health-status').textContent = 'ERROR';
+                document.getElementById('metrics-status').textContent = 'ERROR';
+                document.getElementById('chat-status').textContent = 'ERROR';
+            }
+        }
+        
+        // Check status on load and every 30 seconds
+        checkStatus();
+        setInterval(checkStatus, 30000);
+    </script>
+</body>
+</html>
